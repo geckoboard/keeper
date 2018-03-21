@@ -1,0 +1,13 @@
+{
+  "name": "keeper-server",
+  "version": "1.0.0",
+  "description": "A node server for our Keeper app",
+  "main": "index.js",
+  "scripts": {
+    "start-server": "./server/node_modules/.bin/nodemon ./server/bin/www",
+    "start": "yarn run start-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
