@@ -1,0 +1,73 @@
+daemon off;
+#Heroku dynos have at least 4 cores.
+worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>;
+
+events {
+	use epoll;
+	accept_mutex on;
+	worker_connections 1024;
+}
+
+http {
+        gzip on;
+        gzip_comp_level 2;
+        gzip_min_length 512;
+
+	server_tokens off;
+
+	log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
+	access_log logs/nginx/access.log l2met;
+	error_log logs/nginx/error.log;
+
+	include mime.types;
+	default_type application/octet-stream;
+	sendfile on;
+
+	#Must read the body in 5 seconds.
+	client_body_timeout 5;
+
+	upstream app_server {
+		server unix:/tmp/nginx.socket fail_timeout=0;
+ 	}
+
+	server {
+		listen <%= ENV["PORT"] %>;
+		server_name _;
+		keepalive_timeout 5;
+    
+    location /oauth2/ {
+        proxy_pass       <%= @sso_address %>;
+        proxy_set_header Host                    $host;
+        proxy_set_header X-Real-IP               $remote_addr;
+        proxy_set_header X-Scheme                $scheme;
+        proxy_set_header X-Auth-Request-Redirect $request_uri;
+    }
+    location = /oauth2/auth {
+        proxy_pass       <%= @sso_address %>;
+        proxy_set_header Host             $host;
+        proxy_set_header X-Real-IP        $remote_addr;
+        proxy_set_header X-Scheme         $scheme;
+        # nginx auth_request includes headers but not body
+        proxy_set_header Content-Length   "";
+        proxy_pass_request_body           off;
+    }
+
+
+		location / {
+      location / {
+      auth_request /oauth2/auth;
+      error_page 401 = /oauth2/sign_in;
+
+      # pass information via X-User and X-Email headers to backend,
+      # requires running with --set-xauthrequest flag
+      auth_request_set $user   $upstream_http_x_auth_request_user;
+      auth_request_set $email  $upstream_http_x_auth_request_email;
+      proxy_set_header X-User  $user;
+      proxy_set_header X-Email $email;
+
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_set_header Host $http_host;
+			proxy_redirect off;
+			proxy_pass http://app_server;
+		}
+	}
