@@ -13,12 +13,12 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "morgan": "^1.9.0",
+    "nodemon": "^1.17.2",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.37.3"
   },
   "devDependencies": {
-    "nodemon": "^1.17.2",
     "sequelize-cli": "^4.0.0"
   }
 }
