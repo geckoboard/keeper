@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'react-autobind';
 import NavBar from '../navbar';
+import StoriesList from '../stories-list';
 import styles from './app-styles.css';
 
 class App extends Component {
@@ -47,7 +48,9 @@ class App extends Component {
       <div>
         <NavBar />
         <div className={styles.container}>
-          <div className={styles.sidebar} />
+          <div className={styles.sidebar}>
+            <StoriesList />
+          </div>
           <div className={styles.content}>
             {goals.loading ? (
               'Loading...'
