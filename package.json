@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "nodemon ./server/bin/www"
+    "start-server": "nodemon ./server/bin/www"
   },
   "workspaces": ["client", "server"]
 }

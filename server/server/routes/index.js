@@ -1,4 +1,5 @@
 const goalsController = require('../controllers').goals;
+const storiesController = require('../controllers').stories;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -9,4 +10,6 @@ module.exports = (app) => {
   app.post('/api/goals', goalsController.create);
   app.put('/api/goals/:goalId', goalsController.update);
   app.delete('/api/goals/:goalId', goalsController.destroy);
+
+  app.get('/api/stories', storiesController.list);
 };
