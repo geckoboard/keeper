@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  padding-top: 44px;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  background: #F7F7F7;
+  width: 420px;
+}
+
+.content {
+  flex: 1;
+}

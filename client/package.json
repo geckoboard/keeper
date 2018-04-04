@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "normalize.css": "^8.0.0",
+    "prop-types": "^15.6.1",
     "react": "^16.3.0",
     "react-autobind": "^1.0.6",
     "react-dom": "^16.3.0",
