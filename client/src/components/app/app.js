@@ -4,6 +4,7 @@ import autobind from 'react-autobind';
 import NavBar from '../navbar';
 import StoriesList from '../stories-list';
 import AddGoalForm from '../add-goal-form';
+import Goal from '../goal';
 import styles from './app-styles.css';
 
 class App extends Component {
@@ -57,13 +58,9 @@ class App extends Component {
             {goals.loading ? (
               'Loading...'
             ) : (
-              <ol>
-                {goals.entities.map(goal => (
-                  <li key={goal.id} onClick={() => deleteGoal(goal.id)}>
-                    {goal.title}
-                  </li>
-                ))}
-              </ol>
+              <div>
+                {goals.entities.map(goal => <Goal key={goal.id} goal={goal} />)}
+              </div>
             )}
             <AddGoalForm />
           </div>

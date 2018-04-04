@@ -7,6 +7,7 @@
   border-radius: 4px;
   width: 145px;
   padding: 0.5rem;
+  cursor: pointer;
 }
 
 .input {
@@ -30,6 +31,7 @@
   border-radius: 4px;
   padding: 0.5rem 1rem;
   margin-right: 0.5rem;
+  cursor: pointer;
 }
 
 .cancel_button {
@@ -40,4 +42,5 @@
   font-size: 0.875rem;
   border-radius: 4px;
   padding: 0.5rem 1rem;
+  cursor: pointer;
 }

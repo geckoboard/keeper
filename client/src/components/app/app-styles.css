@@ -17,6 +17,7 @@
   flex: 1;
   padding: 2.5rem;
   box-sizing: border-box;
+  overflow: scroll;
 }
 
 .goals_title {
