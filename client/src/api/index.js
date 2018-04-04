@@ -1,9 +1,13 @@
-import * as api from './api';
+import * as goals from './goals';
+import * as stories from './stories';
 
 export default {
   goals: {
-    fetch: api.fetchGoals,
-    add: api.addGoal,
-    delete: api.deleteGoal,
+    fetch: goals.fetchGoals,
+    add: goals.addGoal,
+    delete: goals.deleteGoal,
+  },
+  stories: {
+    fetch: stories.fetchStories,
   },
 };

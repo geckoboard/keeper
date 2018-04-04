@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { Provider, connect } from 'react-redux';
+import * as actions from './redux/actions';
+import createStore from './redux/create-store';
 import ReactDOM from 'react-dom';
 import autobind from 'react-autobind';
 import api from './api';
 import styles from './index.css';
 import 'normalize.css';
+
+const store = createStore();
 
 class App extends Component {
   constructor(props) {
@@ -11,13 +16,13 @@ class App extends Component {
     autobind(this);
 
     this.state = {
-      goals: undefined,
       title: '',
     };
   }
 
   componentDidMount() {
-    api.goals.fetch().then(goals => this.setState({ goals }));
+    this.props.fetchGoals();
+    this.props.fetchStories();
   }
 
   handleSubmit(e) {
@@ -36,37 +41,26 @@ class App extends Component {
       return;
     }
 
-    api.goals.add(title).then(goal => {
-      this.setState(state => ({
-        goals: [...state.goals, goal],
-        title: '',
-      }));
-    });
-  }
-
-  deleteGoal(id) {
-    api.goals.delete(id).then(() => {
-      this.setState(state => ({
-        goals: state.goals.filter(goal => goal.id !== id),
-      }));
-    });
+    this.props.addGoal(title);
+    this.setState({ title: '' });
   }
 
   render() {
-    const { goals, title } = this.state;
+    const { goals, deleteGoal } = this.props;
+    const { title } = this.state;
 
     return (
       <div className={styles.container}>
-        {goals ? (
+        {goals.loading ? (
+          'Loading...'
+        ) : (
           <ol>
-            {goals.map(goal => (
-              <li key={goal.id} onClick={() => this.deleteGoal(goal.id)}>
+            {goals.entities.map(goal => (
+              <li key={goal.id} onClick={() => deleteGoal(goal.id)}>
                 {goal.title}
               </li>
             ))}
           </ol>
-        ) : (
-          'Loading...'
         )}
         <form className={styles.form} onSubmit={this.handleSubmit}>
           <input type="text" value={title} onChange={this.handleInput} />
@@ -77,4 +71,19 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('App'));
+const ConnectedApp = connect(
+  state => state,
+  dispatch => ({
+    fetchGoals: () => dispatch(actions.fetchGoals()),
+    fetchStories: () => dispatch(actions.fetchStories()),
+    addGoal: title => dispatch(actions.addGoal(title)),
+    deleteGoal: id => dispatch(actions.deleteGoal(id)),
+  }),
+)(App);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ConnectedApp />
+  </Provider>,
+  document.getElementById('App'),
+);
