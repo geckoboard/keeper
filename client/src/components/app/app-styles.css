@@ -15,4 +15,12 @@
 
 .content {
   flex: 1;
+  padding: 2.5rem;
+  box-sizing: border-box;
+}
+
+.goals_title {
+  margin-top: 0;
+  font-weight: normal;
+  font-size: 1.75rem;
 }

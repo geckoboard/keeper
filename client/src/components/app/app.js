@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import autobind from 'react-autobind';
 import NavBar from '../navbar';
 import StoriesList from '../stories-list';
+import AddGoalForm from '../add-goal-form';
 import styles from './app-styles.css';
 
 class App extends Component {
@@ -52,6 +53,7 @@ class App extends Component {
             <StoriesList />
           </div>
           <div className={styles.content}>
+            <h2 className={styles.goals_title}>Goals</h2>
             {goals.loading ? (
               'Loading...'
             ) : (
@@ -63,10 +65,7 @@ class App extends Component {
                 ))}
               </ol>
             )}
-            <form className={styles.form} onSubmit={this.handleSubmit}>
-              <input type="text" value={title} onChange={this.handleInput} />
-              <button type="submit">Add Goal</button>
-            </form>
+            <AddGoalForm />
           </div>
         </div>
       </div>

@@ -4,19 +4,13 @@ import Story from '../story';
 
 const StoriesList = ({ loading, stories }) => {
   if (loading) {
-    return <span>Loading...</span>
+    return <span>Loading...</span>;
   }
 
-  return (
-    <div>
-      {stories.map(story => (
-        <Story {...story} />
-      ))}
-    </div>
-  );
+  return <div>{stories.map(story => <Story key={story.id} {...story} />)}</div>;
 };
 
-StoriesList.PropTypes = {
+StoriesList.propTypes = {
   loading: PropTypes.bool,
   stories: PropTypes.array,
 };

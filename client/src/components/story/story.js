@@ -4,9 +4,7 @@ import styles from './story-styles.css';
 
 const Story = ({ name, id, app_url }) => (
   <div className={styles.container}>
-    <span className={styles.title}>
-      {name}
-    </span>
+    <span className={styles.title}>{name}</span>
     <div className={styles.meta}>
       <a className={styles.id} href={app_url} target="_blank">
         #{id}
@@ -17,7 +15,7 @@ const Story = ({ name, id, app_url }) => (
 
 Story.propTypes = {
   name: PropTypes.string,
-  id: PropTypes.string,
+  id: PropTypes.number,
   app_url: PropTypes.string,
 };
 
