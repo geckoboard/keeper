@@ -15,8 +15,21 @@
 
 .story {
   color: #9B9B9B;
-  padding-left: 1.5rem;
+  padding-left: 2rem;
+  position: relative;
   margin-bottom: 1rem;
+}
+
+.story_icon {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  opacity: 0.6;
+}
+
+.story_icon_completed {
+  color: #38D41C;
+  opacity: 1;
 }
 
 .delete_button {
@@ -29,4 +42,20 @@
 
 .delete_button:hover, .delete_button:focus {
   color: #5FC4F5;
+}
+
+.drag_container {
+  position: relative;
+}
+
+.drag_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
