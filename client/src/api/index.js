@@ -6,6 +6,7 @@ export default {
     fetch: goals.fetchGoals,
     add: goals.addGoal,
     delete: goals.deleteGoal,
+    update: goals.updateGoal,
   },
   stories: {
     fetch: stories.fetchStories,

@@ -23,7 +23,7 @@ const update = (req, res) => Goal.findById(req.params.goalId)
 
     return goal.update({
       title: title || goal.title,
-      cards: cards ? JSON.parse(cards) : goal.cards
+      cards: cards ? cards : goal.cards
     });
   })
   .then(goal => res.status(200).send(goal))

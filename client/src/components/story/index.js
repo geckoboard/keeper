@@ -1,3 +1,3 @@
-import Story from './story';
+import StoryConnector from './story-connector';
 
-export default Story;
+export default StoryConnector;

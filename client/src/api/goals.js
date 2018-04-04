@@ -20,3 +20,13 @@ export const deleteGoal = id =>
       Accept: 'application/json',
     },
   });
+
+export const updateGoal = (id, update) =>
+  fetch(`${API}/goals/${id}`, {
+    method: 'put',
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(update),
+  }).then(getJSON);

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'react-autobind';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
 import NavBar from '../navbar';
 import StoriesList from '../stories-list';
 import AddGoalForm from '../add-goal-form';
@@ -79,4 +81,4 @@ App.propTypes = {
   deleteGoal: PropTypes.func,
 };
 
-export default App;
+export default DragDropContext(HTML5Backend)(App);

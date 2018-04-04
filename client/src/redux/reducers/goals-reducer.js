@@ -28,6 +28,31 @@ const goalsReducer = (state = initialState, action) => {
         entities: state.entities.filter(goal => goal.id !== payload),
       };
 
+    case actions.addStoryToGoal.start.type: {
+      const { goalId, storyId } = payload;
+      const goals = state.entities.map(goal => {
+        if (goal.id !== goalId) {
+          return goal;
+        }
+
+        let cards = goal.cards || [];
+
+        if (!cards.includes(storyId)) {
+          cards = [...cards, storyId];
+        }
+
+        return {
+          ...goal,
+          cards,
+        };
+      });
+
+      return {
+        ...state,
+        entities: goals,
+      };
+    }
+
     default:
       return state;
   }
