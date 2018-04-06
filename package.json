@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "start-server": "nodemon ./server/bin/www"
+    "start": "nodemon ./server/bin/www",
+    "postinstall": "cd ./client && yarn build"
   },
   "workspaces": ["client", "server"]
 }
