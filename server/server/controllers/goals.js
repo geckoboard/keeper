@@ -1,10 +1,12 @@
 const Goal = require('../models').goal;
+var updateDataset = require('../scripts/update-dataset');
 
 const create = (req, res) => Goal.create({
   title: req.body.title,
   active: true,
 })
   .then(goal => res.status(201).send(goal))
+  .then(updateDataset)
   .catch(error => res.status(400).send(error));
 
 const list = (req, res) => Goal.all()
@@ -27,6 +29,7 @@ const update = (req, res) => Goal.findById(req.params.goalId)
     });
   })
   .then(goal => res.status(200).send(goal))
+  .then(updateDataset)
   .catch(error => res.status(400).send(error));
 
 const destroy = (req, res) => Goal.findById(req.params.goalId)
@@ -40,8 +43,8 @@ const destroy = (req, res) => Goal.findById(req.params.goalId)
     return goal.destroy();
   })
   .then(() => res.status(204).send())
+  .then(updateDataset)
   .catch(error => res.status(400).send(error));
-
 
 module.exports = {
   create,
