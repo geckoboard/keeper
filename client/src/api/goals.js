@@ -1,4 +1,5 @@
-const API = 'http://localhost:8000/api';
+const API =
+  process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api' : '/api';
 const getJSON = x => x.json();
 
 const getGoals = () => fetch(`${API}/goals`).then(getJSON);
