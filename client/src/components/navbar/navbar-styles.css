@@ -5,7 +5,7 @@
   display: block;
   width: 100%;
   height: 44px;
-  background: #5FC4F5;
+  background: #36B2E6;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
@@ -16,4 +16,10 @@
   color: #FFFFFF;
   font-weight: normal;
   font-size: 1.5rem;
+}
+
+.logo {
+  height: 100%;
+  padding: 4px;
+  box-sizing: border-box;
 }

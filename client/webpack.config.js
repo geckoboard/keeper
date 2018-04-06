@@ -30,7 +30,16 @@ module.exports = {
             }
           }
         ]
-      }
+      },
+      {
+        test: /\.(jpg|png)$/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "images/[name].[ext]",
+          },
+        },
+      },
     ]
   },
   plugins: [htmlPlugin]
