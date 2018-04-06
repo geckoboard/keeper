@@ -1,9 +1,9 @@
 const API = 'http://localhost:8000/api';
 const getJSON = x => x.json();
 
-export const fetchGoals = () => fetch(`${API}/goals`).then(getJSON);
+const getGoals = () => fetch(`${API}/goals`).then(getJSON);
 
-export const addGoal = title =>
+const addGoal = title =>
   fetch(`${API}/goals`, {
     method: 'post',
     headers: {
@@ -13,7 +13,7 @@ export const addGoal = title =>
     body: JSON.stringify({ title }),
   }).then(getJSON);
 
-export const deleteGoal = id =>
+const deleteGoal = id =>
   fetch(`${API}/goals/${id}`, {
     method: 'delete',
     headers: {
@@ -21,7 +21,7 @@ export const deleteGoal = id =>
     },
   });
 
-export const updateGoal = (id, update) =>
+const updateGoal = (id, update) =>
   fetch(`${API}/goals/${id}`, {
     method: 'put',
     headers: {
@@ -30,3 +30,10 @@ export const updateGoal = (id, update) =>
     },
     body: JSON.stringify(update),
   }).then(getJSON);
+
+export {
+  getGoals as get,
+  addGoal as add,
+  deleteGoal as delete,
+  updateGoal as update,
+};

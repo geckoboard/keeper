@@ -8,9 +8,13 @@ const mapStateToProps = state => {
     return [...acc, ...cards];
   }, []);
 
-  const stories = state.stories.entities.filter(
-    story => !alreadyAssigned.includes(story.id),
+  let stories = Object.keys(state.stories.entities).filter(
+    id =>
+      !alreadyAssigned.includes(parseInt(id, 10)) &&
+      !state.stories.entities[id].completed,
   );
+
+  stories = stories.map(id => state.stories.entities[id]);
 
   return {
     loading: state.stories.loading,

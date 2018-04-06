@@ -4,29 +4,20 @@ const API = 'https://api.clubhouse.io/api/v2';
 const API_KEY = process.env.CLUBHOUSE_API_KEY;
 
 const list = (req, res) => {
+  qs = {
+    token: API_KEY,
+    page_size: 25,
+    query: req.query.query,
+    next: req.query.next,
+  };
+
   var options = {
-    uri: `${API}/projects/5/stories`,
-    qs: {
-      token: API_KEY
-    },
+    uri: `${API}/search/stories`,
+    qs,
     json: true
   };
 
-  const workflows = [
-    500000011, // ready
-    500000015, // doing
-    500074438, // QA
-    // 500000012  // Done
-  ];
-
-  return request(options).then(stories => {
-    res.status(200).send(
-      stories.filter(story => 
-        workflows.includes(story.workflow_state_id)
-        && !story.archived
-      )
-    )
-  });
+  return request(options).then(stories => res.status(200).send(stories));
 }
 
 module.exports = {

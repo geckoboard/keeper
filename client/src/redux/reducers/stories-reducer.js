@@ -2,18 +2,24 @@ import * as actions from '../actions';
 
 const initialState = {
   loading: true,
-  entities: [],
+  entities: {},
 };
 
-const goalsReducer = (state = initialState, action) => {
+const storiesReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case actions.fetchStories.end.type:
+    case actions.storiesReceived.type:
+      let entities = { ...state.entities };
+
+      payload.data.forEach(story => {
+        entities[story.id] = story;
+      });
+
       return {
         ...state,
         loading: false,
-        entities: payload,
+        entities: entities,
       };
 
     default:
@@ -21,4 +27,4 @@ const goalsReducer = (state = initialState, action) => {
   }
 };
 
-export default goalsReducer;
+export default storiesReducer;

@@ -1,8 +1,46 @@
-import { createThunk } from 'redan';
+import { createThunk, createAction } from 'redan';
 import api from '../api';
 
+const _getNextToken = response => {
+  if (!response.next) {
+    return undefined;
+  }
+
+  return response.next.match(/(?<=next=)[^\&]*/)[0];
+};
+
+const _keepFetching = (fetcher, stopWhen, callback) => {
+  const recursiveFetch = response => {
+    const next = _getNextToken(response);
+
+    callback(response);
+
+    if (!next || stopWhen(response)) {
+      return;
+    }
+
+    fetcher(next).then(recursiveFetch);
+  };
+
+  fetcher().then(recursiveFetch);
+};
+
+const _completedInLastThirtyDays = response => {
+  const { data } = response;
+  const last = data[data.length - 1];
+
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 30);
+
+  const completedAt = new Date(last.completed_at);
+
+  return completedAt < cutoff;
+};
+
+export const storiesReceived = createAction('STORIES_RECEIVED');
+
 export const fetchGoals = createThunk('FETCH_GOALS', () => () =>
-  api.goals.fetch(),
+  api.goals.get(),
 );
 
 export const addGoal = createThunk('CREATE_GOAL', title => () =>
@@ -13,9 +51,28 @@ export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
   api.goals.delete(id),
 );
 
-export const fetchStories = createThunk('FETCH_STORIES', () => () =>
-  api.stories.fetch(),
-);
+export const fetchStories = () => dispatch => {
+  // FETCH READY
+  _keepFetching(
+    next => api.stories.get('state:ready project:taco !is:archived', next),
+    () => false,
+    res => dispatch(storiesReceived(res)),
+  );
+
+  // FETCH DOING
+  _keepFetching(
+    next => api.stories.get('is:started project:taco !is:archived', next),
+    () => false,
+    res => dispatch(storiesReceived(res)),
+  );
+
+  // FETCH DONE
+  _keepFetching(
+    next => api.stories.get('is:done project:taco !is:archived', next),
+    _completedInLastThirtyDays,
+    res => dispatch(storiesReceived(res)),
+  );
+};
 
 export const addStoryToGoal = createThunk(
   'ADD_STORY_TO_GOAL',

@@ -7,7 +7,7 @@ const mapStateToProps = (state, props) => {
   const storyIds = props.goal.cards || [];
 
   storyIds.forEach(id => {
-    const story = state.stories.entities.find(x => x.id === id);
+    const story = state.stories.entities[id];
 
     if (story) {
       stories.push(story);
