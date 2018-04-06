@@ -25,6 +25,8 @@ app.use(function(req, res, next) {
 
 // Require our routes into the application.
 require('./server/routes')(app);
-app.get('*', (req, res) => res.sendFile(path.join(__dirname + '/../client/build/index.html')));
+
+// Serve our static files
+app.use(express.static(__dirname + '/../client/dist'))
 
 module.exports = app;
