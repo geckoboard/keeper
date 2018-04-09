@@ -1,5 +1,6 @@
 const goalsController = require('../controllers').goals;
 const storiesController = require('../controllers').stories;
+const webhookController = require('../controllers').webhook;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -12,4 +13,6 @@ module.exports = (app) => {
   app.delete('/api/goals/:goalId', goalsController.destroy);
 
   app.get('/api/stories', storiesController.list);
+
+  app.post('/api/webhook', webhookController.update);
 };
