@@ -84,9 +84,11 @@ const updateDataset = () => Goal.all().then(goals => {
             console.error(err);
             return;
           }
-    
-          dataset.put(data, function(e) {
-            console.error(e);
+
+          dataset.put(data, function(err) {
+            if (err) {
+              console.error(err);
+            }
           });
         }
       );
