@@ -1,5 +1,5 @@
 const Goal = require('../models').goal;
-var updateDataset = require('../scripts/update-dataset');
+const updateDataset = require('../scripts/update-dataset');
 
 const create = (req, res) => Goal.create({
   title: req.body.title,

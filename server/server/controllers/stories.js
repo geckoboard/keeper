@@ -11,7 +11,7 @@ const list = (req, res) => {
     next: req.query.next,
   };
 
-  var options = {
+  const options = {
     uri: `${API}/search/stories`,
     qs,
     json: true
