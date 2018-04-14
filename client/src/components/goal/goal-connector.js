@@ -21,6 +21,13 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => ({
   onDelete: () => dispatch(actions.deleteGoal(props.goal.id)),
+  onUpdate: title =>
+    dispatch(
+      actions.updateGoalTitle({
+        id: props.goal.id,
+        title,
+      }),
+    ),
 });
 
 const GoalConnector = connect(mapStateToProps, mapDispatchToProps)(

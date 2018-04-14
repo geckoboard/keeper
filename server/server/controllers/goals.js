@@ -9,7 +9,9 @@ const create = (req, res) => Goal.create({
   .then(updateDataset)
   .catch(error => res.status(400).send(error));
 
-const list = (req, res) => Goal.all()
+const list = (req, res) => Goal.all({
+  order: [['id', 'ASC']],
+})
   .then(goals => res.status(200).send(goals))
   .catch(error => res.status(400).send(error));
 

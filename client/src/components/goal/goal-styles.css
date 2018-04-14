@@ -32,15 +32,22 @@
   opacity: 1;
 }
 
-.delete_button {
+.delete_button, .edit_button {
   appearance: none;
   cursor: pointer;
   border: none;
   background: none;
   color: #9B9B9B;
+  margin-right: 0.5rem;
 }
 
-.delete_button:hover, .delete_button:focus {
+.delete_button:hover, 
+.delete_button:focus {
+  color: #E63333;
+}
+
+.edit_button:hover,
+.edit_button:focus {
   color: #36B2E6;
 }
 

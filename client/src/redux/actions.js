@@ -47,6 +47,11 @@ export const addGoal = createThunk('CREATE_GOAL', title => () =>
   api.goals.add(title),
 );
 
+export const updateGoalTitle = createThunk(
+  'UPDATE_GOAL_TITLE',
+  ({ id, title }) => () => api.goals.update(id, { title }),
+);
+
 export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
   api.goals.delete(id),
 );

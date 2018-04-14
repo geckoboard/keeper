@@ -28,6 +28,15 @@ const goalsReducer = (state = initialState, action) => {
         entities: state.entities.filter(goal => goal.id !== payload),
       };
 
+    case actions.updateGoalTitle.start.type:
+      return {
+        ...state,
+        entities: state.entities.map(
+          goal =>
+            goal.id === payload.id ? { ...goal, title: payload.title } : goal,
+        ),
+      };
+
     case actions.addStoryToGoal.start.type: {
       const { goalId, storyId } = payload;
       const goals = state.entities.map(goal => {
