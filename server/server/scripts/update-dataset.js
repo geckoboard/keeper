@@ -52,31 +52,33 @@ const updateDataset = () => Goal.all().then(goals => {
 
   Promise.all(storyRequests)
     .then(stories => {
-      const data = goalsJSON.map(goal => {
-        let cards = goal.cards || [];
-        cards = cards.map(id => stories.find(story => story.id === id));
-        cards = cards.filter(story => !story.archived);
+      const data = goalsJSON
+        .sort((a, b) => b.id - a.id)
+        .map(goal => {
+          let cards = goal.cards || [];
+          cards = cards.map(id => stories.find(story => story.id === id));
+          cards = cards.filter(story => !story.archived);
 
-        const completed = cards.filter(story => story.completed);
-        const started = cards.filter(story => story.started);
+          const completed = cards.filter(story => story.completed);
+          const started = cards.filter(story => story.started);
 
-        let status = '';
+          let status = '';
 
-        if (started.length > 0) {
-          status = '🚚';
-        }
+          if (started.length > 0) {
+            status = '🚚';
+          }
 
-        if (cards.length === completed.length && completed.length > 0) {
-          status = '✅';
-        }
+          if (cards.length === completed.length && completed.length > 0) {
+            status = '✅';
+          }
 
-        return {
-          name: goal.title,
-          order: goal.id,
-          status: status,
-          progress: `(${completed.length}/${cards.length})`
-        };
-      });
+          return {
+            name: goal.title,
+            order: goal.id,
+            status: status,
+            progress: `(${completed.length}/${cards.length})`
+          };
+        });
 
       gb.datasets.findOrCreate(datasetSchema,
         function (err, dataset) {
