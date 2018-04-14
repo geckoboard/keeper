@@ -5,7 +5,7 @@ import createStore from './redux/create-store';
 import App from './components/app';
 import styles from './index.css';
 import 'normalize.css';
-import './favicon.png'
+import './favicon.png';
 
 const store = createStore();
 

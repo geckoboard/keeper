@@ -1,53 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import GoalTitleInput from '../goal-title-input';
 import autobind from 'react-autobind';
 import styles from './add-goal-form-styles.css';
-
-const initialState = {
-  showForm: false,
-  title: '',
-};
 
 class AddGoalForm extends Component {
   constructor(props) {
     super(props);
     autobind(this);
 
-    this.state = initialState;
+    this.state = {
+      showForm: false,
+    };
   }
 
-  componentDidUpdate(_, prevState) {
-    if (this.state.showForm && !prevState.showForm) {
-      this.input.focus();
-    }
-  }
-
-  handleInput(event) {
-    this.setState({ title: event.target.value });
-  }
-
-  handleKeyPress(event) {
-    if (event.keyCode === 27) {
-      this.setState(initialState);
-    }
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-
-    const { title } = this.state;
-
-    if (!title) {
+  handleSubmit(value) {
+    if (!value) {
       return;
     }
 
-    this.props.onSubmit(this.state.title);
-    this.setState(initialState);
+    this.props.onSubmit(value);
+    this.setState({ showForm: false });
   }
 
-  handleCancel(event) {
-    event.preventDefault();
-    this.setState(initialState);
+  handleCancel() {
+    this.setState({ showForm: false });
   }
 
   render() {
@@ -65,22 +42,10 @@ class AddGoalForm extends Component {
     }
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          placeholder="Enter a goal name"
-          onChange={this.handleInput}
-          onKeyDown={this.handleKeyPress}
-          className={styles.input}
-          ref={e => (this.input = e)}
-        />
-        <button type="submit" className={styles.save_button}>
-          Save
-        </button>
-        <button onClick={this.handleCancel} className={styles.cancel_button}>
-          Cancel
-        </button>
-      </form>
+      <GoalTitleInput
+        onSubmit={this.handleSubmit}
+        onCancel={() => this.setState({ showForm: false })}
+      />
     );
   }
 }

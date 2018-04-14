@@ -1,0 +1,34 @@
+.input {
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: none;
+  border: 1px solid #DDD;
+  margin-bottom: 1rem;
+}
+
+.save_button {
+  appearance: none;
+  border: none;
+  background: #36B2E6;
+  color: #FFFFFF;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.cancel_button {
+  appearance: none;
+  border: 1px solid #36B2E6;
+  background: #FFFFFF;
+  color: #36B2E6;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
