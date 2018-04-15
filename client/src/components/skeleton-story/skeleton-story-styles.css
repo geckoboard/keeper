@@ -26,6 +26,7 @@
   display: flex;
   justify-content: flex-end;
 }
+
 .id {
   background: #DDDDDD;
   height: 0.5rem;
@@ -47,6 +48,12 @@
 }
 
 @keyframes shine {
-  0% { background-position: -200px; }
-  40%, 100% { background-position: 350px; }
+  0% { 
+    background-position: -200px;
+    opacity: 1;
+  }
+  40%, 100% { 
+    background-position: 350px; 
+    opacity: 0;
+  }
 } 
