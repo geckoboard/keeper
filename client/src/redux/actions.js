@@ -9,7 +9,7 @@ const _getNextToken = response => {
   return response.next.match(/(?<=next=)[^\&]*/)[0];
 };
 
-const _keepFetching = (fetcher, stopWhen, callback) => {
+const _keepFetching = (fetcher, callback, stopWhen = () => false) => {
   const recursiveFetch = response => {
     const next = _getNextToken(response);
 
@@ -60,22 +60,20 @@ export const fetchStories = () => dispatch => {
   // FETCH READY
   _keepFetching(
     next => api.stories.get('state:ready project:taco !is:archived', next),
-    () => false,
     res => dispatch(storiesReceived(res)),
   );
 
   // FETCH DOING
   _keepFetching(
     next => api.stories.get('is:started project:taco !is:archived', next),
-    () => false,
     res => dispatch(storiesReceived(res)),
   );
 
   // FETCH DONE
   _keepFetching(
     next => api.stories.get('is:done project:taco !is:archived', next),
-    _completedInLastThirtyDays,
     res => dispatch(storiesReceived(res)),
+    _completedInLastThirtyDays,
   );
 };
 
