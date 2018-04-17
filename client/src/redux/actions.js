@@ -19,10 +19,10 @@ const _keepFetching = (fetcher, callback, stopWhen = () => false) => {
       return;
     }
 
-    fetcher(next).then(recursiveFetch);
+    return fetcher(next).then(recursiveFetch);
   };
 
-  fetcher().then(recursiveFetch);
+  return fetcher().then(recursiveFetch);
 };
 
 const _completedInLastThirtyDays = response => {
@@ -56,26 +56,28 @@ export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
   api.goals.delete(id),
 );
 
-export const fetchStories = () => dispatch => {
+export const fetchStories = createThunk('FETCH_STORIES', () => dispatch => {
   // FETCH READY
-  _keepFetching(
+  const ready = _keepFetching(
     next => api.stories.get('state:ready project:taco !is:archived', next),
     res => dispatch(storiesReceived(res)),
   );
 
   // FETCH DOING
-  _keepFetching(
+  const doing = _keepFetching(
     next => api.stories.get('is:started project:taco !is:archived', next),
     res => dispatch(storiesReceived(res)),
   );
 
   // FETCH DONE
-  _keepFetching(
+  const done = _keepFetching(
     next => api.stories.get('is:done project:taco !is:archived', next),
     res => dispatch(storiesReceived(res)),
     _completedInLastThirtyDays,
   );
-};
+
+  return Promise.all([ready, doing, done]);
+});
 
 export const addStoryToGoal = createThunk(
   'ADD_STORY_TO_GOAL',

@@ -25,3 +25,9 @@
   font-weight: normal;
   font-size: 1.75rem;
 }
+
+@media screen and (max-width: 940px) {
+  .sidebar {
+    display: none;
+  }
+}

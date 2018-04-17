@@ -5,19 +5,20 @@ import SkeletonStory from '../skeleton-story';
 import styles from './stories-list-styles.css';
 
 const StoriesList = ({ loading, stories }) => {
-  if (loading) {
-    return (
-      <div className={styles.skeleton_container}>
-        <SkeletonStory />
-        <SkeletonStory />
-        <SkeletonStory />
-        <SkeletonStory />
-        <SkeletonStory />
-      </div>
-    );
-  }
-
-  return <div>{stories.map(story => <Story key={story.id} {...story} />)}</div>;
+  return (
+    <div>
+      {stories.map(story => <Story key={story.id} {...story} />)}
+      {loading && (
+        <div className={styles.skeleton_container}>
+          <SkeletonStory />
+          <SkeletonStory />
+          <SkeletonStory />
+          <SkeletonStory />
+          <SkeletonStory />
+        </div>
+      )}
+    </div>
+  );
 };
 
 StoriesList.propTypes = {

@@ -4,6 +4,8 @@ import GoalDragWrapper from './goal-drag-wrapper';
 
 const mapStateToProps = (state, props) => {
   let stories = [];
+
+  const loadingStories = state.stories.loading;
   const storyIds = props.goal.cards || [];
 
   storyIds.forEach(id => {
@@ -16,6 +18,7 @@ const mapStateToProps = (state, props) => {
 
   return {
     stories,
+    loadingStories,
   };
 };
 

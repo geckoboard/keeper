@@ -46,7 +46,7 @@ class Goal extends Component {
   }
 
   render() {
-    const { goal, onDelete, onUpdate, stories } = this.props;
+    const { goal, onDelete, onUpdate, stories, loadingStories } = this.props;
 
     if (this.state.edit) {
       return (
@@ -59,6 +59,9 @@ class Goal extends Component {
         </div>
       );
     }
+
+    const cards = goal.cards || [];
+    const unfound = cards.filter(id => !stories.find(s => s.id === id));
 
     return (
       <div className={styles.container}>
@@ -83,6 +86,30 @@ class Goal extends Component {
               {index + 1}. {story.name}
             </div>
           ))}
+          {loadingStories && (
+            <div className={styles.skeleton_story_container}>
+              {unfound.map(id => (
+                <div key={id} className={styles.skeleton_story}/>
+              ))}
+              <div className={styles.shine} />
+            </div>
+          )}
+          {!loadingStories && unfound.length > 0 && (
+            <span className={styles.archived_count}>
+              archived: {unfound.map((id, index) => (
+                <span key={id}>
+                  <a
+                    className={styles.archived_link}
+                    target="_blank" 
+                    href={`https://app.clubhouse.io/geckoboard/story/${id}`}
+                  >
+                    #{id}
+                  </a>
+                  {index < unfound.length - 1 && ', '}
+                </span>
+              ))}
+            </span>
+          )}
         </div>
       </div>
     );
@@ -99,6 +126,8 @@ Goal.propTypes = {
   }),
   onDelete: PropTypes.func,
   onUpdate: PropTypes.func,
+  loadingStories: PropTypes.bool,
+  stories: PropTypes.array,
 };
 
 export default Goal;

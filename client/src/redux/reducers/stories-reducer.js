@@ -18,8 +18,13 @@ const storiesReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        loading: false,
         entities: entities,
+      };
+
+    case actions.fetchStories.end.type:
+      return {
+        ...state,
+        loading: false,
       };
 
     default:
