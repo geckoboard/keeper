@@ -9,6 +9,15 @@ const storiesReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case actions.fetchStories.start.type:
+      return initialState;
+
+    case actions.fetchStories.end.type:
+      return {
+        ...state,
+        loading: false,
+      };
+
     case actions.storiesReceived.type:
       let entities = { ...state.entities };
 
@@ -19,12 +28,6 @@ const storiesReducer = (state = initialState, action) => {
       return {
         ...state,
         entities: entities,
-      };
-
-    case actions.fetchStories.end.type:
-      return {
-        ...state,
-        loading: false,
       };
 
     default:

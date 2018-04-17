@@ -23,3 +23,12 @@
   padding: 4px;
   box-sizing: border-box;
 }
+
+.project_switcher {
+  float: right;
+  height: 100%;
+  display: flex;
+  padding: 0.25rem;
+  box-sizing: border-box;
+  width: 200px;
+}

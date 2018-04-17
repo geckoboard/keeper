@@ -18,9 +18,8 @@ const _isArchived = action =>
 const update = (req, res) => Goal.all().then(goals => {
   res.status(200).send();
 
-  const cards = goals
-    .map(goal => goal.toJSON())
-    .reduce((acc, goal) => [ ...acc, ...goal.cards ], []);
+  const goalsJSON = goals.map(goal => goal.toJSON());
+  const cards = goalsJSON.reduce((acc, goal) => [ ...acc, ...goal.cards ], []);
 
   const updates = req.body.actions
     .filter(action => cards.includes(action.id))
@@ -29,9 +28,19 @@ const update = (req, res) => Goal.all().then(goals => {
       || _isUpdateWorkflow(action)
       || _isArchived(action));
 
-  if (updates.length) {
-    updateDataset();
-  }
+  const projects = updates.reduce((acc, update) => {
+    const goal = goalsJSON.find(goal => goal.cards.includes(update.id));
+
+    if (!acc.includes(goal.project)) {
+      acc.push(goal.project);
+    }
+
+    return acc;
+  }, []);
+
+  projects.forEach(id => {
+    updateDataset(id);
+  });
 });
 
 module.exports = {

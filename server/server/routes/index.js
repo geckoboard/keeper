@@ -7,8 +7,8 @@ module.exports = (app) => {
     message: 'Welcome to the Goals API!',
   }));
 
-  app.get('/api/goals', goalsController.list);
-  app.post('/api/goals', goalsController.create);
+  app.get('/api/:projectId/goals', goalsController.list);
+  app.post('/api/:projectId/goals', goalsController.create);
   app.put('/api/goals/:goalId', goalsController.update);
   app.delete('/api/goals/:goalId', goalsController.destroy);
 

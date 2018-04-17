@@ -8,35 +8,42 @@ import AddGoalForm from '../add-goal-form';
 import GoalsList from '../goals-list';
 import styles from './app-styles.css';
 import Goal from '../goal/goal';
+import { IconProjectSwitcher } from '../project-switcher';
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchGoals();
-    this.props.fetchStories();
+    this.props.onMount();
   }
 
   render() {
+    const { project } = this.props;
+
     return (
       <div>
-        <NavBar />
-        <div className={styles.container}>
-          <div className={styles.sidebar}>
-            <StoriesList />
+        <NavBar showProjectSwitcher={!!project} />
+        {project ? (
+          <div className={styles.container}>
+            <div className={styles.sidebar}>
+              <StoriesList />
+            </div>
+            <div className={styles.content}>
+              <h2 className={styles.goals_title}>Goals</h2>
+              <GoalsList />
+              <AddGoalForm />
+            </div>
           </div>
-          <div className={styles.content}>
-            <h2 className={styles.goals_title}>Goals</h2>
-            <GoalsList />
-            <AddGoalForm />
+        ) : (
+          <div className={styles.container}>
+            <IconProjectSwitcher />
           </div>
-        </div>
+        )}
       </div>
     );
   }
 }
 
 App.propTypes = {
-  fetchGoals: PropTypes.func,
-  fetchStories: PropTypes.func,
+  onMount: PropTypes.func,
 };
 
 export default DragDropContext(HTML5Backend)(App);

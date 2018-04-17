@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.project_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.project_button {
+  flex: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 2rem;
+  display: block;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.project_button:hover, .project_button:focus, .project_button:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.project_button_icon {
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
