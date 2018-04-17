@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PROJECTS } from './project-switcher-constants';
+import { PROJECTS } from '../../constants';
 import styles from './project-switcher-styles.css';
 
 const ProjectSwitcher = ({ value, onChange }) => (

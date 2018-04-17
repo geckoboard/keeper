@@ -1,4 +1,5 @@
 import { createThunk, createAction } from 'redan';
+import { PROJECTS } from '../constants';
 import api from '../api';
 
 const _getNextToken = response => {
@@ -39,12 +40,12 @@ const _completedInLastThirtyDays = response => {
 
 export const storiesReceived = createAction('STORIES_RECEIVED');
 
-export const fetchGoals = createThunk('FETCH_GOALS', () => () =>
-  api.goals.get(),
+export const fetchGoals = createThunk('FETCH_GOALS', project => () =>
+  api.goals.get(project),
 );
 
-export const addGoal = createThunk('CREATE_GOAL', title => () =>
-  api.goals.add(title),
+export const addGoal = createThunk('CREATE_GOAL', ({ project, title }) => () =>
+  api.goals.add(project, title),
 );
 
 export const updateGoalTitle = createThunk(
@@ -56,28 +57,41 @@ export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
   api.goals.delete(id),
 );
 
-export const fetchStories = createThunk('FETCH_STORIES', () => dispatch => {
-  // FETCH READY
-  const ready = _keepFetching(
-    next => api.stories.get('state:ready project:Taco !is:archived', next),
-    res => dispatch(storiesReceived(res)),
-  );
+export const fetchStories = createThunk(
+  'FETCH_STORIES',
+  project => dispatch => {
+    const projectName =
+      PROJECTS[Object.keys(PROJECTS).find(key => PROJECTS[key].id === project)]
+        .name;
 
-  // FETCH DOING
-  const doing = _keepFetching(
-    next => api.stories.get('is:started project:Taco !is:archived', next),
-    res => dispatch(storiesReceived(res)),
-  );
+    // FETCH READY
+    const ready = _keepFetching(
+      next =>
+        api.stories.get(
+          `state:ready project:${projectName} !is:archived`,
+          next,
+        ),
+      res => dispatch(storiesReceived(res)),
+    );
 
-  // FETCH DONE
-  const done = _keepFetching(
-    next => api.stories.get('is:done project:Taco !is:archived', next),
-    res => dispatch(storiesReceived(res)),
-    _completedInLastThirtyDays,
-  );
+    // FETCH DOING
+    const doing = _keepFetching(
+      next =>
+        api.stories.get(`is:started project:${projectName} !is:archived`, next),
+      res => dispatch(storiesReceived(res)),
+    );
 
-  return Promise.all([ready, doing, done]);
-});
+    // FETCH DONE
+    const done = _keepFetching(
+      next =>
+        api.stories.get(`is:done project:${projectName} !is:archived`, next),
+      res => dispatch(storiesReceived(res)),
+      _completedInLastThirtyDays,
+    );
+
+    return Promise.all([ready, doing, done]);
+  },
+);
 
 export const addStoryToGoal = createThunk(
   'ADD_STORY_TO_GOAL',
@@ -92,4 +106,7 @@ export const addStoryToGoal = createThunk(
   },
 );
 
-export const setProject = createThunk('SET_PROJECT', id => dispatch => {});
+export const setProject = createThunk('SET_PROJECT', id => dispatch => {
+  dispatch(fetchGoals(id));
+  dispatch(fetchStories(id));
+});

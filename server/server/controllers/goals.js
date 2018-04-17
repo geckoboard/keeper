@@ -4,12 +4,16 @@ const updateDataset = require('../scripts/update-dataset');
 const create = (req, res) => Goal.create({
   title: req.body.title,
   active: true,
+  project: req.params.projectId,
 })
   .then(goal => res.status(201).send(goal))
   .then(updateDataset)
   .catch(error => res.status(400).send(error));
 
-const list = (req, res) => Goal.all({
+const list = (req, res) => Goal.findAll({
+  where: {
+    project: req.params.projectId,
+  },
   order: [['id', 'ASC']],
 })
   .then(goals => res.status(200).send(goals))

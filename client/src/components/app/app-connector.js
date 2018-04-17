@@ -9,8 +9,6 @@ const AppConnector = connect(undefined, dispatch => ({
     if (project) {
       dispatch(actions.setProject(parseInt(project, 10)));
     }
-    // dispatch(actions.fetchGoals());
-    // dispatch(actions.fetchStories());
   },
 }))(App);
 

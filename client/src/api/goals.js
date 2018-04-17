@@ -2,10 +2,10 @@ const API =
   process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api' : '/api';
 const getJSON = x => x.json();
 
-const getGoals = () => fetch(`${API}/goals`).then(getJSON);
+const getGoals = project => fetch(`${API}/${project}/goals`).then(getJSON);
 
-const addGoal = title =>
-  fetch(`${API}/goals`, {
+const addGoal = (project, title) =>
+  fetch(`${API}/${project}/goals`, {
     method: 'post',
     headers: {
       Accept: 'application/json',
