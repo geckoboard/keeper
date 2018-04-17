@@ -6,7 +6,7 @@ const _getNextToken = response => {
     return undefined;
   }
 
-  return response.next.match(/(?<=next=)[^\&]*/)[0];
+  return response.next.split('next=')[1];
 };
 
 const _keepFetching = (fetcher, callback, stopWhen = () => false) => {
