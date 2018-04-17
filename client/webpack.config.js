@@ -42,5 +42,9 @@ module.exports = {
       },
     ]
   },
-  plugins: [htmlPlugin]
+  plugins: [htmlPlugin],
+  devServer: {
+    compress: true,
+    disableHostCheck: true   // That solved it
+  }     
 };
