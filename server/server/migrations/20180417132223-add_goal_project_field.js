@@ -3,7 +3,9 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
    return queryInterface.addColumn('goals', 'project', {
-    type: Sequelize.INTEGER,
+     type: Sequelize.INTEGER,
+   }).then(() => {
+     return queryInterface.sequelize.query('UPDATE goals SET project = 5');
    });
   },
 
