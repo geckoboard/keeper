@@ -6,8 +6,10 @@ const create = (req, res) => Goal.create({
   active: true,
   project: req.params.projectId,
 })
-  .then(goal => res.status(201).send(goal))
-  .then(updateDataset)
+  .then(goal => {
+    res.status(201).send(goal);
+    updateDataset(goal.getDataValue('project'));
+  })
   .catch(error => res.status(400).send(error));
 
 const list = (req, res) => Goal.findAll({
@@ -34,8 +36,10 @@ const update = (req, res) => Goal.findById(req.params.goalId)
       cards: cards ? cards : goal.cards
     });
   })
-  .then(goal => res.status(200).send(goal))
-  .then(updateDataset)
+  .then(goal => {
+    res.status(200).send(goal);
+    updateDataset(goal.getDataValue('project'));
+  })
   .catch(error => res.status(400).send(error));
 
 const destroy = (req, res) => Goal.findById(req.params.goalId)
@@ -46,10 +50,12 @@ const destroy = (req, res) => Goal.findById(req.params.goalId)
       });
     }
 
-    return goal.destroy();
+    return goal.destroy()
+      .then(() => {
+        res.status(204).send();
+        updateDataset(goal.getDataValue('project'));
+      });
   })
-  .then(() => res.status(204).send())
-  .then(updateDataset)
   .catch(error => res.status(400).send(error));
 
 module.exports = {
