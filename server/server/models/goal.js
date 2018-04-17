@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING, 
       allowNull: false,
     },
+    project: {
+      type: DataTypes.INTEGER, 
+    },
     cards: DataTypes.ARRAY(DataTypes.INTEGER),
     active: {
       type: DataTypes.BOOLEAN,
