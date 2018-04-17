@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import ProjectSwitcher from './project-switcher';
 import * as actions from '../../redux/actions';
 
 const mapStateToProps = state => ({
@@ -14,8 +13,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const ProjectSwitcherConnector = connect(mapStateToProps, mapDispatchToProps)(
-  ProjectSwitcher,
-);
+const ProjectSwitcherConnector = component =>
+  connect(mapStateToProps, mapDispatchToProps)(component);
 
 export default ProjectSwitcherConnector;

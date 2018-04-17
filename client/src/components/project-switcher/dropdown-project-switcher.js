@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { PROJECTS } from '../../constants';
-import styles from './project-switcher-styles.css';
+import styles from './dropdown-project-switcher-styles.css';
 
-const ProjectSwitcher = ({ value, onChange }) => (
+const DropdownProjectSwitcher = ({ value, onChange }) => (
   <select
     className={styles.input}
     value={value}
@@ -24,13 +24,13 @@ const ProjectSwitcher = ({ value, onChange }) => (
   </select>
 );
 
-ProjectSwitcher.defaultProps = {
+DropdownProjectSwitcher.defaultProps = {
   value: -1,
 };
 
-ProjectSwitcher.propTypes = {
+DropdownProjectSwitcher.propTypes = {
   value: PropTypes.number,
   onChange: PropTypes.func,
 };
 
-export default ProjectSwitcher;
+export default DropdownProjectSwitcher;

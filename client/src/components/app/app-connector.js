@@ -2,7 +2,11 @@ import { connect } from 'react-redux';
 import * as actions from '../../redux/actions';
 import App from './app';
 
-const AppConnector = connect(undefined, dispatch => ({
+const mapStateToProps = state => ({
+  project: state.projects.active,
+});
+
+const mapDispatchToProps = dispatch => ({
   onMount: () => {
     const project = localStorage.getItem('project');
 
@@ -10,6 +14,8 @@ const AppConnector = connect(undefined, dispatch => ({
       dispatch(actions.setProject(parseInt(project, 10)));
     }
   },
-}))(App);
+});
+
+const AppConnector = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default AppConnector;
