@@ -60,7 +60,7 @@ class Goal extends Component {
       );
     }
 
-    const cards = goal.cards || [];
+    const cards = goal.cards;
     const unfound = cards.filter(id => !stories.find(s => s.id === id));
 
     return (

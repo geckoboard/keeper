@@ -82,8 +82,7 @@ export const fetchStories = createThunk('FETCH_STORIES', () => dispatch => {
 export const addStoryToGoal = createThunk(
   'ADD_STORY_TO_GOAL',
   ({ goalId, storyId }) => (_, getState) => {
-    const goal = getState().goals.entities.find(x => x.id === goalId);
-    let cards = goal.cards || [];
+    let { cards } = getState().goals.entities.find(x => x.id === goalId);
 
     if (!cards.includes(storyId)) {
       cards = [...cards, storyId];

@@ -20,11 +20,7 @@ const update = (req, res) => Goal.all().then(goals => {
 
   const cards = goals
     .map(goal => goal.toJSON())
-    .reduce((acc, goal) => {
-      const cards = goal.cards || [];
-      acc = [ ...acc, ...cards ];
-      return acc;
-    }, []);
+    .reduce((acc, goal) => [ ...acc, ...goal.cards ], []);
 
   const updates = req.body.actions
     .filter(action => cards.includes(action.id))

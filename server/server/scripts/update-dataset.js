@@ -38,12 +38,7 @@ const updateDataset = () => Goal.all().then(goals => {
   });
   
   const goalsJSON = goals.map(goal => goal.toJSON());
-
-  const cards = goalsJSON.reduce((acc, goal) => {
-    const cards = goal.cards || [];
-    acc = [ ...acc, ...cards ];
-    return acc;
-  }, []);
+  const cards = goalsJSON.reduce((acc, goal) => [ ...acc, ...goal.cards ], []);
 
   const storyRequests = cards.map(id => request({ 
     qs: { token: API_KEY },
@@ -55,9 +50,9 @@ const updateDataset = () => Goal.all().then(goals => {
       const data = goalsJSON
         .sort((a, b) => b.id - a.id)
         .map(goal => {
-          let cards = goal.cards || [];
-          cards = cards.map(id => stories.find(story => story.id === id));
-          cards = cards.filter(story => !story.archived);
+          const cards = goal.cards
+            .map(id => stories.find(story => story.id === id))
+            .filter(story => !story.archived);
 
           const completed = cards.filter(story => story.completed);
           const started = cards.filter(story => story.started);

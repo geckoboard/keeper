@@ -44,7 +44,7 @@ const goalsReducer = (state = initialState, action) => {
           return goal;
         }
 
-        let cards = goal.cards || [];
+        let { cards } = goal;
 
         if (!cards.includes(storyId)) {
           cards = [...cards, storyId];

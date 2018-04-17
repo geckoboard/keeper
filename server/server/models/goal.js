@@ -9,7 +9,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
-  }, {});
+  }, {
+    getterMethods: {
+      cards() {
+        return this.getDataValue('cards') || [];
+      }
+    },
+  });
 
   return goal;
 };

@@ -3,22 +3,19 @@ import * as actions from '../../redux/actions';
 import GoalDragWrapper from './goal-drag-wrapper';
 
 const mapStateToProps = (state, props) => {
-  let stories = [];
-
-  const loadingStories = state.stories.loading;
-  const storyIds = props.goal.cards || [];
-
-  storyIds.forEach(id => {
+  const stories = props.goal.cards.reduce((acc, id) => {
     const story = state.stories.entities[id];
 
     if (story) {
-      stories.push(story);
+      acc.push(story);
     }
-  });
+
+    return acc;
+  }, []);
 
   return {
     stories,
-    loadingStories,
+    loadingStories: state.stories.loading,
   };
 };
 
