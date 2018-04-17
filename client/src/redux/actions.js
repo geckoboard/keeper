@@ -59,19 +59,19 @@ export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
 export const fetchStories = createThunk('FETCH_STORIES', () => dispatch => {
   // FETCH READY
   const ready = _keepFetching(
-    next => api.stories.get('state:ready project:taco !is:archived', next),
+    next => api.stories.get('state:ready project:Taco !is:archived', next),
     res => dispatch(storiesReceived(res)),
   );
 
   // FETCH DOING
   const doing = _keepFetching(
-    next => api.stories.get('is:started project:taco !is:archived', next),
+    next => api.stories.get('is:started project:Taco !is:archived', next),
     res => dispatch(storiesReceived(res)),
   );
 
   // FETCH DONE
   const done = _keepFetching(
-    next => api.stories.get('is:done project:taco !is:archived', next),
+    next => api.stories.get('is:done project:Taco !is:archived', next),
     res => dispatch(storiesReceived(res)),
     _completedInLastThirtyDays,
   );
@@ -91,3 +91,5 @@ export const addStoryToGoal = createThunk(
     return api.goals.update(goalId, { cards });
   },
 );
+
+export const setProject = createThunk('SET_PROJECT', id => dispatch => {});

@@ -89,27 +89,29 @@ class Goal extends Component {
           {loadingStories && (
             <div className={styles.skeleton_story_container}>
               {unfound.map(id => (
-                <div key={id} className={styles.skeleton_story}/>
+                <div key={id} className={styles.skeleton_story} />
               ))}
               <div className={styles.shine} />
             </div>
           )}
-          {!loadingStories && unfound.length > 0 && (
-            <span className={styles.archived_count}>
-              archived: {unfound.map((id, index) => (
-                <span key={id}>
-                  <a
-                    className={styles.archived_link}
-                    target="_blank" 
-                    href={`https://app.clubhouse.io/geckoboard/story/${id}`}
-                  >
-                    #{id}
-                  </a>
-                  {index < unfound.length - 1 && ', '}
-                </span>
-              ))}
-            </span>
-          )}
+          {!loadingStories &&
+            unfound.length > 0 && (
+              <span className={styles.archived_count}>
+                archived:{' '}
+                {unfound.map((id, index) => (
+                  <span key={id}>
+                    <a
+                      className={styles.archived_link}
+                      target="_blank"
+                      href={`https://app.clubhouse.io/geckoboard/story/${id}`}
+                    >
+                      #{id}
+                    </a>
+                    {index < unfound.length - 1 && ', '}
+                  </span>
+                ))}
+              </span>
+            )}
         </div>
       </div>
     );

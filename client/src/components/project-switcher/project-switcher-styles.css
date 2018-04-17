@@ -1,0 +1,11 @@
+.input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  padding-left: 1rem;
+  cursor: pointer;
+}

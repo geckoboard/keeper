@@ -11,8 +11,7 @@ import Goal from '../goal/goal';
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchGoals();
-    this.props.fetchStories();
+    this.props.onMount();
   }
 
   render() {
@@ -37,6 +36,7 @@ class App extends Component {
 App.propTypes = {
   fetchGoals: PropTypes.func,
   fetchStories: PropTypes.func,
+  onMount: PropTypes.func,
 };
 
 export default DragDropContext(HTML5Backend)(App);

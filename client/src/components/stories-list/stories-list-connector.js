@@ -2,7 +2,10 @@ import { connect } from 'react-redux';
 import StoriesList from './stories-list';
 
 const mapStateToProps = state => {
-  const alreadyAssigned = state.goals.entities.reduce((acc, goal) => [...acc, ...goal.cards], []);
+  const alreadyAssigned = state.goals.entities.reduce(
+    (acc, goal) => [...acc, ...goal.cards],
+    [],
+  );
 
   let stories = Object.keys(state.stories.entities).filter(
     id =>
