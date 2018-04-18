@@ -118,3 +118,9 @@
     opacity: 0;
   }
 } 
+
+@media screen and (max-width: 940px) {
+  .actions {
+    display: none;
+  }
+}

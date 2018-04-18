@@ -9,3 +9,9 @@
   padding: 0.5rem;
   cursor: pointer;
 }
+
+@media screen and (max-width: 940px) {
+  .add_goal_button {
+    display: none;
+  }
+}
