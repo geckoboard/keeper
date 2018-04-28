@@ -34,3 +34,9 @@
   font-size: 3rem;
   margin-bottom: 1rem;
 }
+
+@media screen and (max-width: 940px) {
+  .container {
+    flex-direction: column;
+  }
+}
