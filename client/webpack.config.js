@@ -1,9 +1,32 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const isProd = process.env.NODE_ENV === 'production';
+
+const CSSLoader = {
+  loader: "css-loader",
+  options: {
+    modules: true,
+    importLoaders: 1,
+    localIdentName: "[name]_[local]_[hash:base64]",
+    sourceMap: true,
+    minimize: true
+  }
+};
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: "./src/index.html",
   filename: "./index.html"
 });
+
+const plugins = [htmlPlugin];
+
+if (isProd) {
+  plugins.push(new MiniCssExtractPlugin({
+    filename: "[name].css",
+    chunkFilename: "[id].css"
+  }));
+}
 
 module.exports = {
   module: {
@@ -12,24 +35,14 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.css$/,
-        use: [
-          "style-loader", 
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: "[name]_[local]_[hash:base64]",
-              sourceMap: true,
-              minimize: true
-            }
-          }
-        ]
+        use: isProd 
+          ? [ MiniCssExtractPlugin.loader, CSSLoader ]
+          : [ "style-loader", CSSLoader ],
       },
       {
         test: /\.(jpg|png)$/,
@@ -40,11 +53,11 @@ module.exports = {
           },
         },
       },
-    ]
+    ],
   },
-  plugins: [htmlPlugin],
+  plugins: plugins,
   devServer: {
     compress: true,
-    disableHostCheck: true   // That solved it
-  }     
+    disableHostCheck: true,
+  },
 };
