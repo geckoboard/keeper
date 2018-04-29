@@ -1,13 +1,13 @@
 .container {
   margin-bottom: 3rem;
-  position: relative;
+  padding-top: 0.5rem;
 }
 
 .title {
   background: #DDDDDD;
   height: 0.5rem;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   border-radius: 2px;
 }
 
@@ -23,26 +23,3 @@
   border-radius: 2px;
   opacity: 0.6;
 }
-
-.shine {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  background-image: linear-gradient(90deg, rgba(255,255,255,0) 0px, #FFF 80px, rgba(255,255,255,0) 160px);
-  background-repeat: no-repeat;
-  animation: shine 1.5s linear infinite;
-}
-
-@keyframes shine {
-  0% { 
-    background-position: -200px; 
-    opacity: 1;
-  }
-  40%, 100% { 
-    background-position: 550px; 
-    opacity: 0;
-  }
-} 

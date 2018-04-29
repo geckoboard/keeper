@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GoalTitleInput from '../goal-title-input';
+import Shimmer from '../shimmer';
 import autobind from 'react-autobind';
 import styles from './goal-styles.css';
 
@@ -88,10 +89,11 @@ class Goal extends Component {
           ))}
           {loadingStories && (
             <div className={styles.skeleton_story_container}>
-              {unfound.map(id => (
-                <div key={id} className={styles.skeleton_story} />
-              ))}
-              <div className={styles.shine} />
+              <Shimmer>
+                {unfound.map(id => (
+                  <div key={id} className={styles.skeleton_story} />
+                ))}
+              </Shimmer>
             </div>
           )}
           {!loadingStories &&

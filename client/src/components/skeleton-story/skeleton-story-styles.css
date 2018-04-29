@@ -6,7 +6,6 @@
   border-radius: 4px;
   border: 1px solid #EEEEEE;
   margin-bottom: 0.5rem;
-  position: relative;
 }
 
 .title {
@@ -33,26 +32,3 @@
   opacity: 0.6;
   border-radius: 2px;
 }
-
-.shine {
-  position: absolute;
-  top: 0.5rem;
-  bottom: 0.5rem;
-  left: 0.5rem;
-  right: 0.5rem;
-
-  background-image: linear-gradient(90deg, rgba(255,255,255,0) 0px, #FFF 80px, rgba(255,255,255,0) 160px);
-  background-repeat: no-repeat;
-  animation: shine 1.5s infinite linear;
-}
-
-@keyframes shine {
-  0% { 
-    background-position: -200px;
-    opacity: 1;
-  }
-  40%, 100% { 
-    background-position: 350px; 
-    opacity: 0;
-  }
-} 
