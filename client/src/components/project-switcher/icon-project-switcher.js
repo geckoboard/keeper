@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { PROJECTS } from '../../constants';
 import styles from './icon-project-switcher-styles.css';
 
@@ -9,14 +10,16 @@ const IconProjectSwitcher = ({ onChange }) => {
       {Object.keys(PROJECTS).map(key => {
         const project = PROJECTS[key];
         return (
-          <button
+          <Link
+            to={`/${project.id}`}
             key={project.id}
-            className={styles.project_button}
-            onClick={() => onChange(project.id)}
+            className={styles.project}
           >
-            <span className={styles.project_button_icon}>{project.icon}</span>
-            <span className={styles.project_button_name}>{project.name}</span>
-          </button>
+            <span className={styles.project_contents}>
+              <span className={styles.project_icon}>{project.icon}</span>
+              <span className={styles.project_name}>{project.name}</span>
+            </span>
+          </Link>
         );
       })}
     </div>

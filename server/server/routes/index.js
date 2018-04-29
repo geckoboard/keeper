@@ -1,3 +1,4 @@
+const path = require('path');
 const goalsController = require('../controllers').goals;
 const storiesController = require('../controllers').stories;
 const webhookController = require('../controllers').webhook;
@@ -15,4 +16,8 @@ module.exports = (app) => {
   app.get('/api/stories', storiesController.list);
 
   app.post('/api/webhook', webhookController.update);
+
+  app.get('/:projectId', (req, res) => res.sendFile(
+    path.join(__dirname + '/../../../client/dist/index.html')
+  ));
 };

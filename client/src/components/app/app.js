@@ -12,7 +12,19 @@ import { IconProjectSwitcher } from '../project-switcher';
 
 class App extends Component {
   componentDidMount() {
-    this.props.onMount();
+    const { project, setProject } = this.props;
+
+    if (project) {
+      setProject(project);
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    const { project, setProject } = this.props;
+
+    if (project !== nextProps.project) {
+      setProject(nextProps.project);
+    }
   }
 
   render() {
@@ -20,7 +32,7 @@ class App extends Component {
 
     return (
       <div>
-        <NavBar showProjectSwitcher={!!project} />
+        <NavBar project={project} />
         {project ? (
           <div className={styles.container}>
             <div className={styles.sidebar}>
@@ -43,7 +55,8 @@ class App extends Component {
 }
 
 App.propTypes = {
-  onMount: PropTypes.func,
+  setProject: PropTypes.func,
+  project: PropTypes.number,
 };
 
 export default DragDropContext(HTML5Backend)(App);
