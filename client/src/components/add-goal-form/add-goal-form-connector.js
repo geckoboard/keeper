@@ -1,31 +1,27 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import AddGoalForm from './add-goal-form';
 import * as actions from '../../redux/actions';
+import PROJECTS from '../../../../projects';
+import { values } from '../../utils';
 
-const mapStateToProps = state => ({
-  project: state.projects.active,
+const mapDispatchToProps = (dispatch, props) => ({
+  onSubmit: title => {
+    const project = values(PROJECTS).find(
+      p => p.slug === props.match.params.project,
+    );
+
+    dispatch(
+      actions.addGoal({
+        project: project.id,
+        title,
+      }),
+    );
+  },
 });
 
-const mapDispatchToProps = dispatch => ({
-  createHandlers: project => ({
-    onSubmit: title => dispatch(actions.addGoal({ project, title })),
-  }),
-});
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { project } = stateProps;
-  const { onSubmit } = dispatchProps.createHandlers(project);
-
-  return {
-    ...ownProps,
-    onSubmit,
-  };
-};
-
-const AddGoalFormConnector = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps,
-)(AddGoalForm);
+const AddGoalFormConnector = withRouter(
+  connect(null, mapDispatchToProps)(AddGoalForm),
+);
 
 export default AddGoalFormConnector;

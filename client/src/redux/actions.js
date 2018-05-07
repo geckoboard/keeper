@@ -1,5 +1,5 @@
 import { createThunk, createAction } from 'redan';
-import { PROJECTS } from '../constants';
+import PROJECTS from '../../../projects';
 import api from '../api';
 
 const _getNextToken = response => {
@@ -59,16 +59,14 @@ export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
 
 export const fetchStories = createThunk(
   'FETCH_STORIES',
-  project => dispatch => {
-    const projectName =
-      PROJECTS[Object.keys(PROJECTS).find(key => PROJECTS[key].id === project)]
-        .name;
+  projectId => dispatch => {
+    const project = PROJECTS[projectId];
 
     // FETCH READY
     const ready = _keepFetching(
       next =>
         api.stories.get(
-          `state:ready project:${projectName} !is:archived`,
+          `state:ready project:${project.name} !is:archived`,
           next,
         ),
       res => dispatch(storiesReceived(res)),
@@ -77,14 +75,17 @@ export const fetchStories = createThunk(
     // FETCH DOING
     const doing = _keepFetching(
       next =>
-        api.stories.get(`is:started project:${projectName} !is:archived`, next),
+        api.stories.get(
+          `is:started project:${project.name} !is:archived`,
+          next,
+        ),
       res => dispatch(storiesReceived(res)),
     );
 
     // FETCH DONE
     const done = _keepFetching(
       next =>
-        api.stories.get(`is:done project:${projectName} !is:archived`, next),
+        api.stories.get(`is:done project:${project.name} !is:archived`, next),
       res => dispatch(storiesReceived(res)),
       _completedInLastThirtyDays,
     );

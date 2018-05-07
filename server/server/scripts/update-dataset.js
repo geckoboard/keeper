@@ -1,13 +1,13 @@
 const request = require('request-promise');
 const geckoboard = require('geckoboard');
-const constants = require('../constants');
+const PROJECTS = require('../../../projects');
 const Goal = require('../models').goal;
 
 const API = 'https://api.clubhouse.io/api/v2';
 const API_KEY = process.env.CLUBHOUSE_API_KEY;
 
 const getDatasetSchema = id => ({
-  id: constants.DATASETS[id],
+  id: PROJECTS[id].dataset,
   fields: {
     name: {
       type: 'string',

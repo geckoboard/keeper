@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PROJECTS } from '../../constants';
+import PROJECTS from '../../../../projects';
+import { values } from '../../utils';
 import styles from './dropdown-project-switcher-styles.css';
 
 const DropdownProjectSwitcher = ({ value, onChange }) => (
@@ -12,15 +13,11 @@ const DropdownProjectSwitcher = ({ value, onChange }) => (
     <option disabled value={-1}>
       Select project
     </option>
-    {Object.keys(PROJECTS).map(key => {
-      const project = PROJECTS[key];
-
-      return (
-        <option key={project.id} value={project.id}>
-          {project.icon} {project.name}
-        </option>
-      );
-    })}
+    {values(PROJECTS).map(project => (
+      <option key={project.id} value={project.id}>
+        {project.icon} {project.name}
+      </option>
+    ))}
   </select>
 );
 
