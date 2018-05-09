@@ -1,3 +1,5 @@
+import { apiRequest } from './utils';
+
 const API =
   process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api' : '/api';
 const getJSON = x => x.json();
@@ -9,5 +11,5 @@ export const get = (query, next) => {
     url += `&next=${next}`;
   }
 
-  return fetch(url).then(getJSON);
+  return apiRequest(url).then(getJSON);
 };
