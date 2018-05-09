@@ -30,6 +30,9 @@
     },
     {
       "url": "https://github.com/danp/heroku-buildpack-runit"
+    },
+    {
+      "url": "https://github.com/niteoweb/heroku-buildpack-shell"
     }
   ]
 }
