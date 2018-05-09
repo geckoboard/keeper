@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     project: {
       type: DataTypes.INTEGER, 
     },
+    order: {
+      type: DataTypes.INTEGER, 
+      allowNull: false,
+    },
     cards: DataTypes.ARRAY(DataTypes.INTEGER),
     active: {
       type: DataTypes.BOOLEAN,
