@@ -1,11 +1,13 @@
+import { apiRequest } from './utils';
+
 const API =
   process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api' : '/api';
 const getJSON = x => x.json();
 
-const getGoals = project => fetch(`${API}/${project}/goals`).then(getJSON);
+const getGoals = project => apiRequest(`${API}/${project}/goals`).then(getJSON);
 
 const addGoal = (project, title) =>
-  fetch(`${API}/${project}/goals`, {
+  apiRequest(`${API}/${project}/goals`, {
     method: 'post',
     headers: {
       Accept: 'application/json',
@@ -15,7 +17,7 @@ const addGoal = (project, title) =>
   }).then(getJSON);
 
 const deleteGoal = id =>
-  fetch(`${API}/goals/${id}`, {
+  apiRequest(`${API}/goals/${id}`, {
     method: 'delete',
     headers: {
       Accept: 'application/json',
@@ -23,7 +25,7 @@ const deleteGoal = id =>
   });
 
 const updateGoal = (id, update) =>
-  fetch(`${API}/goals/${id}`, {
+  apiRequest(`${API}/goals/${id}`, {
     method: 'put',
     headers: {
       Accept: 'application/json',
