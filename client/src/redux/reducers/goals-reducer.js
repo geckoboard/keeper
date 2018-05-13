@@ -5,6 +5,13 @@ const initialState = {
   entities: [],
 };
 
+const byOrder = (a, b) => a.order > b.order;
+const updateOrders = goals => goals.map((goal, index) => {
+  const order = index + 1;
+
+  return goal.order === order ? goal : { ...goal, order };
+});
+
 const goalsReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
@@ -16,7 +23,7 @@ const goalsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        entities: payload,
+        entities: payload.sort(byOrder),
       };
 
     case actions.addGoal.end.type:
@@ -25,11 +32,14 @@ const goalsReducer = (state = initialState, action) => {
         entities: [...state.entities, payload],
       };
 
-    case actions.deleteGoal.start.type:
+    case actions.deleteGoal.start.type: {
+      const goals = state.entities.filter(goal => goal.id !== payload);
+
       return {
         ...state,
-        entities: state.entities.filter(goal => goal.id !== payload),
+        entities: updateOrders(goals),
       };
+    }
 
     case actions.updateGoalTitle.start.type:
       return {
