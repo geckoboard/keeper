@@ -44,8 +44,9 @@ export const fetchGoals = createThunk('FETCH_GOALS', project => () =>
   api.goals.get(project),
 );
 
-export const addGoal = createThunk('CREATE_GOAL', ({ project, title }) => () =>
-  api.goals.add(project, title),
+export const addGoal = createThunk(
+  'CREATE_GOAL',
+  ({ project, title, order }) => () => api.goals.add(project, { title, order }),
 );
 
 export const updateGoalTitle = createThunk(

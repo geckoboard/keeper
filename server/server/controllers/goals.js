@@ -2,6 +2,7 @@ const Goal = require('../models').goal;
 const updateDataset = require('../scripts/update-dataset');
 
 const create = (req, res) => Goal.create({
+  order: req.body.order,
   title: req.body.title,
   active: true,
   project: req.params.projectId,
