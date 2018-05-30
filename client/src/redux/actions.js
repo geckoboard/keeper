@@ -123,6 +123,16 @@ export const addStoryToGoal = createThunk(
   },
 );
 
+export const removeStoryFromGoal = createThunk(
+  'REMOVE_STORY_FROM_GOAL',
+  ({ goalId, storyId }) => (_, getState) => {
+    let { cards } = getState().goals.entities.find(x => x.id === goalId);
+    cards = cards.filter(c => c !== storyId);
+
+    return api.goals.update(goalId, { cards });
+  },
+);
+
 export const setProject = createThunk('SET_PROJECT', id => dispatch => {
   dispatch(fetchGoals(id));
   dispatch(fetchStories(id));

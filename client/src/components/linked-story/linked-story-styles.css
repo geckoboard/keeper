@@ -1,0 +1,44 @@
+.story {
+  color: #9B9B9B;
+  padding-left: 2rem;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.icon_button {
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  position: absolute;
+  left: 0;
+  appearance: none;
+  color: #9B9B9B;
+  cursor: pointer;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.icon {
+  opacity: 0.6;
+}
+
+.delete {
+  color: #E63333;
+  display: none;
+}
+
+.icon_button:hover .icon, .icon_button:focus .icon {
+  display: none;
+}
+
+.icon_button:hover .delete, .icon_button:focus .delete {
+  display: inline-block;
+}
+
+
+.story_icon_completed {
+  color: #38D41C;
+  opacity: 1;
+}
