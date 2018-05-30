@@ -5,6 +5,17 @@ import SkeletonStory from '../skeleton-story';
 import styles from './stories-list-styles.css';
 
 const StoriesList = ({ loading, stories }) => {
+  if (!loading && stories.length === 0) {
+    return (
+      <div className={styles.empty_container}>
+        <div className={styles.empty}>
+          <span className={styles.emptyTada}>🎉</span>
+          <span className={styles.emptyMessage}>You're all done</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       {stories.map(story => <Story key={story.id} {...story} />)}

@@ -12,3 +12,23 @@
 
   background-image: linear-gradient(0deg, rgba(247, 247, 247, 1) 0%, rgba(247, 247, 247, 0) 100%);
 }
+
+.empty_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyTada {
+  display: block;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.emptyMessage {
+  font-size: 1.2rem;
+  color: #9b9b9b;
+}

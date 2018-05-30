@@ -6,10 +6,27 @@ import Shimmer from '../shimmer';
 import autobind from 'react-autobind';
 import styles from './goal-styles.css';
 
+const emptyMessages = [
+  `🤷‍ Have you seen a Clubhouse card anywhere?`,
+  `🥑 There's a goal, but it doesn't av-a-card-do`,
+  `👻 This goal... is coming like a ghost town!`,
+  `🐝 There must bee a card for this goal somewhere`,
+  `🦁 Have you seen a card lion around here?`,
+  `🌲 I can't be-leaf this goal has no cards`,
+  `⚾ Throw me a Clubhouse card!`,
+  `🕸 It sure is quiet in here`
+];
+
+const getRandomEmptyMessage = () => {
+  return emptyMessages[Math.floor(Math.random()*emptyMessages.length)]
+};
+
 class Goal extends Component {
   constructor(props) {
     super(props);
     autobind(this);
+
+    this.emptyMessage = getRandomEmptyMessage();
 
     this.state = {
       edit: false,
@@ -45,6 +62,7 @@ class Goal extends Component {
 
     const cards = goal.cards;
     const unfound = cards.filter(id => !stories.find(s => s.id === id));
+    const isEmpty = cards.length === 0;
 
     return (
       <div className={styles.container}>
@@ -63,6 +81,7 @@ class Goal extends Component {
           </div>
         </div>
         <div className={styles.stories_list}>
+          {isEmpty && <span className={styles.empty}>{this.emptyMessage}</span>}
           {stories.map((story, index) => (
             <LinkedStory
               key={story.id}
