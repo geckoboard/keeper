@@ -34,9 +34,20 @@ const updateGoal = (id, update) =>
     body: JSON.stringify(update),
   }).then(getJSON);
 
+const updateOrders = (project, updates) =>
+  apiRequest(`${API}/${project}/goals/orders`, {
+    method: 'put',
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(updates),
+  });
+
 export {
   getGoals as get,
   addGoal as add,
   deleteGoal as delete,
   updateGoal as update,
+  updateOrders,
 };

@@ -75,6 +75,20 @@ const goalsReducer = (state = initialState, action) => {
       };
     }
 
+    case actions.updateGoalOrder.type: {
+      const goal = state.entities.find(goal => goal.id === payload.id);
+      let goals = state.entities.filter(g => g !== goal);
+
+      goals.splice(payload.to - 1, 0, goal);
+
+      goals = updateOrders(goals);
+
+      return {
+        ...state,
+        entities: goals,
+      };
+    }
+
     default:
       return state;
   }
