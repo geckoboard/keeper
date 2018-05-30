@@ -10,8 +10,18 @@
   cursor: pointer;
 }
 
+.empty {
+  margin-left: 1rem;
+}
+
+.hint {
+  color: #9B9B9B;
+  font-size: 0.9rem;
+  margin-left: 0.25rem;
+}
+
 @media screen and (max-width: 940px) {
-  .add_goal_button {
+  .add_goal_button, .empty {
     display: none;
   }
 }

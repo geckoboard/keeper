@@ -10,6 +10,7 @@ const mapStateToProps = state => {
 
   return {
     nextOrder: orders.length === 0 ? 1 : Math.max(...orders) + 1,
+    isEmpty: !state.goals.loading && state.goals.entities.length === 0,
   };
 };
 
@@ -31,8 +32,10 @@ const mapDispatchToProps = (dispatch, props) => ({
   }),
 });
 
-const mergeProps = (stateProps, dispatchProps) =>
-  dispatchProps.createHandlers(stateProps);
+const mergeProps = (stateProps, dispatchProps) => ({
+  ...dispatchProps.createHandlers(stateProps),
+  isEmpty: stateProps.isEmpty,
+});
 
 const AddGoalFormConnector = withRouter(
   connect(mapStateToProps, mapDispatchToProps, mergeProps)(AddGoalForm),
