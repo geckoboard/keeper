@@ -42,12 +42,19 @@ class Goal extends Component {
   }
 
   handleTitleChange(title) {
-    this.props.onUpdate(title);
+    this.props.onChangeTitle(title);
     this.setState({ edit: false });
   }
 
   render() {
-    const { goal, onDelete, onUpdate, stories, loadingStories } = this.props;
+    const {
+      goal,
+      onDelete,
+      onChangeTitle,
+      stories,
+      loadingStories,
+      createDragHandle,
+    } = this.props;
 
     if (this.state.edit) {
       return (
@@ -67,7 +74,7 @@ class Goal extends Component {
     return (
       <div className={styles.container}>
         <div className={styles.titlebar}>
-          <span className={styles.title}>{goal.title}</span>
+          {createDragHandle(<span className={styles.title}>{goal.title}</span>)}
           <div className={styles.actions}>
             <button
               onClick={() => this.setState({ edit: true })}
@@ -129,9 +136,10 @@ Goal.propTypes = {
     title: PropTypes.string,
   }),
   onDelete: PropTypes.func,
-  onUpdate: PropTypes.func,
+  onChangeTitle: PropTypes.func,
   loadingStories: PropTypes.bool,
   stories: PropTypes.array,
+  createDragHandle: PropTypes.func,
 };
 
 export default Goal;

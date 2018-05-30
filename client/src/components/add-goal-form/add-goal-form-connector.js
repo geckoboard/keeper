@@ -7,7 +7,7 @@ import { values } from '../../utils';
 
 const mapStateToProps = state => {
   const orders = state.goals.entities.map(goal => goal.order);
-  
+
   return {
     nextOrder: orders.length === 0 ? 1 : Math.max(...orders) + 1,
   };
