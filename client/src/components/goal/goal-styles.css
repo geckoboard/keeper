@@ -1,5 +1,5 @@
 .container {
-  margin-bottom: 3rem;
+  margin-bottom: 0;
 }
 
 .titlebar {
@@ -11,6 +11,7 @@
   display: block;
   font-size: 1.25rem;
   flex: 1;
+  cursor: -webkit-grab;
 }
 
 .story {
@@ -53,6 +54,17 @@
 
 .drag_container {
   position: relative;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 4px;
+}
+
+.isDragging {
+  opacity: 0;
+}
+
+.isDragging, .isDragging * {
+  cursor: -webkit-grabbing !important;
 }
 
 .drag_overlay {

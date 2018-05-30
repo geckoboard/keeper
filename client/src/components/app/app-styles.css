@@ -16,16 +16,21 @@
 
 .content {
   flex: 1;
-  padding: 2.5rem;
+  padding: 1rem;
   box-sizing: border-box;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
 }
 
 .goals_title {
-  margin-top: 0;
+  margin: 0;
   font-weight: normal;
   font-size: 1.75rem;
+  padding: 1.5rem;
+}
+
+.add_goal_form {
+  padding: 1.5rem;
 }
 
 @media screen and (max-width: 940px) {

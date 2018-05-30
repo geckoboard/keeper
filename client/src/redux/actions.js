@@ -39,18 +39,34 @@ const _completedInLastThirtyDays = response => {
 };
 
 export const storiesReceived = createAction('STORIES_RECEIVED');
+export const updateGoalOrder = createAction('UPDATE_GOAL_ORDER');
 
 export const fetchGoals = createThunk('FETCH_GOALS', project => () =>
   api.goals.get(project),
 );
 
-export const addGoal = createThunk('CREATE_GOAL', ({ project, title }) => () =>
-  api.goals.add(project, title),
+export const addGoal = createThunk(
+  'CREATE_GOAL',
+  ({ project, title, order }) => () => api.goals.add(project, { title, order }),
 );
 
 export const updateGoalTitle = createThunk(
   'UPDATE_GOAL_TITLE',
   ({ id, title }) => () => api.goals.update(id, { title }),
+);
+
+export const saveGoalOrders = createThunk(
+  'SAVE_GOAL_ORDERS',
+  project => (_, getState) => {
+    const goals = getState().goals.entities;
+
+    const updates = goals.reduce(
+      (updates, { id, order }) => ({ ...updates, [id]: order }),
+      {},
+    );
+
+    return api.goals.updateOrders(project, updates);
+  },
 );
 
 export const deleteGoal = createThunk('DELETE_GOAL', id => () =>

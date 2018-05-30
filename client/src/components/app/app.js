@@ -41,7 +41,9 @@ class App extends Component {
             <div className={styles.content}>
               <h2 className={styles.goals_title}>Goals</h2>
               <GoalsList />
-              <AddGoalForm />
+              <div className={styles.add_goal_form}>
+                <AddGoalForm />
+              </div>
             </div>
           </div>
         ) : (

@@ -53,7 +53,7 @@ const updateDataset = projectId => Goal.findAll({
   Promise.all(storyRequests)
     .then(stories => {
       const data = goalsJSON
-        .sort((a, b) => b.id - a.id)
+        .sort((a, b) => b.order - a.order)
         .map(goal => {
           const cards = goal.cards
             .map(id => stories.find(story => story.id === id))
@@ -74,7 +74,7 @@ const updateDataset = projectId => Goal.findAll({
 
           return {
             name: goal.title,
-            order: goal.id,
+            order: goal.order,
             status: status,
             progress: `(${completed.length}/${cards.length})`
           };

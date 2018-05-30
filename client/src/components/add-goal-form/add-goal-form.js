@@ -17,15 +17,15 @@ class AddGoalForm extends Component {
   componentDidMount() {
     document.addEventListener('keyup', this.handleKeypress);
   }
-  
+
   componentWillUnmount() {
     document.removeEventListener('keyup', this.handleKeypress);
   }
-  
+
   handleKeypress(event) {
     if (
-      event.key.toLowerCase() === "n"
-      && event.target.tagName.toLowerCase() !== "input"
+      event.key.toLowerCase() === 'n' &&
+      event.target.tagName.toLowerCase() !== 'input'
     ) {
       this.setState({ showForm: true });
     }
