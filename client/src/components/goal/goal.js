@@ -1,35 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GoalTitleInput from '../goal-title-input';
+import LinkedStory from '../linked-story';
 import Shimmer from '../shimmer';
 import autobind from 'react-autobind';
 import styles from './goal-styles.css';
-
-const getStoryIcon = story => {
-  if (story.completed) {
-    return (
-      <i
-        className={`fas fa-check ${styles.story_icon} ${
-          styles.story_icon_completed
-        }`}
-      />
-    );
-  }
-
-  if (story.started) {
-    return <i className={`fas fa-truck ${styles.story_icon}`} />;
-  }
-
-  if (story.blocker) {
-    return <i className={`fas fa-exclamation-triangle ${styles.story_icon}`} />;
-  }
-
-  if (story.blocked) {
-    return <i className={`fas fa-minus-circle ${styles.story_icon}`} />;
-  }
-
-  return <i className={styles.story_icon} />;
-};
 
 class Goal extends Component {
   constructor(props) {
@@ -89,10 +64,12 @@ class Goal extends Component {
         </div>
         <div className={styles.stories_list}>
           {stories.map((story, index) => (
-            <div key={story.id} className={styles.story}>
-              {getStoryIcon(story)}
-              {index + 1}. {story.name}
-            </div>
+            <LinkedStory
+              key={story.id}
+              story={story}
+              index={index + 1}
+              goalId={goal.id}
+            />
           ))}
           {loadingStories && (
             <div className={styles.skeleton_story_container}>

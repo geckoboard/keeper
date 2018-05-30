@@ -75,6 +75,25 @@ const goalsReducer = (state = initialState, action) => {
       };
     }
 
+    case actions.removeStoryFromGoal.start.type: {
+      const { goalId, storyId } = payload;
+      const goals = state.entities.map(goal => {
+        if (goal.id !== goalId) {
+          return goal;
+        }
+
+        return {
+          ...goal,
+          cards: goal.cards.filter(card => card !== storyId),
+        };
+      });
+
+      return {
+        ...state,
+        entities: goals,
+      };
+    }
+
     case actions.updateGoalOrder.type: {
       const goal = state.entities.find(goal => goal.id === payload.id);
       let goals = state.entities.filter(g => g !== goal);
