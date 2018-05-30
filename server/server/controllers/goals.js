@@ -75,9 +75,28 @@ const destroy = async (req, res) => {
   }
 }
 
+const updateOrders = async (req, res) => {
+  try {
+    const updates = Object.keys(req.body).map(async goalId => {
+      const goal = await Goal.findById(goalId);
+      return goal.update({
+        order: req.body[goalId],
+      });
+    });
+
+    await Promise.all(updates);
+  
+    res.status(204).send();
+    updateDataset(req.params.projectId)
+  } catch (error) {
+    res.status(400).send(error);
+  }
+}
+
 module.exports = {
   create,
   list,
   update,
   destroy,
+  updateOrders,
 };
