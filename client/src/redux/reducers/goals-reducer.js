@@ -6,11 +6,11 @@ const initialState = {
 };
 
 const byOrder = (a, b) => a.order > b.order;
-const updateOrders = goals => goals.map((goal, index) => {
-  const order = index + 1;
-
-  return goal.order === order ? goal : { ...goal, order };
-});
+const updateOrders = goals =>
+  goals.map((goal, index) => {
+    const order = index + 1;
+    return goal.order === order ? goal : { ...goal, order };
+  });
 
 const goalsReducer = (state = initialState, action) => {
   const { type, payload } = action;
