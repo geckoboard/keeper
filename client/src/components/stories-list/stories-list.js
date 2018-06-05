@@ -10,7 +10,7 @@ const StoriesList = ({ loading, stories }) => {
       <div className={styles.empty_container}>
         <div className={styles.empty}>
           <span className={styles.emptyTada}>🎉</span>
-          <span className={styles.emptyMessage}>You're all done</span>
+          <span className={styles.emptyMessage}>You’re all done</span>
         </div>
       </div>
     );
