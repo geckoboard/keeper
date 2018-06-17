@@ -10,6 +10,14 @@ import styles from './index.css';
 import 'normalize.css';
 import './favicon.png';
 
+if ('serviceWorker' in navigator) {
+  try {
+    navigator.serviceWorker.register('/service-worker.js');
+  } catch (e) {
+    // You're probably in development mode
+  }
+}
+
 const store = createStore();
 
 ReactDOM.render(

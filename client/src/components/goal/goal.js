@@ -8,17 +8,17 @@ import styles from './goal-styles.css';
 
 const emptyMessages = [
   `🤷‍ Have you seen a Clubhouse card anywhere?`,
-  `🥑 There's a goal, but it doesn't av-a-card-do`,
+  `🥑 There’s a goal, but it doesn’t av-a-card-do`,
   `👻 This goal... is coming like a ghost town!`,
   `🐝 There must bee a card for this goal somewhere`,
   `🦁 Have you seen a card lion around here?`,
-  `🌲 I can't be-leaf this goal has no cards`,
+  `🌲 I can’t be-leaf this goal has no cards`,
   `⚾ Throw me a Clubhouse card!`,
-  `🕸 It sure is quiet in here`
+  `🕸 It sure is quiet in here`,
 ];
 
 const getRandomEmptyMessage = () => {
-  return emptyMessages[Math.floor(Math.random()*emptyMessages.length)]
+  return emptyMessages[Math.floor(Math.random() * emptyMessages.length)];
 };
 
 class Goal extends Component {

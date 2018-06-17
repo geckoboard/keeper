@@ -1,5 +1,7 @@
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -19,16 +21,49 @@ const htmlPlugin = new HtmlWebPackPlugin({
   filename: "./index.html"
 });
 
+const swPlugin = new SWPrecacheWebpackPlugin({
+  cacheId: 'keeper-v1',
+  dontCacheBustUrlsMatching: /\.\w{8}\./,
+  filename: 'service-worker.js',
+  minify: true,
+  navigateFallback: 'https://geckoboard-keeper.herokuapp.com/index.html',
+  staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+});
+
+const cssPlugin = new MiniCssExtractPlugin({
+  filename: "[name].css",
+  chunkFilename: "[id].css"
+});
+
 const plugins = [htmlPlugin];
 
 if (isProd) {
-  plugins.push(new MiniCssExtractPlugin({
-    filename: "[name].css",
-    chunkFilename: "[id].css"
-  }));
+  plugins.push(cssPlugin, swPlugin);
 }
 
 module.exports = {
+  entry: {
+    main: './src/index',
+    vendor: [
+      'normalize.css',
+      'prop-types',
+      'react',
+      'react-autobind',
+      'react-dnd',
+      'react-dnd-html5-backend',
+      'react-dom',
+      'react-redux',
+      'react-router-dom',
+      'redan',
+      'redux',
+      'redux-thunk',
+    ],
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
   module: {
     rules: [
       {
