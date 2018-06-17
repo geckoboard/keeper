@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
@@ -34,13 +35,35 @@ const cssPlugin = new MiniCssExtractPlugin({
   chunkFilename: "[id].css"
 });
 
-const plugins = [htmlPlugin, swPlugin];
+const plugins = [htmlPlugin];
 
 if (isProd) {
-  plugins.push(cssPlugin);
+  plugins.push(cssPlugin, swPlugin);
 }
 
 module.exports = {
+  entry: {
+    main: './src/index',
+    vendor: [
+      'normalize.css',
+      'prop-types',
+      'react',
+      'react-autobind',
+      'react-dnd',
+      'react-dnd-html5-backend',
+      'react-dom',
+      'react-redux',
+      'react-router-dom',
+      'redan',
+      'redux',
+      'redux-thunk',
+    ],
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
   module: {
     rules: [
       {
