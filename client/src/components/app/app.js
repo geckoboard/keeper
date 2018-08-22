@@ -4,6 +4,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import NavBar from '../navbar';
 import StoriesList from '../stories-list';
+import ProjectSelector from '../project-selector';
 import AddGoalForm from '../add-goal-form';
 import GoalsList from '../goals-list';
 import styles from './app-styles.css';
@@ -38,6 +39,7 @@ class App extends Component {
         {team ? (
           <div className={styles.container}>
             <div className={styles.sidebar}>
+              <ProjectSelector />
               <StoriesList />
             </div>
             <div className={styles.content}>

@@ -4,7 +4,7 @@ const API = 'https://api.clubhouse.io/api/v2';
 const API_KEY = process.env.CLUBHOUSE_API_KEY;
 
 const list = (req, res) => {
-  qs = {
+  const qs = {
     token: API_KEY,
     page_size: 25,
     query: req.query.query,
@@ -30,6 +30,7 @@ const list = (req, res) => {
         started: story.started,
         completed: story.completed,
         completed_at: story.completed_at,
+        project_id: story.project_id,
       })),
     });
   });

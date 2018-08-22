@@ -30,6 +30,36 @@ const teamsReducer = (state = initialState, action) => {
         entities: payload,
       };
 
+    case actions.addProject.start.type:
+      return {
+        ...state,
+        entities: state.entities.map(team => {
+          if (team.id !== state.current) {
+            return team;
+          }
+
+          return {
+            ...team,
+            projects: [...team.projects, payload],
+          };
+        }),
+      };
+
+    case actions.removeProject.start.type:
+      return {
+        ...state,
+        entities: state.entities.map(team => {
+          if (team.id !== state.current) {
+            return team;
+          }
+
+          return {
+            ...team,
+            projects: team.projects.filter(t => t !== payload),
+          };
+        }),
+      };
+
     default:
       return state;
   }

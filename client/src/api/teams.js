@@ -6,4 +6,14 @@ const getJSON = x => x.json();
 
 const getTeams = team => apiRequest(`${API}/teams`).then(getJSON);
 
-export { getTeams as get };
+const updateTeam = (id, updates) =>
+  apiRequest(`${API}/teams/${id}`, {
+    method: 'put',
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(updates),
+  }).then(getJSON);
+
+export { getTeams as get, updateTeam as update };

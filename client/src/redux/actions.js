@@ -48,6 +48,33 @@ export const fetchTeams = createThunk('FETCH_TEAMS', () => () =>
   api.teams.get(),
 );
 
+export const fetchProjects = createThunk('FETCH_PROJECTS', () => () =>
+  api.projects.get(),
+);
+
+export const addProject = createThunk(
+  'ADD_PROJECT',
+  project => (dispatch, getState) => {
+    const state = getState();
+    const team = state.teams.entities.find(t => t.id === state.teams.current);
+
+    dispatch(fetchStories([project]));
+    api.teams.update(team.id, { projects: [...team.projects, project] });
+  },
+);
+
+export const removeProject = createThunk(
+  'REMOVE_PROJECT',
+  project => (dispatch, getState) => {
+    const state = getState();
+    const team = state.teams.entities.find(t => t.id === state.teams.current);
+
+    api.teams.update(team.id, {
+      projects: team.projects.filter(p => p !== project),
+    });
+  },
+);
+
 export const addGoal = createThunk(
   'CREATE_GOAL',
   ({ team, title, order }) => () => api.goals.add(team, { title, order }),
@@ -78,12 +105,10 @@ export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
 
 export const fetchStories = createThunk(
   'FETCH_STORIES',
-  teamId => (dispatch, getState) => {
-    const teams = getState().teams.entities;
-    const team = teams.find(t => t.id === teamId);
+  projects => (dispatch, getState) => {
     const requests = [];
 
-    team.projects.forEach(project => {
+    projects.forEach(project => {
       // FETCH READY
       requests.push(
         _keepFetching(
@@ -143,7 +168,10 @@ export const removeStoryFromGoal = createThunk(
   },
 );
 
-export const setTeam = createThunk('SET_TEAM', id => dispatch => {
+export const setTeam = createThunk('SET_TEAM', id => (dispatch, getState) => {
+  const state = getState();
+  const team = state.teams.entities.find(t => t.id === id);
+
   dispatch(fetchGoals(id));
-  dispatch(fetchStories(id));
+  dispatch(fetchStories(team.projects));
 });
