@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TEAMS from '../../../../teams';
-import { values } from '../../utils';
 import styles from './dropdown-team-switcher-styles.css';
 
-const DropdownTeamSwitcher = ({ value, onChange }) => (
+const DropdownTeamSwitcher = ({ onChange, teams, value }) => (
   <select
     className={styles.input}
     value={value}
@@ -13,9 +11,9 @@ const DropdownTeamSwitcher = ({ value, onChange }) => (
     <option disabled value={-1}>
       Select team
     </option>
-    {values(TEAMS).map(team => (
+    {teams.map(team => (
       <option key={team.id} value={team.id}>
-        {team.icon} {team.name}
+        {team.icon} {team.title}
       </option>
     ))}
   </select>
@@ -26,8 +24,9 @@ DropdownTeamSwitcher.defaultProps = {
 };
 
 DropdownTeamSwitcher.propTypes = {
-  value: PropTypes.number,
   onChange: PropTypes.func,
+  teams: PropTypes.array,
+  value: PropTypes.number,
 };
 
 export default DropdownTeamSwitcher;

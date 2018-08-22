@@ -9,7 +9,7 @@ const NavBar = ({ team }) => (
   <header className={styles.container}>
     <img srcSet={`${logo}, ${logo2X} 2x`} src={logo} className={styles.logo} />
     <div className={styles.team_switcher}>
-      {!!team && <DropdownTeamSwitcher value={team} />}
+      {!!team && <DropdownTeamSwitcher />}
     </div>
   </header>
 );

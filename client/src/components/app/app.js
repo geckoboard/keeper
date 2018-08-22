@@ -12,7 +12,9 @@ import { IconTeamSwitcher } from '../team-switcher';
 
 class App extends Component {
   componentDidMount() {
-    const { team, setTeam } = this.props;
+    const { team, setTeam, init } = this.props;
+
+    init();
 
     if (team) {
       setTeam(team);
