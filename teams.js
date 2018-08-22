@@ -1,4 +1,4 @@
-const PROJECTS = {
+const TEAMS = {
   5: {
     id: 5,
     name: 'Taco',
@@ -22,4 +22,4 @@ const PROJECTS = {
   },
 };
 
-module.exports = PROJECTS;
+module.exports = TEAMS;

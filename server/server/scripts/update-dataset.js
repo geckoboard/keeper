@@ -1,13 +1,13 @@
 const request = require('request-promise');
 const geckoboard = require('geckoboard');
-const PROJECTS = require('../../../projects');
+const TEAMS = require('../../../teams');
 const Goal = require('../models').goal;
 
 const API = 'https://api.clubhouse.io/api/v2';
 const API_KEY = process.env.CLUBHOUSE_API_KEY;
 
 const getDatasetSchema = id => ({
-  id: PROJECTS[id].dataset,
+  id: TEAMS[id].dataset,
   fields: {
     name: {
       type: 'string',
@@ -28,9 +28,9 @@ const getDatasetSchema = id => ({
   }
 });
 
-const updateDataset = projectId => Goal.findAll({
+const updateDataset = teamId => Goal.findAll({
   where: {
-    project: projectId,
+    team: teamId,
   },
 }).then(goals => {
   gb = geckoboard(process.env.GECKOBOARD_API_KEY);
@@ -81,7 +81,7 @@ const updateDataset = projectId => Goal.findAll({
         });
 
       gb.datasets.findOrCreate(
-        getDatasetSchema(projectId),
+        getDatasetSchema(teamId),
         function (err, dataset) {
           if (err) {
             console.error(err);

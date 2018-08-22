@@ -8,9 +8,9 @@ module.exports = (app) => {
     message: 'Welcome to the Goals API!',
   }));
 
-  app.get('/api/:projectId/goals', goalsController.list);
-  app.post('/api/:projectId/goals', goalsController.create);
-  app.put('/api/:projectId/goals/orders', goalsController.updateOrders);
+  app.get('/api/:teamId/goals', goalsController.list);
+  app.post('/api/:teamId/goals', goalsController.create);
+  app.put('/api/:teamId/goals/orders', goalsController.updateOrders);
   app.put('/api/goals/:goalId', goalsController.update);
   app.delete('/api/goals/:goalId', goalsController.destroy);
 
@@ -18,7 +18,7 @@ module.exports = (app) => {
 
   app.post('/api/webhook', webhookController.update);
 
-  app.get('/:projectId', (req, res) => res.sendFile(
+  app.get('/:teamId', (req, res) => res.sendFile(
     path.join(__dirname + '/../../../client/dist/index.html')
   ));
 };

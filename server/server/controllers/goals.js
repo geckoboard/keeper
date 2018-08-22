@@ -5,17 +5,17 @@ const create = (req, res) => Goal.create({
   order: req.body.order,
   title: req.body.title,
   active: true,
-  project: req.params.projectId,
+  team: req.params.teamId,
 })
   .then(goal => {
     res.status(201).send(goal);
-    updateDataset(goal.getDataValue('project'));
+    updateDataset(goal.getDataValue('team'));
   })
   .catch(error => res.status(400).send(error));
 
 const list = (req, res) => Goal.findAll({
   where: {
-    project: req.params.projectId,
+    team: req.params.teamId,
   },
   order: [['order', 'ASC']],
 })
@@ -39,7 +39,7 @@ const update = (req, res) => Goal.findById(req.params.goalId)
   })
   .then(goal => {
     res.status(200).send(goal);
-    updateDataset(goal.getDataValue('project'));
+    updateDataset(goal.getDataValue('team'));
   })
   .catch(error => res.status(400).send(error));
 
@@ -53,12 +53,12 @@ const destroy = async (req, res) => {
       });
     }
     
-    const project = goal.getDataValue('project');
+    const team = goal.getDataValue('team');
     
     await goal.destroy();
     
     const remaining = await Goal.findAll({
-      where: { project },
+      where: { team },
       order: [['order', 'ASC']],
     });
     
@@ -69,7 +69,7 @@ const destroy = async (req, res) => {
     );
 
     res.status(204).send();
-    updateDataset(project);
+    updateDataset(team);
   } catch (error) {
     res.status(400).send(error);
   }
@@ -87,7 +87,7 @@ const updateOrders = async (req, res) => {
     await Promise.all(updates);
   
     res.status(204).send();
-    updateDataset(req.params.projectId)
+    updateDataset(req.params.teamId)
   } catch (error) {
     res.status(400).send(error);
   }

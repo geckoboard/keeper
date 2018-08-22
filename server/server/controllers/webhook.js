@@ -28,17 +28,17 @@ const update = (req, res) => Goal.all().then(goals => {
       || _isUpdateWorkflow(action)
       || _isArchived(action));
 
-  const projects = updates.reduce((acc, update) => {
+  const teams = updates.reduce((acc, update) => {
     const goal = goalsJSON.find(goal => goal.cards.includes(update.id));
 
-    if (!acc.includes(goal.project)) {
-      acc.push(goal.project);
+    if (!acc.includes(goal.team)) {
+      acc.push(goal.team);
     }
 
     return acc;
   }, []);
 
-  projects.forEach(id => {
+  teams.forEach(id => {
     updateDataset(id);
   });
 });

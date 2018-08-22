@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../redux/actions';
 import GoalDragWrapper from './goal-drag-wrapper';
-import PROJECTS from '../../../../projects';
+import TEAMS from '../../../../teams';
 import { values } from '../../utils';
 
 const mapStateToProps = (state, props) => {
@@ -26,11 +26,9 @@ const mapDispatchToProps = (dispatch, props) => ({
   onDelete: () => dispatch(actions.deleteGoal(props.goal.id)),
   onChangeOrder: update => dispatch(actions.updateGoalOrder(update)),
   onSaveOrder: () => {
-    const project = values(PROJECTS).find(
-      p => p.slug === props.match.params.project,
-    );
+    const team = values(TEAMS).find(p => p.slug === props.match.params.team);
 
-    dispatch(actions.saveGoalOrders(project.id));
+    dispatch(actions.saveGoalOrders(team.id));
   },
   onChangeTitle: title =>
     dispatch(

@@ -24,7 +24,7 @@
   box-sizing: border-box;
 }
 
-.project_switcher {
+.team_switcher {
   float: right;
   height: 100%;
   display: flex;

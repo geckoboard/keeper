@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import createStore from './redux/create-store';
 import App from './components/app';
 import { values } from './utils';
-import PROJECTS from '../../projects';
+import TEAMS from '../../teams';
 import styles from './index.css';
 import 'normalize.css';
 import './favicon.png';
@@ -15,13 +15,11 @@ const store = createStore();
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Route path="/:project?">
+      <Route path="/:team?">
         {({ match }) => {
-          const project = values(PROJECTS).find(
-            p => p.slug === match.params.project,
-          );
+          const team = values(TEAMS).find(p => p.slug === match.params.team);
 
-          return <App project={project ? project.id : undefined} />;
+          return <App team={team ? team.id : undefined} />;
         }}
       </Route>
     </Router>

@@ -4,14 +4,14 @@
   flex: 1;
 }
 
-.project_container {
+.team_container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
 }
 
-.project {
+.team {
   flex: 1;
   appearance: none;
   -webkit-appearance: none;
@@ -28,17 +28,17 @@
   text-decoration: none;
 }
 
-.project:hover, .project:focus, .project:active {
+.team:hover, .team:focus, .team:active {
   background: rgba(0, 0, 0, 0.05);
 }
 
-.project_contents {
+.team_contents {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.project_icon {
+.team_icon {
   display: block;
   font-size: 3rem;
   margin-bottom: 1rem;
@@ -49,11 +49,11 @@
     flex-direction: column;
   }
 
-  .project_contents {
+  .team_contents {
     flex-direction: row;
   }
 
-  .project_icon {
+  .team_icon {
     display: block;
     font-size: 3rem;
     margin-bottom: 0;

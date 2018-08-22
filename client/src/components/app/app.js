@@ -8,32 +8,32 @@ import AddGoalForm from '../add-goal-form';
 import GoalsList from '../goals-list';
 import styles from './app-styles.css';
 import Goal from '../goal/goal';
-import { IconProjectSwitcher } from '../project-switcher';
+import { IconTeamSwitcher } from '../team-switcher';
 
 class App extends Component {
   componentDidMount() {
-    const { project, setProject } = this.props;
+    const { team, setTeam } = this.props;
 
-    if (project) {
-      setProject(project);
+    if (team) {
+      setTeam(team);
     }
   }
 
   componentWillUpdate(nextProps) {
-    const { project, setProject } = this.props;
+    const { team, setTeam } = this.props;
 
-    if (project !== nextProps.project) {
-      setProject(nextProps.project);
+    if (team !== nextProps.team) {
+      setTeam(nextProps.team);
     }
   }
 
   render() {
-    const { project } = this.props;
+    const { team } = this.props;
 
     return (
       <div>
-        <NavBar project={project} />
-        {project ? (
+        <NavBar team={team} />
+        {team ? (
           <div className={styles.container}>
             <div className={styles.sidebar}>
               <StoriesList />
@@ -48,7 +48,7 @@ class App extends Component {
           </div>
         ) : (
           <div className={styles.container}>
-            <IconProjectSwitcher />
+            <IconTeamSwitcher />
           </div>
         )}
       </div>
@@ -57,8 +57,8 @@ class App extends Component {
 }
 
 App.propTypes = {
-  setProject: PropTypes.func,
-  project: PropTypes.number,
+  setTeam: PropTypes.func,
+  team: PropTypes.number,
 };
 
 export default DragDropContext(HTML5Backend)(App);

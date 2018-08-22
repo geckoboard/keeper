@@ -1,5 +1,5 @@
 import { createThunk, createAction } from 'redan';
-import PROJECTS from '../../../projects';
+import TEAMS from '../../../teams';
 import api from '../api';
 
 const _getNextToken = response => {
@@ -41,13 +41,13 @@ const _completedInLastThirtyDays = response => {
 export const storiesReceived = createAction('STORIES_RECEIVED');
 export const updateGoalOrder = createAction('UPDATE_GOAL_ORDER');
 
-export const fetchGoals = createThunk('FETCH_GOALS', project => () =>
-  api.goals.get(project),
+export const fetchGoals = createThunk('FETCH_GOALS', team => () =>
+  api.goals.get(team),
 );
 
 export const addGoal = createThunk(
   'CREATE_GOAL',
-  ({ project, title, order }) => () => api.goals.add(project, { title, order }),
+  ({ team, title, order }) => () => api.goals.add(team, { title, order }),
 );
 
 export const updateGoalTitle = createThunk(
@@ -57,7 +57,7 @@ export const updateGoalTitle = createThunk(
 
 export const saveGoalOrders = createThunk(
   'SAVE_GOAL_ORDERS',
-  project => (_, getState) => {
+  team => (_, getState) => {
     const goals = getState().goals.entities;
 
     const updates = goals.reduce(
@@ -65,7 +65,7 @@ export const saveGoalOrders = createThunk(
       {},
     );
 
-    return api.goals.updateOrders(project, updates);
+    return api.goals.updateOrders(team, updates);
   },
 );
 
@@ -75,14 +75,14 @@ export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
 
 export const fetchStories = createThunk(
   'FETCH_STORIES',
-  projectId => dispatch => {
-    const project = PROJECTS[projectId];
+  teamId => dispatch => {
+    const team = TEAMS[teamId];
 
     // FETCH READY
     const ready = _keepFetching(
       next =>
         api.stories.get(
-          `state:ready project:${project.name} !is:archived`,
+          `state:ready project:${team.name} !is:archived`,
           next,
         ),
       res => dispatch(storiesReceived(res)),
@@ -92,7 +92,7 @@ export const fetchStories = createThunk(
     const doing = _keepFetching(
       next =>
         api.stories.get(
-          `is:started project:${project.name} !is:archived`,
+          `is:started project:${team.name} !is:archived`,
           next,
         ),
       res => dispatch(storiesReceived(res)),
@@ -101,7 +101,7 @@ export const fetchStories = createThunk(
     // FETCH DONE
     const done = _keepFetching(
       next =>
-        api.stories.get(`is:done project:${project.name} !is:archived`, next),
+        api.stories.get(`is:done project:${team.name} !is:archived`, next),
       res => dispatch(storiesReceived(res)),
       _completedInLastThirtyDays,
     );
@@ -133,7 +133,7 @@ export const removeStoryFromGoal = createThunk(
   },
 );
 
-export const setProject = createThunk('SET_PROJECT', id => dispatch => {
+export const setTeam = createThunk('SET_TEAM', id => dispatch => {
   dispatch(fetchGoals(id));
   dispatch(fetchStories(id));
 });
