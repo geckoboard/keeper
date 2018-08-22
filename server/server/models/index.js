@@ -14,25 +14,45 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => 
-    (file.indexOf('.') !== 0) 
-    && (file !== basename) 
-    && (file.slice(-3) === '.js')
-  )
-  .forEach(file => {
-    const model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+const Goal = sequelize.define('goal', {
+  title: { 
+    type: Sequelize.STRING, 
+    allowNull: false,
+  },
+  order: {
+    type: Sequelize.INTEGER, 
+    allowNull: false,
+  },
+  cards: Sequelize.ARRAY(Sequelize.INTEGER),
+  active: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
+  },
+}, {
+  getterMethods: {
+    cards() {
+      return this.getDataValue('cards') || [];
+    }
+  },
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+const Team = sequelize.define('team', {
+  title: { 
+    type: Sequelize.STRING, 
+    allowNull: false,
+  },
+  icon: Sequelize.STRING,
+  dataset: Sequelize.STRING, 
+  slug: Sequelize.STRING,
+  projects: Sequelize.ARRAY(Sequelize.INTEGER),
+}, {
+  getterMethods: {
+    projects() {
+      return this.getDataValue('projects') || [];
+    }
+  },
+});
 
-module.exports = db;
+Goal.belongsTo(Team);
+
+module.exports = { goal: Goal, team: Team };
