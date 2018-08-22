@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -21,15 +20,6 @@ const htmlPlugin = new HtmlWebPackPlugin({
   filename: "./index.html"
 });
 
-const swPlugin = new SWPrecacheWebpackPlugin({
-  cacheId: 'keeper-v1',
-  dontCacheBustUrlsMatching: /\.\w{8}\./,
-  filename: 'service-worker.js',
-  minify: true,
-  navigateFallback: 'https://geckoboard-keeper.herokuapp.com/index.html',
-  staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-});
-
 const cssPlugin = new MiniCssExtractPlugin({
   filename: "[name].css",
   chunkFilename: "[id].css"
@@ -38,7 +28,7 @@ const cssPlugin = new MiniCssExtractPlugin({
 const plugins = [htmlPlugin];
 
 if (isProd) {
-  plugins.push(cssPlugin, swPlugin);
+  plugins.push(cssPlugin);
 }
 
 module.exports = {
