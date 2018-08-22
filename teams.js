@@ -5,6 +5,7 @@ const TEAMS = {
     icon: '🌮',
     dataset: 'keeper.goals.taco',
     slug: 'taco',
+    projects: [5],
   },
   36: {
     id: 36,
@@ -12,6 +13,7 @@ const TEAMS = {
     icon: '🌯',
     dataset: 'keeper.goals.burrito',
     slug: 'burrito',
+    projects: [36, 26437, 26446],
   },
   3120: {
     id: 3120,
@@ -19,6 +21,7 @@ const TEAMS = {
     icon: '🥑',
     dataset: 'keeper.goals.guacamole',
     slug: 'guacamole',
+    projects: [3120],
   },
 };
 

@@ -26,12 +26,12 @@ const _keepFetching = (fetcher, callback, stopWhen = () => false) => {
   return fetcher().then(recursiveFetch);
 };
 
-const _completedInLastThirtyDays = response => {
+const _completedInLastTwoWeeks = response => {
   const { data } = response;
   const last = data[data.length - 1];
 
   const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - 30);
+  cutoff.setDate(cutoff.getDate() - 14);
 
   const completedAt = new Date(last.completed_at);
 
@@ -73,42 +73,42 @@ export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
   api.goals.delete(id),
 );
 
-export const fetchStories = createThunk(
-  'FETCH_STORIES',
-  teamId => dispatch => {
-    const team = TEAMS[teamId];
+export const fetchStories = createThunk('FETCH_STORIES', teamId => dispatch => {
+  const team = TEAMS[teamId];
+  const requests = [];
 
+  team.projects.forEach(project => {
     // FETCH READY
-    const ready = _keepFetching(
-      next =>
-        api.stories.get(
-          `state:ready project:${team.name} !is:archived`,
-          next,
-        ),
-      res => dispatch(storiesReceived(res)),
+    requests.push(
+      _keepFetching(
+        next =>
+          api.stories.get(`state:ready project:${project} !is:archived`, next),
+        res => dispatch(storiesReceived(res)),
+      ),
     );
 
     // FETCH DOING
-    const doing = _keepFetching(
-      next =>
-        api.stories.get(
-          `is:started project:${team.name} !is:archived`,
-          next,
-        ),
-      res => dispatch(storiesReceived(res)),
+    requests.push(
+      _keepFetching(
+        next =>
+          api.stories.get(`is:started project:${project} !is:archived`, next),
+        res => dispatch(storiesReceived(res)),
+      ),
     );
 
     // FETCH DONE
-    const done = _keepFetching(
-      next =>
-        api.stories.get(`is:done project:${team.name} !is:archived`, next),
-      res => dispatch(storiesReceived(res)),
-      _completedInLastThirtyDays,
+    requests.push(
+      _keepFetching(
+        next =>
+          api.stories.get(`is:done project:${project} !is:archived`, next),
+        res => dispatch(storiesReceived(res)),
+        _completedInLastTwoWeeks,
+      ),
     );
+  });
 
-    return Promise.all([ready, doing, done]);
-  },
-);
+  return Promise.all(requests);
+});
 
 export const addStoryToGoal = createThunk(
   'ADD_STORY_TO_GOAL',
