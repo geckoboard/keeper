@@ -1,12 +1,15 @@
 const path = require('path');
 const goalsController = require('../controllers').goals;
 const storiesController = require('../controllers').stories;
+const teamsController = require('../controllers').teams;
 const webhookController = require('../controllers').webhook;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
     message: 'Welcome to the Goals API!',
   }));
+
+  app.get('/api/teams', teamsController.list);
 
   app.get('/api/:teamId/goals', goalsController.list);
   app.post('/api/:teamId/goals', goalsController.create);

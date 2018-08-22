@@ -53,6 +53,7 @@ const Team = sequelize.define('team', {
   },
 });
 
+Team.hasMany(Goal);
 Goal.belongsTo(Team);
 
 module.exports = { goal: Goal, team: Team };

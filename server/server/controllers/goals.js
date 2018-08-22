@@ -5,17 +5,17 @@ const create = (req, res) => Goal.create({
   order: req.body.order,
   title: req.body.title,
   active: true,
-  team: req.params.teamId,
+  teamId: req.params.teamId,
 })
   .then(goal => {
     res.status(201).send(goal);
-    updateDataset(goal.getDataValue('team'));
+    updateDataset(goal.getDataValue('teamId'));
   })
   .catch(error => res.status(400).send(error));
 
 const list = (req, res) => Goal.findAll({
   where: {
-    team: req.params.teamId,
+    teamId: req.params.teamId,
   },
   order: [['order', 'ASC']],
 })
@@ -39,7 +39,7 @@ const update = (req, res) => Goal.findById(req.params.goalId)
   })
   .then(goal => {
     res.status(200).send(goal);
-    updateDataset(goal.getDataValue('team'));
+    updateDataset(goal.getDataValue('teamId'));
   })
   .catch(error => res.status(400).send(error));
 
@@ -53,12 +53,12 @@ const destroy = async (req, res) => {
       });
     }
     
-    const team = goal.getDataValue('team');
+    const teamId = goal.getDataValue('teamId');
     
     await goal.destroy();
     
     const remaining = await Goal.findAll({
-      where: { team },
+      where: { teamId },
       order: [['order', 'ASC']],
     });
     
@@ -69,7 +69,7 @@ const destroy = async (req, res) => {
     );
 
     res.status(204).send();
-    updateDataset(team);
+    updateDataset(teamId);
   } catch (error) {
     res.status(400).send(error);
   }
