@@ -37,12 +37,9 @@ const _completedInLastTwoWeeks = response => {
   return completedAt < cutoff;
 };
 
+export const setGoals = createAction('SET_GOALS');
 export const storiesReceived = createAction('STORIES_RECEIVED');
 export const updateGoalOrder = createAction('UPDATE_GOAL_ORDER');
-
-export const fetchGoals = createThunk('FETCH_GOALS', team => () =>
-  api.goals.get(team),
-);
 
 export const fetchTeams = createThunk('FETCH_TEAMS', () => () =>
   api.teams.get(),
@@ -172,6 +169,6 @@ export const setTeam = createThunk('SET_TEAM', id => (dispatch, getState) => {
   const state = getState();
   const team = state.teams.entities.find(t => t.id === id);
 
-  dispatch(fetchGoals(id));
+  dispatch(setGoals(team.goals));
   dispatch(fetchStories(team.projects));
 });
