@@ -5,10 +5,12 @@ const storiesController = require('../controllers').stories;
 const teamsController = require('../controllers').teams;
 const webhookController = require('../controllers').webhook;
 
-module.exports = (app) => {
-  app.get('/api', (req, res) => res.status(200).send({
-    message: 'Welcome to the Goals API!',
-  }));
+module.exports = app => {
+  app.get('/api', (req, res) =>
+    res.status(200).send({
+      message: 'Welcome to the Goals API!',
+    }),
+  );
 
   app.get('/api/teams', teamsController.list);
   app.put('/api/teams/:teamId', teamsController.update);
@@ -25,7 +27,7 @@ module.exports = (app) => {
 
   app.post('/api/webhook', webhookController.update);
 
-  app.get('/:teamId', (req, res) => res.sendFile(
-    path.join(__dirname + '/../../../client/dist/index.html')
-  ));
+  app.get('/:teamId', (req, res) =>
+    res.sendFile(path.join(__dirname + '/../../../client/dist/index.html')),
+  );
 };

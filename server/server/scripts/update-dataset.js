@@ -11,26 +11,25 @@ const getDatasetSchema = dataset => ({
   fields: {
     name: {
       type: 'string',
-      name: 'Name'
+      name: 'Name',
     },
     status: {
       type: 'string',
-      name: 'Status'
+      name: 'Status',
     },
     progress: {
       type: 'string',
-      name: 'Progress'
+      name: 'Progress',
     },
     order: {
       type: 'number',
-      name: 'Order'
-    }
-  }
+      name: 'Order',
+    },
+  },
 });
 
-const formatDataForDataset = (goals, stories) => goals
-  .sort((a, b) => b.order - a.order)
-  .map(goal => {
+const formatDataForDataset = (goals, stories) =>
+  goals.sort((a, b) => b.order - a.order).map(goal => {
     const cards = goal.cards
       .map(id => stories.find(story => story.id === id))
       .filter(story => !story.archived);
@@ -52,54 +51,55 @@ const formatDataForDataset = (goals, stories) => goals
       name: goal.title,
       order: goal.order,
       status: status,
-      progress: cards.length === 0 ? '--' : `(${completed.length}/${cards.length})`
+      progress:
+        cards.length === 0 ? '--' : `(${completed.length}/${cards.length})`,
     };
   });
 
-const updateDataset = teamId => Team.findById(
-  teamId, 
-  {
-    include: [{ model: Goal, as: 'goals' }]
+const updateDataset = teamId =>
+  Team.findById(teamId, {
+    include: [{ model: Goal, as: 'goals' }],
   }).then(team => {
-  gb = geckoboard(process.env.GECKOBOARD_API_KEY);
+    gb = geckoboard(process.env.GECKOBOARD_API_KEY);
 
-  gb.ping(function (err) {
-    if (err) {
-      console.error(err);
-      return;
-    }
-  });
+    gb.ping(function(err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
 
-  const _team = team.get();
-  
-  const goalsJSON = _team.goals.map(goal => goal.toJSON());
-  const cards = goalsJSON.reduce((acc, goal) => [ ...acc, ...goal.cards ], []);
+    const _team = team.get();
 
-  const storyRequests = cards.map(id => request({ 
-    qs: { token: API_KEY },
-    uri: `${API}/stories/${id}`
-  }).then(story => JSON.parse(story)));
+    const goalsJSON = _team.goals.map(goal => goal.toJSON());
+    const cards = goalsJSON.reduce((acc, goal) => [...acc, ...goal.cards], []);
 
-  Promise.all(storyRequests)
-    .then(stories => {
+    const storyRequests = cards.map(id =>
+      request({
+        qs: { token: API_KEY },
+        uri: `${API}/stories/${id}`,
+      }).then(story => JSON.parse(story)),
+    );
+
+    Promise.all(storyRequests).then(stories => {
       const data = formatDataForDataset(goalsJSON, stories);
 
-      gb.datasets.findOrCreate(
-        getDatasetSchema(_team.dataset),
-        function (err, dataset) {
+      gb.datasets.findOrCreate(getDatasetSchema(_team.dataset), function(
+        err,
+        dataset,
+      ) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+        dataset.put(data, function(err) {
           if (err) {
             console.error(err);
-            return;
           }
-
-          dataset.put(data, function(err) {
-            if (err) {
-              console.error(err);
-            }
-          });
-        }
-      );
+        });
+      });
     });
-});
+  });
 
 module.exports = updateDataset;

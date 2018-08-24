@@ -14,7 +14,7 @@ const list = (req, res) => {
   const options = {
     uri: `${API}/search/stories`,
     qs,
-    json: true
+    json: true,
   };
 
   return request(options).then(stories => {
@@ -34,7 +34,7 @@ const list = (req, res) => {
       })),
     });
   });
-}
+};
 
 module.exports = {
   list,
