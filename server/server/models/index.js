@@ -16,7 +16,7 @@ if (config.use_env_variable) {
 
 const Goal = sequelize.define('goal', {
   title: { 
-    type: Sequelize.STRING, 
+    type: Sequelize.STRING,
     allowNull: false,
   },
   order: {

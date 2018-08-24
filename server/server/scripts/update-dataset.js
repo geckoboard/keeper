@@ -1,13 +1,13 @@
 const request = require('request-promise');
 const geckoboard = require('geckoboard');
-const TEAMS = require('../../../teams');
 const Goal = require('../models').goal;
+const Team = require('../models').team;
 
 const API = 'https://api.clubhouse.io/api/v2';
 const API_KEY = process.env.CLUBHOUSE_API_KEY;
 
-const getDatasetSchema = id => ({
-  id: TEAMS[id].dataset,
+const getDatasetSchema = dataset => ({
+  id: dataset,
   fields: {
     name: {
       type: 'string',
@@ -28,11 +28,39 @@ const getDatasetSchema = id => ({
   }
 });
 
-const updateDataset = teamId => Goal.findAll({
-  where: {
-    team: teamId,
-  },
-}).then(goals => {
+const formatDataForDataset = (goals, stories) => goals
+  .sort((a, b) => b.order - a.order)
+  .map(goal => {
+    const cards = goal.cards
+      .map(id => stories.find(story => story.id === id))
+      .filter(story => !story.archived);
+
+    const completed = cards.filter(story => story.completed);
+    const started = cards.filter(story => story.started);
+
+    let status = '';
+
+    if (started.length > 0) {
+      status = '🚚';
+    }
+
+    if (cards.length === completed.length && completed.length > 0) {
+      status = '✅';
+    }
+
+    return {
+      name: goal.title,
+      order: goal.order,
+      status: status,
+      progress: cards.length === 0 ? '--' : `(${completed.length}/${cards.length})`
+    };
+  });
+
+const updateDataset = teamId => Team.findById(
+  teamId, 
+  {
+    include: [{ model: Goal, as: 'goals' }]
+  }).then(team => {
   gb = geckoboard(process.env.GECKOBOARD_API_KEY);
 
   gb.ping(function (err) {
@@ -41,8 +69,10 @@ const updateDataset = teamId => Goal.findAll({
       return;
     }
   });
+
+  const _team = team.get();
   
-  const goalsJSON = goals.map(goal => goal.toJSON());
+  const goalsJSON = _team.goals.map(goal => goal.toJSON());
   const cards = goalsJSON.reduce((acc, goal) => [ ...acc, ...goal.cards ], []);
 
   const storyRequests = cards.map(id => request({ 
@@ -52,36 +82,10 @@ const updateDataset = teamId => Goal.findAll({
 
   Promise.all(storyRequests)
     .then(stories => {
-      const data = goalsJSON
-        .sort((a, b) => b.order - a.order)
-        .map(goal => {
-          const cards = goal.cards
-            .map(id => stories.find(story => story.id === id))
-            .filter(story => !story.archived);
-
-          const completed = cards.filter(story => story.completed);
-          const started = cards.filter(story => story.started);
-
-          let status = '';
-
-          if (started.length > 0) {
-            status = '🚚';
-          }
-
-          if (cards.length === completed.length && completed.length > 0) {
-            status = '✅';
-          }
-
-          return {
-            name: goal.title,
-            order: goal.order,
-            status: status,
-            progress: `(${completed.length}/${cards.length})`
-          };
-        });
+      const data = formatDataForDataset(goalsJSON, stories);
 
       gb.datasets.findOrCreate(
-        getDatasetSchema(teamId),
+        getDatasetSchema(_team.dataset),
         function (err, dataset) {
           if (err) {
             console.error(err);

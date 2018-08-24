@@ -2,12 +2,13 @@ const Goal = require('../models').goal;
 const Team = require('../models').team;
 
 const list = (req, res) => Team.findAll({
+  order: [['title', 'ASC']],
   include: [{
     model: Goal,
     as: 'goals'
   }]
 })
-  .then(goals => res.status(200).send(goals))
+  .then(teams => res.status(200).send(teams))
   .catch(error => res.status(400).send(error));
 
 const update = (req, res) => Team.findById(req.params.teamId)
