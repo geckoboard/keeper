@@ -9,15 +9,11 @@ const loadingState = {
 };
 
 const mapStateToProps = state => {
-  if (state.teams.loading) {
-    return loadingState;
-  }
-
   const team = state.teams.entities.find(t => t.id === state.teams.current);
 
   return {
-    loading: false,
-    selected: team.projects,
+    loading: state.projects.loading,
+    selected: team ? team.projects : [],
     projects: state.projects.entities,
   };
 };

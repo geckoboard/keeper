@@ -16,7 +16,7 @@
 
 .list {
   position: absolute;
-  max-width: 300px;
+  width: 280px;
   max-height: 400px;
   overflow: scroll;
   background: white;
@@ -31,6 +31,7 @@
 .project {
   padding: 6px 0;
   display: flex;
+  align-items: center;
 }
 
 .project input {
@@ -39,4 +40,28 @@
 
 .projectName {
   margin-left: 8px;
+}
+
+.buttonCaret {
+  margin-left: 6px;
+  opacity: 0.8;
+  font-size: 12px;
+}
+
+.ghostProject {
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+.ghostProjectNameContainer {
+  width: 100%;
+  margin: 2px 0 0 8px;
+}
+
+.ghostProjectName {
+  height: 10px;
+  background: #EEEEEE;
+  opacity: 0.5;
+  border-radius: 3px;
 }

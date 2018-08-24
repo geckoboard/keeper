@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
+import { times } from '../../utils';
+import Shimmer from '../shimmer';
 import styles from './project-selector-styles.css';
 
 class ProjectSelector extends Component {
@@ -40,7 +41,7 @@ class ProjectSelector extends Component {
   }
 
   handleGlobalClick(e) {
-    if (!findDOMNode(this).contains(e.target)) {
+    if (!this.list.contains(e.target)) {
       e.stopPropagation();
       this.setState({ open: false });
     }
@@ -67,10 +68,22 @@ class ProjectSelector extends Component {
           {selected.length === 1
             ? `${selected.length} project`
             : `${selected.length} projects`}
+          <i className={`fas fa-caret-down ${styles.buttonCaret}`} />
         </button>
         {this.state.open && (
-          <div className={styles.list}>
-            {projects.map(project => (
+          <div ref={node => this.list = node} className={styles.list}>
+            {loading ? 
+              times(16).map((_, i) => (
+                <div key={i} className={styles.ghostProject}>
+                  <input type="checkbox" checked={false} />
+                  <div className={styles.ghostProjectNameContainer} >
+                    <Shimmer>
+                      <div className={styles.ghostProjectName} />
+                    </Shimmer>
+                  </div>
+                </div>
+              )) :
+            projects.map(project => (
               <div key={project.id} className={styles.project}>
                 <input
                   type="checkbox"
