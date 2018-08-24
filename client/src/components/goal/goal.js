@@ -82,27 +82,33 @@ class Goal extends Component {
         </div>
         <div className={styles.stories_list}>
           {isEmpty && <span className={styles.empty}>{this.emptyMessage}</span>}
-          {stories.map((story, index) => (
-            <LinkedStory
-              key={story.id}
-              story={story}
-              index={index + 1}
-              goalId={goal.id}
-            />
-          ))}
-          {loadingStories && (
-            <div className={styles.skeleton_story_container}>
-              <Shimmer>
-                {unfound.map(id => (
-                  <div key={id} className={styles.skeleton_story} />
-                ))}
-              </Shimmer>
-            </div>
-          )}
+          {cards.map((card, index) => {
+            const story = stories.find(s => s.id === card);
+
+            if (story) {
+              return (
+                <LinkedStory
+                  key={card}
+                  story={story}
+                  index={index + 1}
+                  goalId={goal.id}
+                />
+              );
+            }
+
+            if (loadingStories) {
+              return (
+                <div key={card} className={styles.skeleton_story_container}>
+                  <Shimmer>
+                    <div className={styles.skeleton_story} />
+                  </Shimmer>
+                </div>
+              );
+            }
+          })}
           {!loadingStories &&
             unfound.length > 0 && (
               <span className={styles.archived_count}>
-                archived:{' '}
                 {unfound.map((id, index) => (
                   <span key={id}>
                     <a
