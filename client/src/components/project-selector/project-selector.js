@@ -71,28 +71,28 @@ class ProjectSelector extends Component {
           <i className={`fas fa-caret-down ${styles.buttonCaret}`} />
         </button>
         {this.state.open && (
-          <div ref={node => this.list = node} className={styles.list}>
-            {loading ? 
-              times(16).map((_, i) => (
-                <div key={i} className={styles.ghostProject}>
-                  <input type="checkbox" checked={false} />
-                  <div className={styles.ghostProjectNameContainer} >
-                    <Shimmer>
-                      <div className={styles.ghostProjectName} />
-                    </Shimmer>
+          <div ref={node => (this.list = node)} className={styles.list}>
+            {loading
+              ? times(16).map((_, i) => (
+                  <div key={i} className={styles.ghostProject}>
+                    <input type="checkbox" checked={false} />
+                    <div className={styles.ghostProjectNameContainer}>
+                      <Shimmer>
+                        <div className={styles.ghostProjectName} />
+                      </Shimmer>
+                    </div>
                   </div>
-                </div>
-              )) :
-            projects.map(project => (
-              <div key={project.id} className={styles.project}>
-                <input
-                  type="checkbox"
-                  checked={selected.includes(project.id)}
-                  onChange={() => this.handleProjectSelect(project.id)}
-                />
-                <span className={styles.projectName}>{project.name}</span>
-              </div>
-            ))}
+                ))
+              : projects.map(project => (
+                  <div key={project.id} className={styles.project}>
+                    <input
+                      type="checkbox"
+                      checked={selected.includes(project.id)}
+                      onChange={() => this.handleProjectSelect(project.id)}
+                    />
+                    <span className={styles.projectName}>{project.name}</span>
+                  </div>
+                ))}
           </div>
         )}
       </div>

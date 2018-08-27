@@ -1,5 +1,6 @@
 import { createThunk, createAction } from 'redan';
 import api from '../api';
+import { unique } from '../utils';
 
 const _getNextToken = response => {
   if (!response.next) {
@@ -56,7 +57,7 @@ export const addProject = createThunk(
     const team = state.teams.entities.find(t => t.id === state.teams.current);
 
     dispatch(fetchStories([project]));
-    api.teams.update(team.id, { projects: [...team.projects, project] });
+    api.teams.update(team.id, { projects: unique([...team.projects, project]) });
   },
 );
 
@@ -67,7 +68,7 @@ export const removeProject = createThunk(
     const team = state.teams.entities.find(t => t.id === state.teams.current);
 
     api.teams.update(team.id, {
-      projects: team.projects.filter(p => p !== project),
+      projects: unique(team.projects.filter(p => p !== project)),
     });
   },
 );
