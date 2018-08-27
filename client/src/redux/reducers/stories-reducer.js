@@ -1,4 +1,5 @@
 import * as actions from '../actions';
+import { values } from '../../utils';
 
 const initialState = {
   loading: true,
@@ -9,8 +10,14 @@ const storiesReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case actions.fetchStories.start.type:
+    case actions.setTeam.start.type:
       return initialState;
+
+    case actions.fetchStories.start.type:
+      return {
+        ...state,
+        loading: true,
+      };
 
     case actions.fetchStories.end.type:
       return {
@@ -29,6 +36,21 @@ const storiesReducer = (state = initialState, action) => {
         ...state,
         entities: entities,
       };
+
+    case actions.removeProject.start.type: {
+      let entities = {};
+      let stories = values(state.entities);
+      stories = stories.filter(story => story.project_id !== payload);
+
+      stories.forEach(story => {
+        entities[story.id] = story;
+      });
+
+      return {
+        ...state,
+        entities,
+      };
+    }
 
     default:
       return state;

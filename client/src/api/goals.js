@@ -4,10 +4,10 @@ const API =
   process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api' : '/api';
 const getJSON = x => x.json();
 
-const getGoals = project => apiRequest(`${API}/${project}/goals`).then(getJSON);
+const getGoals = team => apiRequest(`${API}/${team}/goals`).then(getJSON);
 
-const addGoal = (project, goal) =>
-  apiRequest(`${API}/${project}/goals`, {
+const addGoal = (team, goal) =>
+  apiRequest(`${API}/${team}/goals`, {
     method: 'post',
     headers: {
       Accept: 'application/json',
@@ -34,8 +34,8 @@ const updateGoal = (id, update) =>
     body: JSON.stringify(update),
   }).then(getJSON);
 
-const updateOrders = (project, updates) =>
-  apiRequest(`${API}/${project}/goals/orders`, {
+const updateOrders = (team, updates) =>
+  apiRequest(`${API}/${team}/goals/orders`, {
     method: 'put',
     headers: {
       Accept: 'application/json',

@@ -3,7 +3,8 @@ import * as actions from '../../redux/actions';
 import App from './app';
 
 const mapDispatchToProps = {
-  setProject: actions.setProject,
+  init: actions.fetchTeams,
+  setTeam: actions.setTeam,
 };
 
 const AppConnector = connect(null, mapDispatchToProps)(App);

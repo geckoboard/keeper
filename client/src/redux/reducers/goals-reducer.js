@@ -16,10 +16,7 @@ const goalsReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case actions.fetchGoals.start.type:
-      return initialState;
-
-    case actions.fetchGoals.end.type:
+    case actions.setGoals.type:
       return {
         ...state,
         loading: false,

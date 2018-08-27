@@ -1,5 +1,4 @@
 import { createThunk, createAction } from 'redan';
-import PROJECTS from '../../../projects';
 import api from '../api';
 
 const _getNextToken = response => {
@@ -26,28 +25,56 @@ const _keepFetching = (fetcher, callback, stopWhen = () => false) => {
   return fetcher().then(recursiveFetch);
 };
 
-const _completedInLastThirtyDays = response => {
+const _completedInLastTwoWeeks = response => {
   const { data } = response;
   const last = data[data.length - 1];
 
   const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - 30);
+  cutoff.setDate(cutoff.getDate() - 14);
 
   const completedAt = new Date(last.completed_at);
 
   return completedAt < cutoff;
 };
 
+export const setGoals = createAction('SET_GOALS');
 export const storiesReceived = createAction('STORIES_RECEIVED');
 export const updateGoalOrder = createAction('UPDATE_GOAL_ORDER');
 
-export const fetchGoals = createThunk('FETCH_GOALS', project => () =>
-  api.goals.get(project),
+export const fetchTeams = createThunk('FETCH_TEAMS', () => () =>
+  api.teams.get(),
+);
+
+export const fetchProjects = createThunk('FETCH_PROJECTS', () => () =>
+  api.projects.get(),
+);
+
+export const addProject = createThunk(
+  'ADD_PROJECT',
+  project => (dispatch, getState) => {
+    const state = getState();
+    const team = state.teams.entities.find(t => t.id === state.teams.current);
+
+    dispatch(fetchStories([project]));
+    api.teams.update(team.id, { projects: [...team.projects, project] });
+  },
+);
+
+export const removeProject = createThunk(
+  'REMOVE_PROJECT',
+  project => (dispatch, getState) => {
+    const state = getState();
+    const team = state.teams.entities.find(t => t.id === state.teams.current);
+
+    api.teams.update(team.id, {
+      projects: team.projects.filter(p => p !== project),
+    });
+  },
 );
 
 export const addGoal = createThunk(
   'CREATE_GOAL',
-  ({ project, title, order }) => () => api.goals.add(project, { title, order }),
+  ({ team, title, order }) => () => api.goals.add(team, { title, order }),
 );
 
 export const updateGoalTitle = createThunk(
@@ -57,7 +84,7 @@ export const updateGoalTitle = createThunk(
 
 export const saveGoalOrders = createThunk(
   'SAVE_GOAL_ORDERS',
-  project => (_, getState) => {
+  team => (_, getState) => {
     const goals = getState().goals.entities;
 
     const updates = goals.reduce(
@@ -65,7 +92,7 @@ export const saveGoalOrders = createThunk(
       {},
     );
 
-    return api.goals.updateOrders(project, updates);
+    return api.goals.updateOrders(team, updates);
   },
 );
 
@@ -75,38 +102,43 @@ export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
 
 export const fetchStories = createThunk(
   'FETCH_STORIES',
-  projectId => dispatch => {
-    const project = PROJECTS[projectId];
+  projects => (dispatch, getState) => {
+    const requests = [];
 
-    // FETCH READY
-    const ready = _keepFetching(
-      next =>
-        api.stories.get(
-          `state:ready project:${project.name} !is:archived`,
-          next,
+    projects.forEach(project => {
+      // FETCH READY
+      requests.push(
+        _keepFetching(
+          next =>
+            api.stories.get(
+              `state:ready project:${project} !is:archived`,
+              next,
+            ),
+          res => dispatch(storiesReceived(res)),
         ),
-      res => dispatch(storiesReceived(res)),
-    );
+      );
 
-    // FETCH DOING
-    const doing = _keepFetching(
-      next =>
-        api.stories.get(
-          `is:started project:${project.name} !is:archived`,
-          next,
+      // FETCH DOING
+      requests.push(
+        _keepFetching(
+          next =>
+            api.stories.get(`is:started project:${project} !is:archived`, next),
+          res => dispatch(storiesReceived(res)),
         ),
-      res => dispatch(storiesReceived(res)),
-    );
+      );
 
-    // FETCH DONE
-    const done = _keepFetching(
-      next =>
-        api.stories.get(`is:done project:${project.name} !is:archived`, next),
-      res => dispatch(storiesReceived(res)),
-      _completedInLastThirtyDays,
-    );
+      // FETCH DONE
+      requests.push(
+        _keepFetching(
+          next =>
+            api.stories.get(`is:done project:${project} !is:archived`, next),
+          res => dispatch(storiesReceived(res)),
+          _completedInLastTwoWeeks,
+        ),
+      );
+    });
 
-    return Promise.all([ready, doing, done]);
+    return Promise.all(requests);
   },
 );
 
@@ -133,7 +165,10 @@ export const removeStoryFromGoal = createThunk(
   },
 );
 
-export const setProject = createThunk('SET_PROJECT', id => dispatch => {
-  dispatch(fetchGoals(id));
-  dispatch(fetchStories(id));
+export const setTeam = createThunk('SET_TEAM', id => (dispatch, getState) => {
+  const state = getState();
+  const team = state.teams.entities.find(t => t.id === id);
+
+  dispatch(setGoals(team.goals));
+  dispatch(fetchStories(team.projects));
 });
