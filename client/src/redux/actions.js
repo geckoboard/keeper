@@ -2,6 +2,7 @@ import { createThunk, createAction } from 'redan';
 import api from '../api';
 import { unique } from '../utils';
 import { apiRequest } from '../api/utils';
+import { getGoals } from './helpers';
 
 const _getNextToken = response => {
   if (!response.next) {
@@ -89,7 +90,7 @@ export const updateGoalTitle = createThunk(
 export const saveGoalOrders = createThunk(
   'SAVE_GOAL_ORDERS',
   team => (_, getState) => {
-    const goals = getState().goals.entities;
+    const goals = getGoals(getState());
 
     const updates = goals.reduce(
       (updates, { id, order }) => ({ ...updates, [id]: order }),
@@ -143,7 +144,7 @@ export const fetchStories = createThunk(
 export const addStoryToGoal = createThunk(
   'ADD_STORY_TO_GOAL',
   ({ goalId, storyId }) => (_, getState) => {
-    let { cards } = getState().goals.entities.find(x => x.id === goalId);
+    let { cards } = getGoals(getState()).find(x => x.id === goalId);
 
     if (!cards.includes(storyId)) {
       cards = [...cards, storyId];
@@ -156,7 +157,7 @@ export const addStoryToGoal = createThunk(
 export const removeStoryFromGoal = createThunk(
   'REMOVE_STORY_FROM_GOAL',
   ({ goalId, storyId }) => (_, getState) => {
-    let { cards } = getState().goals.entities.find(x => x.id === goalId);
+    let { cards } = getGoals(getState()).find(x => x.id === goalId);
     cards = cards.filter(c => c !== storyId);
 
     return api.goals.update(goalId, { cards });

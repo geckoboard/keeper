@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
 import AddGoalForm from './add-goal-form';
 import * as actions from '../../redux/actions';
+import { getGoals } from '../../redux/helpers';
 
 const mapStateToProps = state => {
-  const orders = state.goals.entities.map(goal => goal.order);
+  const goals = getGoals(state);
+  const orders = goals.map(goal => goal.order);
 
   return {
     nextOrder: orders.length === 0 ? 1 : Math.max(...orders) + 1,
-    isEmpty: !state.goals.loading && state.goals.entities.length === 0,
+    isEmpty: goals.length === 0,
     team: state.teams.current,
   };
 };

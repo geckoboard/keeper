@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import GoalsList from './goals-list';
 import Goal from '../goal/goal';
+import { getGoals } from '../../redux/helpers';
 
 const mapStateToProps = state => ({
-  goals: state.goals.entities,
-  loading: state.goals.loading,
+  goals: getGoals(state),
 });
 
 const GoalsListConnector = connect(mapStateToProps)(GoalsList);
