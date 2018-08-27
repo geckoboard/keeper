@@ -16,7 +16,7 @@ const mapStateToProps = (state, props) => {
 
   return {
     stories,
-    loadingStories: state.stories.loading,
+    loadingStories: state.stories.loading || props.goal.isConvertingToStory,
     teamId: state.teams.current,
   };
 };

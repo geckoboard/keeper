@@ -1,8 +1,4 @@
-import { apiRequest } from './utils';
-
-const API =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api' : '/api';
-const getJSON = x => x.json();
+import { API, apiRequest, getJSON } from './utils';
 
 const getGoals = team => apiRequest(`${API}/${team}/goals`).then(getJSON);
 

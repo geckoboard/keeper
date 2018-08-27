@@ -34,6 +34,9 @@ const LinkedStory = ({ story, index, onDelete }) => {
         <i className={`fas fa-trash ${styles.delete}`} />
       </button>
       {index}. {story.name}
+      <a className={styles.id} href={story.app_url} target="_blank">
+        (#{story.id})
+      </a>
     </div>
   );
 };

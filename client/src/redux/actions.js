@@ -1,6 +1,8 @@
 import { createThunk, createAction } from 'redan';
 import api from '../api';
 import { unique } from '../utils';
+import { apiRequest } from '../api/utils';
+import { getGoals } from './helpers';
 
 const _getNextToken = response => {
   if (!response.next) {
@@ -88,7 +90,7 @@ export const updateGoalTitle = createThunk(
 export const saveGoalOrders = createThunk(
   'SAVE_GOAL_ORDERS',
   team => (_, getState) => {
-    const goals = getState().goals.entities;
+    const goals = getGoals(getState());
 
     const updates = goals.reduce(
       (updates, { id, order }) => ({ ...updates, [id]: order }),
@@ -112,11 +114,7 @@ export const fetchStories = createThunk(
       // FETCH READY
       requests.push(
         _keepFetching(
-          next =>
-            api.stories.get(
-              `state:ready project:${project} !is:archived`,
-              next,
-            ),
+          next => api.clubhouse.stories.getReady(project, next),
           res => dispatch(storiesReceived(res)),
         ),
       );
@@ -124,8 +122,7 @@ export const fetchStories = createThunk(
       // FETCH DOING
       requests.push(
         _keepFetching(
-          next =>
-            api.stories.get(`is:started project:${project} !is:archived`, next),
+          next => api.clubhouse.stories.getDoing(project, next),
           res => dispatch(storiesReceived(res)),
         ),
       );
@@ -133,8 +130,7 @@ export const fetchStories = createThunk(
       // FETCH DONE
       requests.push(
         _keepFetching(
-          next =>
-            api.stories.get(`is:done project:${project} !is:archived`, next),
+          next => api.clubhouse.stories.getDone(project, next),
           res => dispatch(storiesReceived(res)),
           _completedInLastTwoWeeks,
         ),
@@ -148,7 +144,7 @@ export const fetchStories = createThunk(
 export const addStoryToGoal = createThunk(
   'ADD_STORY_TO_GOAL',
   ({ goalId, storyId }) => (_, getState) => {
-    let { cards } = getState().goals.entities.find(x => x.id === goalId);
+    let { cards } = getGoals(getState()).find(x => x.id === goalId);
 
     if (!cards.includes(storyId)) {
       cards = [...cards, storyId];
@@ -161,7 +157,7 @@ export const addStoryToGoal = createThunk(
 export const removeStoryFromGoal = createThunk(
   'REMOVE_STORY_FROM_GOAL',
   ({ goalId, storyId }) => (_, getState) => {
-    let { cards } = getState().goals.entities.find(x => x.id === goalId);
+    let { cards } = getGoals(getState()).find(x => x.id === goalId);
     cards = cards.filter(c => c !== storyId);
 
     return api.goals.update(goalId, { cards });
@@ -175,3 +171,19 @@ export const setTeam = createThunk('SET_TEAM', id => (dispatch, getState) => {
   dispatch(setGoals(team.goals));
   dispatch(fetchStories(team.projects));
 });
+
+export const createStoryFromGoal = createThunk(
+  'CREATE_STORY_FROM_GOAL',
+  ({ goal, project }) => () =>
+    api.clubhouse.stories
+      .create({
+        goalId: goal.id,
+        teamId: project.team_id,
+        projectId: project.id,
+        name: goal.title,
+      })
+      .then(story => ({
+        goalId: goal.id,
+        story,
+      })),
+);

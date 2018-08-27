@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import StoriesList from './stories-list';
+import { getGoals } from '../../redux/helpers';
 
 const mapStateToProps = state => {
-  const alreadyAssigned = state.goals.entities.reduce(
+  const alreadyAssigned = getGoals(state).reduce(
     (acc, goal) => [...acc, ...goal.cards],
     [],
   );

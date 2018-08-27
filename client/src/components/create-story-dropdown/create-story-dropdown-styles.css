@@ -1,0 +1,12 @@
+.createStoryDropdown {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid #36B2E6;
+  background: #FFFFFF;
+  color: #36B2E6;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
