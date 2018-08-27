@@ -112,11 +112,7 @@ export const fetchStories = createThunk(
       // FETCH READY
       requests.push(
         _keepFetching(
-          next =>
-            api.stories.get(
-              `state:ready project:${project} !is:archived`,
-              next,
-            ),
+          next => api.clubhouse.stories.getReady(project, next),
           res => dispatch(storiesReceived(res)),
         ),
       );
@@ -124,8 +120,7 @@ export const fetchStories = createThunk(
       // FETCH DOING
       requests.push(
         _keepFetching(
-          next =>
-            api.stories.get(`is:started project:${project} !is:archived`, next),
+          next => api.clubhouse.stories.getDoing(project, next),
           res => dispatch(storiesReceived(res)),
         ),
       );
@@ -133,8 +128,7 @@ export const fetchStories = createThunk(
       // FETCH DONE
       requests.push(
         _keepFetching(
-          next =>
-            api.stories.get(`is:done project:${project} !is:archived`, next),
+          next => api.clubhouse.stories.getDone(project, next),
           res => dispatch(storiesReceived(res)),
           _completedInLastTwoWeeks,
         ),
