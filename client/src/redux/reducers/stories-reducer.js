@@ -52,6 +52,15 @@ const storiesReducer = (state = initialState, action) => {
       };
     }
 
+    case actions.createStoryFromGoal.end.type:
+      return {
+        ...state,
+        entities: {
+          ...state.entities,
+          [payload.story.id]: payload.story,
+        },
+      };
+
     default:
       return state;
   }

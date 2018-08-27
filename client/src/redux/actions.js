@@ -175,10 +175,15 @@ export const setTeam = createThunk('SET_TEAM', id => (dispatch, getState) => {
 export const createStoryFromGoal = createThunk(
   'CREATE_STORY_FROM_GOAL',
   ({ goal, project }) => () =>
-    api.clubhouse.stories.create({
-      goalId: goal.id,
-      teamId: project.team_id,
-      projectId: project.id,
-      name: goal.title,
-    }),
+    api.clubhouse.stories
+      .create({
+        goalId: goal.id,
+        teamId: project.team_id,
+        projectId: project.id,
+        name: goal.title,
+      })
+      .then(story => ({
+        goalId: goal.id,
+        story,
+      })),
 );

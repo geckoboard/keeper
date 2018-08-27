@@ -160,6 +160,44 @@ const teamsReducer = (state = initialState, action) => {
         }),
       };
 
+    case actions.createStoryFromGoal.start.type:
+      return {
+        ...state,
+        entities: _updateCurrent(state, team => ({
+          ...team,
+          goals: team.goals.map(goal => {
+            if (goal.id !== payload.goal.id) {
+              return goal;
+            }
+
+            return {
+              ...goal,
+              isConvertingToStory: true,
+              cards: [-1],
+            };
+          }),
+        })),
+      };
+
+    case actions.createStoryFromGoal.end.type:
+      return {
+        ...state,
+        entities: _updateCurrent(state, team => ({
+          ...team,
+          goals: team.goals.map(goal => {
+            if (goal.id !== payload.goalId) {
+              return goal;
+            }
+
+            return {
+              ...goal,
+              isConvertingToStory: false,
+              cards: [payload.story.id],
+            };
+          }),
+        })),
+      };
+
     default:
       return state;
   }
