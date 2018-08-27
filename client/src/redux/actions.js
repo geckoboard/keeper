@@ -169,3 +169,8 @@ export const setTeam = createThunk('SET_TEAM', id => (dispatch, getState) => {
   dispatch(setGoals(team.goals));
   dispatch(fetchStories(team.projects));
 });
+
+export const createStoryFromGoal = createThunk(
+  'CREATE_STORY_FROM_GOAL',
+  ({ goal, projectId }) => () => {},
+);
