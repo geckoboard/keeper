@@ -57,7 +57,9 @@ export const addProject = createThunk(
     const team = state.teams.entities.find(t => t.id === state.teams.current);
 
     dispatch(fetchStories([project]));
-    api.teams.update(team.id, { projects: unique([...team.projects, project]) });
+    api.teams.update(team.id, {
+      projects: unique([...team.projects, project]),
+    });
   },
 );
 

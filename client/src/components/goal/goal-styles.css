@@ -77,15 +77,18 @@
 
 .skeleton_story_container {
   padding-left: 30px;
+  height: 34px;
+  padding-top: 2px;
+  box-sizing: border-box;
 }
 
 .skeleton_story {
-  background: #DDDDDD;
-  height: 0.5rem;
+  background: #EEEEEE;
+  height: 10px;
   width: 100%;
   margin-bottom: 0.5rem;
-  border-radius: 2px;
-  opacity: 0.6;
+  border-radius: 3px;
+  opacity: 0.5;
 }
 
 .empty {
