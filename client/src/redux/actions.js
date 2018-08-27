@@ -1,6 +1,7 @@
 import { createThunk, createAction } from 'redan';
 import api from '../api';
 import { unique } from '../utils';
+import { apiRequest } from '../api/utils';
 
 const _getNextToken = response => {
   if (!response.next) {
@@ -172,5 +173,11 @@ export const setTeam = createThunk('SET_TEAM', id => (dispatch, getState) => {
 
 export const createStoryFromGoal = createThunk(
   'CREATE_STORY_FROM_GOAL',
-  ({ goal, projectId }) => () => {},
+  ({ goal, project }) => () =>
+    api.clubhouse.stories.create({
+      goalId: goal.id,
+      teamId: project.team_id,
+      projectId: project.id,
+      name: goal.title,
+    }),
 );

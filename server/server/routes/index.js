@@ -24,6 +24,7 @@ module.exports = app => {
   app.delete('/api/goals/:goalId', goalsController.destroy);
 
   app.get('/api/stories', storiesController.list);
+  app.post('/api/stories', storiesController.create);
 
   app.post('/api/webhook', webhookController.update);
 

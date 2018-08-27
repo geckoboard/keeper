@@ -15,10 +15,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
-  onChange: projectId => {
+  onChange: project => {
     dispatch(
       actions.createStoryFromGoal({
-        projectId,
+        project,
         goal: props.goal,
       }),
     );

@@ -18,3 +18,18 @@ export const getDoing = (project, next) =>
 
 export const getDone = (project, next) =>
   get(`is:done project:${project} !is:archived`, next);
+
+export const create = ({ projectId, teamId, goalId, name }) =>
+  apiRequest(`${API}/stories`, {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      projectId,
+      teamId,
+      goalId,
+      name,
+    }),
+  }).then(getJSON);

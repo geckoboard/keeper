@@ -6,7 +6,12 @@ const CreateStoryDropdown = ({ projects, onChange }) => (
   <select
     value={-1}
     className={styles.createStoryDropdown}
-    onChange={e => onChange(parseInt(e.target.value), 10)}
+    onChange={e => {
+      const id = parseInt(e.target.value, 10);
+      const project = projects.find(p => p.id === id);
+
+      onChange(project);
+    }}
   >
     <option disabled value={-1}>
       Create a Clubhouse story
