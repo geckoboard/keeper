@@ -37,8 +37,18 @@
   display: inline-block;
 }
 
-
 .story_icon_completed {
   color: #38D41C;
   opacity: 1;
+}
+
+.id {
+  font-size: 0.75rem;
+  color: #d6d6d6;
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+.id:hover {
+  color: #36B2E6;
 }
