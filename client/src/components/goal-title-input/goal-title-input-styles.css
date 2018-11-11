@@ -13,7 +13,7 @@
 .save_button {
   appearance: none;
   border: none;
-  background: #36B2E6;
+  background: #821EBA;
   color: #FFFFFF;
   font-size: 0.875rem;
   border-radius: 4px;
@@ -24,9 +24,9 @@
 
 .cancel_button {
   appearance: none;
-  border: 1px solid #36B2E6;
+  border: 1px solid #821EBA;
   background: #FFFFFF;
-  color: #36B2E6;
+  color: #821EBA;
   font-size: 0.875rem;
   border-radius: 4px;
   padding: 0.5rem 1rem;

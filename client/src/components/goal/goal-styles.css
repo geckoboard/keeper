@@ -30,7 +30,7 @@
 
 .edit_button:hover,
 .edit_button:focus {
-  color: #36B2E6;
+  color: #821EBA;
 }
 
 .drag_container {
@@ -72,7 +72,7 @@
 }
 
 .archived_link:hover {
-  color: #36B2E6;
+  color: #821EBA;
 }
 
 .skeleton_story_container {
