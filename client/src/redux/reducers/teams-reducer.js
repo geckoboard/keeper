@@ -6,7 +6,7 @@ const initialState = {
   entities: [],
 };
 
-const _byOrder = (a, b) => a.order > b.order;
+const _byOrder = (a, b) => a.order - b.order;
 const _updateOrders = goals =>
   goals.map((goal, index) => {
     const order = index + 1;
