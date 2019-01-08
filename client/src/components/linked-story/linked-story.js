@@ -23,6 +23,10 @@ const getIcon = story => {
     return <i className={`fas fa-minus-circle ${styles.icon}`} />;
   }
 
+if (story.workflow_state_id == 500074438 || story.workflow_state_id == 500081148){
+return <i className={`fas fa-question-circle ${styles.icon}`} />;
+}
+
   return null;
 };
 
