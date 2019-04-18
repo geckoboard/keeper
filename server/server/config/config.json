@@ -5,8 +5,7 @@
     "database": "keeper-dev",
     "host": "127.0.0.1",
     "port": 5432,
-    "dialect": "postgres",
-    "operatorsAliases": false
+    "dialect": "postgres"
   },
   "production": {
     "use_env_variable": "DATABASE_URL"
