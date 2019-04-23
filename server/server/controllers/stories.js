@@ -84,7 +84,7 @@ const create = (req, res) => {
       }),
     )
     .then(story =>
-      Goal.findById(req.body.goalId)
+      Goal.findByPk(req.body.goalId)
         .then(goal =>
           goal.update({
             cards: [...goal.cards, story.id],

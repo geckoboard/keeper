@@ -15,7 +15,7 @@ const _isArchived = action =>
   !!action.changes.archived;
 
 const update = (req, res) =>
-  Goal.all().then(goals => {
+  Goal.findAll().then(goals => {
     res.status(200).send();
 
     const goalsJSON = goals.map(goal => goal.toJSON());

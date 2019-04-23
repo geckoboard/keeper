@@ -25,7 +25,7 @@ const list = (req, res) =>
     .catch(error => res.status(400).send(error));
 
 const update = (req, res) =>
-  Goal.findById(req.params.goalId)
+  Goal.findByPk(req.params.goalId)
     .then(goal => {
       if (!goal) {
         return res.status(404).send({
@@ -48,7 +48,7 @@ const update = (req, res) =>
 
 const destroy = async (req, res) => {
   try {
-    const goal = await Goal.findById(req.params.goalId);
+    const goal = await Goal.findByPk(req.params.goalId);
 
     if (!goal) {
       return res.status(404).send({
@@ -83,7 +83,7 @@ const destroy = async (req, res) => {
 const updateOrders = async (req, res) => {
   try {
     const updates = Object.keys(req.body).map(async goalId => {
-      const goal = await Goal.findById(goalId);
+      const goal = await Goal.findByPk(goalId);
       return goal.update({
         order: req.body[goalId],
       });
