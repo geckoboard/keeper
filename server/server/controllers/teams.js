@@ -15,7 +15,7 @@ const list = (req, res) =>
     .catch(error => res.status(400).send(error));
 
 const update = (req, res) =>
-  Team.findById(req.params.teamId)
+  Team.findByPk(req.params.teamId)
     .then(team => {
       if (!team) {
         return res.status(404).send({

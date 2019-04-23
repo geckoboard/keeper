@@ -57,7 +57,7 @@ const formatDataForDataset = (goals, stories) =>
   });
 
 const updateDataset = teamId =>
-  Team.findById(teamId, {
+  Team.findByPk(teamId, {
     include: [{ model: Goal, as: 'goals' }],
   }).then(team => {
     gb = geckoboard(process.env.GECKOBOARD_API_KEY);
