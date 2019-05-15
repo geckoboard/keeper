@@ -1,4 +1,5 @@
 import * as actions from '../actions';
+import socketActions from '../socket-actions';
 
 const initialState = {
   current: null,
@@ -20,6 +21,15 @@ const _updateCurrent = (state, update) =>
     }
 
     return update(team);
+  });
+
+const _updateByID = (id, entities, update) =>
+  entities.map(item => {
+    if (item.id.toString() !== id.toString()) {
+      return item;
+    }
+
+    return update(item);
   });
 
 const teamsReducer = (state = initialState, action) => {
@@ -67,12 +77,30 @@ const teamsReducer = (state = initialState, action) => {
         })),
       };
 
+    case socketActions.teams.update.type:
+      return {
+        ...state,
+        entities: _updateByID(payload.id, state.entities, () => ({
+          ...payload,
+          goals: payload.goals.sort(_byOrder),
+        })),
+      };
+
     case actions.addGoal.end.type:
       return {
         ...state,
         entities: _updateCurrent(state, team => ({
           ...team,
           goals: [...team.goals, payload],
+        })),
+      };
+
+    case socketActions.goals.create.type:
+      return {
+        ...state,
+        entities: _updateByID(payload.teamId, state.entities, team => ({
+          ...team,
+          goals: [...team.goals, payload.goal],
         })),
       };
 
@@ -89,14 +117,28 @@ const teamsReducer = (state = initialState, action) => {
         }),
       };
 
+    case socketActions.goals.delete.type:
+      return {
+        ...state,
+        entities: _updateByID(payload.teamId, state.entities, team => {
+          const goals = team.goals.filter(
+            goal => goal.id.toString() !== payload.goalId.toString(),
+          );
+
+          return {
+            ...team,
+            goals: _updateOrders(goals),
+          };
+        }),
+      };
+
     case actions.updateGoalTitle.start.type:
       return {
         ...state,
         entities: _updateCurrent(state, team => ({
           ...team,
-          goals: team.goals.map(
-            goal =>
-              goal.id === payload.id ? { ...goal, title: payload.title } : goal,
+          goals: team.goals.map(goal =>
+            goal.id === payload.id ? { ...goal, title: payload.title } : goal,
           ),
         })),
       };
@@ -143,6 +185,17 @@ const teamsReducer = (state = initialState, action) => {
         })),
       };
 
+    case socketActions.goals.update.type:
+      return {
+        ...state,
+        entities: _updateByID(payload.teamId, state.entities, team => {
+          return {
+            ...team,
+            goals: _updateByID(payload.goal.id, team.goals, () => payload.goal),
+          };
+        }),
+      };
+
     case actions.updateGoalOrder.type:
       return {
         ...state,
@@ -158,6 +211,20 @@ const teamsReducer = (state = initialState, action) => {
             goals,
           };
         }),
+      };
+
+    case socketActions.goals.updateOrders.type:
+      return {
+        ...state,
+        entities: _updateByID(payload.teamId, state.entities, team => ({
+          ...team,
+          goals: team.goals
+            .map(goal => ({
+              ...goal,
+              order: payload.updates[goal.id],
+            }))
+            .sort(_byOrder),
+        })),
       };
 
     case actions.createStoryFromGoal.start.type:
