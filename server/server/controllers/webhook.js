@@ -21,6 +21,8 @@ const update = (req, res) =>
     const goalsJSON = goals.map(goal => goal.toJSON());
     const cards = goalsJSON.reduce((acc, goal) => [...acc, ...goal.cards], []);
 
+    console.log(JSON.stringify(req.body));
+
     const updates = req.body.actions
       .filter(action => cards.includes(action.id))
       .filter(
