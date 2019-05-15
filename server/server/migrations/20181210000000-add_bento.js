@@ -1,5 +1,5 @@
 'use strict';
- module.exports = {
+module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('teams', [
       {
@@ -13,5 +13,5 @@
       },
     ]);
   },
-   down: (queryInterface, Sequelize) => {}
+  down: (queryInterface, Sequelize) => {},
 };

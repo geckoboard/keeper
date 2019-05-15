@@ -7,21 +7,24 @@ export const getSessionID = () => {
     return sessionID;
   }
 
-  sessionID = Math.random().toString(36).substring(2) + new Date().getTime().toString(36);
+  sessionID =
+    Math.random()
+      .toString(36)
+      .substring(2) + new Date().getTime().toString(36);
 
   return sessionID;
-}
+};
 
 export const apiRequest = (url, options = {}) => {
   const sharedOptions = {
     credentials: 'same-origin',
     headers: {
-      "X-Socket-Session": getSessionID(),
+      'X-Socket-Session': getSessionID(),
     },
   };
 
-  return fetch(url, merge(options, sharedOptions ));
-}
+  return fetch(url, merge(options, sharedOptions));
+};
 
 export const API =
   process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api' : '/api';

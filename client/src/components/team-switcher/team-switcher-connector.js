@@ -24,7 +24,11 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
 
 const teamSwitcherConnector = Component =>
   withRouter(
-    connect(mapStateToProps, mapDispatchToProps, mergeProps)(Component),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+      mergeProps,
+    )(Component),
   );
 
 export default teamSwitcherConnector;

@@ -13,7 +13,10 @@ const mapDispatchToProps = (dispatch, props) => ({
     ),
 });
 
-const LinkedStoryConnector = connect(null, mapDispatchToProps)(LinkedStory);
+const LinkedStoryConnector = connect(
+  null,
+  mapDispatchToProps,
+)(LinkedStory);
 
 LinkedStoryConnector.propTypes = {
   story: PropTypes.shape({

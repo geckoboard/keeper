@@ -19,10 +19,14 @@ const StoriesList = ({ loading, stories }) => {
 
   return (
     <div>
-      {stories.map(story => <Story key={story.id} {...story} />)}
+      {stories.map(story => (
+        <Story key={story.id} {...story} />
+      ))}
       {loading && (
         <div className={styles.skeleton_container}>
-          {times(5 - stories.length).map((_, i) => <SkeletonStory key={i} />)}
+          {times(5 - stories.length).map((_, i) => (
+            <SkeletonStory key={i} />
+          ))}
         </div>
       )}
     </div>

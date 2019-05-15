@@ -10,6 +10,9 @@ const mapDispatchToProps = dispatch => ({
   setTeam: team => dispatch(actions.setTeam(team)),
 });
 
-const AppConnector = connect(null, mapDispatchToProps)(App);
+const AppConnector = connect(
+  null,
+  mapDispatchToProps,
+)(App);
 
 export default AppConnector;
