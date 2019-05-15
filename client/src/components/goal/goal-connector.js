@@ -42,8 +42,10 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   ...ownProps,
 });
 
-const GoalConnector = connect(mapStateToProps, mapDispatchToProps, mergeProps)(
-  GoalDragWrapper,
-);
+const GoalConnector = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps,
+)(GoalDragWrapper);
 
 export default GoalConnector;

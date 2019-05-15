@@ -89,23 +89,22 @@ class Goal extends Component {
               );
             }
           })}
-          {!loadingStories &&
-            unfound.length > 0 && (
-              <span className={styles.archived_count}>
-                {unfound.map((id, index) => (
-                  <span key={id}>
-                    <a
-                      className={styles.archived_link}
-                      target="_blank"
-                      href={`https://app.clubhouse.io/geckoboard/story/${id}`}
-                    >
-                      #{id}
-                    </a>
-                    {index < unfound.length - 1 && ', '}
-                  </span>
-                ))}
-              </span>
-            )}
+          {!loadingStories && unfound.length > 0 && (
+            <span className={styles.archived_count}>
+              {unfound.map((id, index) => (
+                <span key={id}>
+                  <a
+                    className={styles.archived_link}
+                    target="_blank"
+                    href={`https://app.clubhouse.io/geckoboard/story/${id}`}
+                  >
+                    #{id}
+                  </a>
+                  {index < unfound.length - 1 && ', '}
+                </span>
+              ))}
+            </span>
+          )}
         </div>
       </div>
     );

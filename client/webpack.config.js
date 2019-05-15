@@ -81,6 +81,7 @@ module.exports = {
   },
   plugins: plugins,
   devServer: {
+    port: 8080,
     compress: true,
     disableHostCheck: true,
     historyApiFallback: true,

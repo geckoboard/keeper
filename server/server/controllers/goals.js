@@ -1,5 +1,7 @@
 const Goal = require('../models').goal;
 const updateDataset = require('../scripts/update-dataset');
+const socket = require('../../socket');
+const actions = require('../actions');
 
 const create = (req, res) =>
   Goal.create({
@@ -9,6 +11,9 @@ const create = (req, res) =>
     teamId: req.params.teamId,
   })
     .then(goal => {
+      socket.emit(
+        actions.goals.create({ teamId: req.params.teamId, goal }, req),
+      );
       res.status(201).send(goal);
       updateDataset(goal.getDataValue('teamId'));
     })
@@ -41,14 +46,17 @@ const update = (req, res) =>
       });
     })
     .then(goal => {
+      const teamId = goal.getDataValue('teamId');
+      socket.emit(actions.goals.update({ teamId, goal }, req));
       res.status(200).send(goal);
-      updateDataset(goal.getDataValue('teamId'));
+      updateDataset(teamId);
     })
     .catch(error => res.status(400).send(error));
 
 const destroy = async (req, res) => {
   try {
-    const goal = await Goal.findByPk(req.params.goalId);
+    const { goalId } = req.params;
+    const goal = await Goal.findByPk(goalId);
 
     if (!goal) {
       return res.status(404).send({
@@ -59,6 +67,8 @@ const destroy = async (req, res) => {
     const teamId = goal.getDataValue('teamId');
 
     await goal.destroy();
+
+    socket.emit(actions.goals.delete({ teamId, goalId }, req));
 
     const remaining = await Goal.findAll({
       where: { teamId },
@@ -91,6 +101,12 @@ const updateOrders = async (req, res) => {
 
     await Promise.all(updates);
 
+    socket.emit(
+      actions.goals.updateOrders(
+        { teamId: req.params.teamId, updates: req.body },
+        req,
+      ),
+    );
     res.status(204).send();
     updateDataset(req.params.teamId);
   } catch (error) {

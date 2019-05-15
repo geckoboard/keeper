@@ -29,32 +29,34 @@ const getDatasetSchema = dataset => ({
 });
 
 const formatDataForDataset = (goals, stories) =>
-  goals.sort((a, b) => b.order - a.order).map(goal => {
-    const cards = goal.cards
-      .map(id => stories.find(story => story.id === id))
-      .filter(story => !story.archived);
+  goals
+    .sort((a, b) => b.order - a.order)
+    .map(goal => {
+      const cards = goal.cards
+        .map(id => stories.find(story => story.id === id))
+        .filter(story => !story.archived);
 
-    const completed = cards.filter(story => story.completed);
-    const started = cards.filter(story => story.started);
+      const completed = cards.filter(story => story.completed);
+      const started = cards.filter(story => story.started);
 
-    let status = '';
+      let status = '';
 
-    if (started.length > 0) {
-      status = '🚚';
-    }
+      if (started.length > 0) {
+        status = '🚚';
+      }
 
-    if (cards.length === completed.length && completed.length > 0) {
-      status = '✅';
-    }
+      if (cards.length === completed.length && completed.length > 0) {
+        status = '✅';
+      }
 
-    return {
-      name: goal.title,
-      order: goal.order,
-      status: status,
-      progress:
-        cards.length === 0 ? '--' : `(${completed.length}/${cards.length})`,
-    };
-  });
+      return {
+        name: goal.title,
+        order: goal.order,
+        status: status,
+        progress:
+          cards.length === 0 ? '--' : `(${completed.length}/${cards.length})`,
+      };
+    });
 
 const updateDataset = teamId =>
   Team.findByPk(teamId, {

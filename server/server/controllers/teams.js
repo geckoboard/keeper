@@ -1,5 +1,7 @@
 const Goal = require('../models').goal;
 const Team = require('../models').team;
+const socket = require('../../socket');
+const actions = require('../actions');
 
 const list = (req, res) =>
   Team.findAll({
@@ -15,7 +17,14 @@ const list = (req, res) =>
     .catch(error => res.status(400).send(error));
 
 const update = (req, res) =>
-  Team.findByPk(req.params.teamId)
+  Team.findByPk(req.params.teamId, {
+    include: [
+      {
+        model: Goal,
+        as: 'goals',
+      },
+    ],
+  })
     .then(team => {
       if (!team) {
         return res.status(404).send({
@@ -29,7 +38,10 @@ const update = (req, res) =>
         projects: projects || team.projects,
       });
     })
-    .then(team => res.status(200).send(team))
+    .then(team => {
+      socket.emit(actions.teams.update(team, req));
+      return res.status(200).send(team);
+    })
     .catch(error => res.status(400).send(error));
 
 module.exports = {

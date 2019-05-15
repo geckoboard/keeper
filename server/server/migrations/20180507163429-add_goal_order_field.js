@@ -15,14 +15,16 @@ module.exports = {
       })
       .then(goals => {
         const projectOrders = {};
-        const updates = goals.sort((a, b) => a.id > b.id).map(goal => {
-          if (!projectOrders[goal.project]) {
-            projectOrders[goal.project] = 0;
-          }
-          const order = (projectOrders[goal.project] += 1);
+        const updates = goals
+          .sort((a, b) => a.id > b.id)
+          .map(goal => {
+            if (!projectOrders[goal.project]) {
+              projectOrders[goal.project] = 0;
+            }
+            const order = (projectOrders[goal.project] += 1);
 
-          return goal.update({ order });
-        });
+            return goal.update({ order });
+          });
 
         return Promise.all(updates);
       });
