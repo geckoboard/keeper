@@ -7,10 +7,19 @@ import App from './components/app';
 import TeamProvider from './components/team-provider';
 import { values } from './utils';
 import styles from './index.css';
+import io from 'socket.io-client';
 import 'normalize.css';
 import './favicon.png';
 
+const socket = process.env.NODE_ENV === 'development' 
+  ? io('http://localhost:8000')
+  : io();
+
 const store = createStore();
+
+socket.on('socket-event', payload => {
+  console.log('EVENT', payload);
+});
 
 ReactDOM.render(
   <Provider store={store}>

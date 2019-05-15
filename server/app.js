@@ -1,30 +1,53 @@
 const path = require('path');
+const http = require('http');
 const express = require('express');
+const socket = require('./socket');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const port = parseInt(process.env.PORT, 10) || 8000;
+
 // Setup environment variables
 require('dotenv').config();
 
-// Set up the express app
-const app = express();
+const createApp = () => {
+  // Set up the express app
+  const app = express();
+  
+  // Log requests to the console.
+  app.use(logger('dev'));
+  
+  // Parse incoming requests data (https://github.com/expressjs/body-parser)
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  
+  // Set CORS headers
+  app.use(cors());
+  
+  // Serve our static files
+  app.use(express.static(__dirname + '/../client/dist'))
+  
+  // Require our routes into the application.
+  require('./server/routes')(app);
+  
+  app.set('port', port);
 
-// Log requests to the console.
-app.use(logger('dev'));
+  return app;
+}
 
-// Parse incoming requests data (https://github.com/expressjs/body-parser)
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+const createServer = app => {
+  const server = http.createServer(app);
+  socket.init(server);
 
-// Set CORS headers
-app.use(cors());
+  return server;
+}
 
-// Serve our static files
-app.use(express.static(__dirname + '/../client/dist'))
+const start = () => {
+  const app = createApp();
+  const server = createServer(app);
 
-// Require our routes into the application.
-require('./server/routes')(app);
+  server.listen(app.get('port'));
+}
 
-
-module.exports = app;
+module.exports = { start };
