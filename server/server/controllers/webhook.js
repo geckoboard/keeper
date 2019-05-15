@@ -1,5 +1,4 @@
 const Goal = require('../models').goal;
-const updateDataset = require('../scripts/update-dataset');
 
 const _isCreateAction = action =>
   action.entity_type === 'story' && action.action === 'create';
@@ -31,20 +30,6 @@ const update = (req, res) =>
           _isUpdateWorkflow(action) ||
           _isArchived(action),
       );
-
-    const teams = updates.reduce((acc, update) => {
-      const goal = goalsJSON.find(goal => goal.cards.includes(update.id));
-
-      if (!acc.includes(goal.team)) {
-        acc.push(goal.team);
-      }
-
-      return acc;
-    }, []);
-
-    teams.forEach(id => {
-      updateDataset(id);
-    });
   });
 
 module.exports = {

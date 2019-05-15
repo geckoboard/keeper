@@ -1,6 +1,5 @@
 const request = require('request-promise');
 const Goal = require('../models').goal;
-const updateDataset = require('../scripts/update-dataset');
 
 const API = 'https://api.clubhouse.io/api/v2';
 const API_KEY = process.env.CLUBHOUSE_API_KEY;
@@ -90,10 +89,7 @@ const create = (req, res) => {
             cards: [...goal.cards, story.id],
           }),
         )
-        .then(goal => {
-          res.status(200).send(_whitelistStory(story));
-          updateDataset(goal.getDataValue('teamId'));
-        }),
+        .then(goal => res.status(200).send(_whitelistStory(story))),
     )
     .catch(error => {
       res.status(400).send(error);

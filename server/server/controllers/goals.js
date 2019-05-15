@@ -1,5 +1,4 @@
 const Goal = require('../models').goal;
-const updateDataset = require('../scripts/update-dataset');
 const socket = require('../../socket');
 const actions = require('../actions');
 
@@ -15,7 +14,6 @@ const create = (req, res) =>
         actions.goals.create({ teamId: req.params.teamId, goal }, req),
       );
       res.status(201).send(goal);
-      updateDataset(goal.getDataValue('teamId'));
     })
     .catch(error => res.status(400).send(error));
 
@@ -49,7 +47,6 @@ const update = (req, res) =>
       const teamId = goal.getDataValue('teamId');
       socket.emit(actions.goals.update({ teamId, goal }, req));
       res.status(200).send(goal);
-      updateDataset(teamId);
     })
     .catch(error => res.status(400).send(error));
 
@@ -84,7 +81,6 @@ const destroy = async (req, res) => {
     );
 
     res.status(204).send();
-    updateDataset(teamId);
   } catch (error) {
     res.status(400).send(error);
   }
@@ -108,7 +104,6 @@ const updateOrders = async (req, res) => {
       ),
     );
     res.status(204).send();
-    updateDataset(req.params.teamId);
   } catch (error) {
     res.status(400).send(error);
   }
