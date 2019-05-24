@@ -86,6 +86,16 @@ const storiesReducer = (state = initialState, action) => {
         },
       };
 
+    case socketActions.stories.delete.type: {
+      let entities = { ...state.entities };
+      delete entities[payload];
+
+      return {
+        ...state,
+        entities,
+      };
+    }
+
     default:
       return state;
   }

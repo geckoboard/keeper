@@ -13,5 +13,6 @@ export default {
   stories: {
     create: createAction('socket:stories:create'),
     update: createAction('socket:stories:update'),
+    delete: createAction('socket:stories:delete'),
   },
 };
