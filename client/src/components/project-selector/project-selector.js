@@ -70,7 +70,10 @@ class ProjectSelector extends Component {
           {selected.length === 1
             ? `${selected.length} project`
             : `${selected.length} projects`}
-          <FontAwesomeIcon icon={icons.faCaretDown} className={styles.buttonCaret} />
+          <FontAwesomeIcon
+            icon={icons.faCaretDown}
+            className={styles.buttonCaret}
+          />
         </button>
         {this.state.open && (
           <div ref={node => (this.list = node)} className={styles.list}>

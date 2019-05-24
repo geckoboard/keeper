@@ -1,4 +1,5 @@
 import * as actions from '../actions';
+import socketActions from '../socket-actions';
 import { values } from '../../utils';
 
 const initialState = {
@@ -58,6 +59,30 @@ const storiesReducer = (state = initialState, action) => {
         entities: {
           ...state.entities,
           [payload.story.id]: payload.story,
+        },
+      };
+
+    case socketActions.stories.update.type: {
+      let entities = { ...state.entities };
+
+      if (!entities[payload.id]) {
+        return state;
+      }
+
+      entities[payload.id] = payload;
+
+      return {
+        ...state,
+        entities,
+      };
+    }
+
+    case socketActions.stories.create.type:
+      return {
+        ...state,
+        entities: {
+          ...state.entities,
+          [payload.id]: payload,
         },
       };
 

@@ -32,6 +32,14 @@ const mapDispatchToProps = dispatch => ({
         dispatch(socketActions.goals.delete(payload));
         return;
 
+      case 'socket:stories:create':
+        dispatch(socketActions.stories.create(payload));
+        return;
+
+      case 'socket:stories:update':
+        dispatch(socketActions.stories.update(payload));
+        return;
+
       default:
         return;
     }

@@ -10,4 +10,8 @@ module.exports = {
     updateOrders: createAction('socket:goals:updateOrders'),
     delete: createAction('socket:goals:delete'),
   },
+  stories: {
+    create: createAction('socket:stories:create'),
+    update: createAction('socket:stories:update'),
+  },
 };
