@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as icons from '@fortawesome/free-solid-svg-icons';
 import GoalTitleInput from '../goal-title-input';
 import LinkedStory from '../linked-story';
 import CreateStoryDropdown from '../create-story-dropdown';
@@ -56,10 +58,10 @@ class Goal extends Component {
               onClick={() => this.setState({ edit: true })}
               className={styles.edit_button}
             >
-              <i className="fas fa-pencil-alt" />
+              <FontAwesomeIcon icon={icons.faPencilAlt} />
             </button>
             <button onClick={onDelete} className={styles.delete_button}>
-              <i className="fas fa-trash" />
+              <FontAwesomeIcon icon={icons.faTrash} />
             </button>
           </div>
         </div>
@@ -71,7 +73,7 @@ class Goal extends Component {
             if (story) {
               return (
                 <LinkedStory
-                  key={card}
+                  key={story.id}
                   story={story}
                   index={index + 1}
                   goalId={goal.id}
