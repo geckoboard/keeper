@@ -39,7 +39,7 @@ const update = (req, res) =>
       });
     })
     .then(team => {
-      socket.emit(actions.teams.update(team, req));
+      socket.emit(actions.teams.update(team, req.header('X-Socket-Session')));
       return res.status(200).send(team);
     })
     .catch(error => res.status(400).send(error));

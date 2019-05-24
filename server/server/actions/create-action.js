@@ -1,7 +1,7 @@
-const createAction = type => (payload, req) => ({
+const createAction = type => (payload, sender) => ({
   type,
   payload,
-  sender: req.header('X-Socket-Session'),
+  sender,
 });
 
 module.exports = createAction;

@@ -11,7 +11,10 @@ const create = (req, res) =>
   })
     .then(goal => {
       socket.emit(
-        actions.goals.create({ teamId: req.params.teamId, goal }, req),
+        actions.goals.create(
+          { teamId: req.params.teamId, goal },
+          req.header('X-Socket-Session'),
+        ),
       );
       res.status(201).send(goal);
     })
@@ -45,7 +48,9 @@ const update = (req, res) =>
     })
     .then(goal => {
       const teamId = goal.getDataValue('teamId');
-      socket.emit(actions.goals.update({ teamId, goal }, req));
+      socket.emit(
+        actions.goals.update({ teamId, goal }, req.header('X-Socket-Session')),
+      );
       res.status(200).send(goal);
     })
     .catch(error => res.status(400).send(error));
@@ -65,7 +70,9 @@ const destroy = async (req, res) => {
 
     await goal.destroy();
 
-    socket.emit(actions.goals.delete({ teamId, goalId }, req));
+    socket.emit(
+      actions.goals.delete({ teamId, goalId }, req.header('X-Socket-Session')),
+    );
 
     const remaining = await Goal.findAll({
       where: { teamId },
@@ -100,7 +107,7 @@ const updateOrders = async (req, res) => {
     socket.emit(
       actions.goals.updateOrders(
         { teamId: req.params.teamId, updates: req.body },
-        req,
+        req.header('X-Socket-Session'),
       ),
     );
     res.status(204).send();
