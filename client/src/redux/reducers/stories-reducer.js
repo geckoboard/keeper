@@ -96,6 +96,22 @@ const storiesReducer = (state = initialState, action) => {
       };
     }
 
+    case actions.deleteGoal.start.type: {
+      let entities = { ...state.entities };
+
+      payload.cards
+        .reduce((acc, id) => (entities[id] ? [...acc, entities[id]] : acc), [])
+        .filter(story => story.completed || story.archived)
+        .forEach(story => {
+          delete entities[story.id];
+        });
+
+      return {
+        ...state,
+        entities,
+      };
+    }
+
     default:
       return state;
   }

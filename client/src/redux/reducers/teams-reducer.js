@@ -108,7 +108,7 @@ const teamsReducer = (state = initialState, action) => {
       return {
         ...state,
         entities: _updateCurrent(state, team => {
-          const goals = team.goals.filter(goal => goal.id !== payload);
+          const goals = team.goals.filter(goal => goal.id !== payload.id);
 
           return {
             ...team,

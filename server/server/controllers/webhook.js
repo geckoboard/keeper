@@ -11,7 +11,6 @@ const API_KEY = process.env.CLUBHOUSE_API_KEY;
  *
  * 1) Handle case where card is moved into visible column.
  * 2) Handle case where card is moved into invisible column.
- * 3) Clear done and archived cards from frontend when goal is deleted
  */
 
 const getStory = id =>

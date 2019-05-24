@@ -101,8 +101,8 @@ export const saveGoalOrders = createThunk(
   },
 );
 
-export const deleteGoal = createThunk('DELETE_GOAL', id => () =>
-  api.goals.delete(id),
+export const deleteGoal = createThunk('DELETE_GOAL', goal => () =>
+  api.goals.delete(goal.id),
 );
 
 export const fetchStories = createThunk(
