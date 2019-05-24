@@ -11,7 +11,8 @@ const mapStateToProps = state => {
   let stories = Object.keys(state.stories.entities).filter(
     id =>
       !alreadyAssigned.includes(parseInt(id, 10)) &&
-      !state.stories.entities[id].completed,
+      !state.stories.entities[id].completed &&
+      !state.stories.entities[id].archived,
   );
 
   stories = stories.map(id => state.stories.entities[id]);
