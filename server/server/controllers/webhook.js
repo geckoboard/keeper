@@ -21,7 +21,7 @@ const update = (req, res) =>
     const goalsJSON = goals.map(goal => goal.toJSON());
     const cards = goalsJSON.reduce((acc, goal) => [...acc, ...goal.cards], []);
 
-    console.log(JSON.stringify(req.body));
+    console.log(JSON.stringify(req.body)); // eslint-disable-line
 
     const updates = req.body.actions
       .filter(action => cards.includes(action.id))
