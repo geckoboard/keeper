@@ -28,7 +28,6 @@ class Goal extends Component {
     const {
       goal,
       onDelete,
-      onChangeTitle,
       stories,
       loadingStories,
       createDragHandle,

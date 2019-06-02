@@ -62,7 +62,7 @@ class ProjectSelector extends Component {
   }
 
   render() {
-    const { loading, onChange, onOpen, projects, selected } = this.props;
+    const { loading, projects, selected } = this.props;
 
     return (
       <div className={styles.container}>

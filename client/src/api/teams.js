@@ -1,6 +1,6 @@
 import { API, apiRequest, getJSON } from './utils';
 
-const getTeams = team => apiRequest(`${API}/teams`).then(getJSON);
+const getTeams = () => apiRequest(`${API}/teams`).then(getJSON);
 
 const updateTeam = (id, updates) =>
   apiRequest(`${API}/teams/${id}`, {

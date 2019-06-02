@@ -59,8 +59,8 @@ class AddGoalForm extends Component {
           </button>
           {isEmpty && (
             <span className={styles.empty}>
-              👈 Let's get started!{' '}
-              <span className={styles.hint}>(press "n")</span>
+              {`👈 Let's get started! '`}
+              <span className={styles.hint}>{`(press "n")`}</span>
             </span>
           )}
         </div>

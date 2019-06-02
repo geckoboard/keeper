@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styles from './icon-team-switcher-styles.css';
 
-const IconTeamSwitcher = ({ onChange, teams }) => {
+const IconTeamSwitcher = ({ teams }) => {
   return (
     <div className={styles.container}>
       {teams.map(team => (
@@ -19,7 +19,6 @@ const IconTeamSwitcher = ({ onChange, teams }) => {
 };
 
 IconTeamSwitcher.propTypes = {
-  onChange: PropTypes.func,
   teams: PropTypes.array,
 };
 

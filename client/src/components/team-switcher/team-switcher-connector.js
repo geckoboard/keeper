@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import DropdownTeamSwitcher from './dropdown-team-switcher';
 
 const mapStateToProps = state => ({
   value: state.teams.current,
