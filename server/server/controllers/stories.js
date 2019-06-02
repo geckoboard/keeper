@@ -49,14 +49,8 @@ const list = (req, res) => {
     .catch(error => res.status(400).send(error));
 };
 
-const create = (req, res) => {
-  const options = {
-    uri: `${API}/teams/${req.body.teamId}`,
-    qs: { token: API_KEY },
-    json: true,
-  };
-
-  return _getTeamReadyColumn(req.body.teamId)
+const create = (req, res) =>
+  _getTeamReadyColumn(req.body.teamId)
     .then(column =>
       request({
         method: 'post',
@@ -77,12 +71,11 @@ const create = (req, res) => {
             cards: [...goal.cards, story.id],
           }),
         )
-        .then(goal => res.status(200).send(whitelistStory(story))),
+        .then(() => res.status(200).send(whitelistStory(story))),
     )
     .catch(error => {
       res.status(400).send(error);
     });
-};
 
 module.exports = {
   list,
