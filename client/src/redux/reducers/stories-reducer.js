@@ -26,7 +26,7 @@ const storiesReducer = (state = initialState, action) => {
         loading: false,
       };
 
-    case actions.storiesReceived.type:
+    case actions.storiesReceived.type: {
       let entities = { ...state.entities };
 
       payload.data.forEach(story => {
@@ -37,6 +37,7 @@ const storiesReducer = (state = initialState, action) => {
         ...state,
         entities: entities,
       };
+    }
 
     case actions.removeProject.start.type: {
       let entities = {};

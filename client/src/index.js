@@ -8,10 +8,9 @@ import createStore from './redux/create-store';
 import SocketDispatcher from './components/socket-dispatcher';
 import App from './components/app';
 import TeamProvider from './components/team-provider';
-import { values } from './utils';
-import styles from './index.css';
 import io from 'socket.io-client';
 import 'normalize.css';
+import './index.css';
 import './favicon.png';
 
 const socket =

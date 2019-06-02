@@ -1,7 +1,6 @@
 import { createThunk, createAction } from 'redan';
 import api from '../api';
 import { unique } from '../utils';
-import { apiRequest } from '../api/utils';
 import { getGoals } from './helpers';
 
 const _getNextToken = response => {
@@ -107,7 +106,7 @@ export const deleteGoal = createThunk('DELETE_GOAL', goal => () =>
 
 export const fetchStories = createThunk(
   'FETCH_STORIES',
-  projects => (dispatch, getState) => {
+  projects => dispatch => {
     const requests = [];
 
     projects.forEach(project => {
