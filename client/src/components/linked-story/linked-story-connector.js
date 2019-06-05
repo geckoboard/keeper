@@ -6,9 +6,9 @@ import LinkedStory from './linked-story';
 const mapDispatchToProps = (dispatch, props) => ({
   onDelete: () =>
     dispatch(
-      actions.removeStoryFromGoal({
+      actions.removeStoriesFromGoal({
         goalId: props.goalId,
-        storyId: props.story.id,
+        storyIds: [props.story.id],
       }),
     ),
 });

@@ -153,11 +153,11 @@ export const addStoryToGoal = createThunk(
   },
 );
 
-export const removeStoryFromGoal = createThunk(
-  'REMOVE_STORY_FROM_GOAL',
-  ({ goalId, storyId }) => (_, getState) => {
+export const removeStoriesFromGoal = createThunk(
+  'REMOVE_STORIES_FROM_GOAL',
+  ({ goalId, storyIds }) => (_, getState) => {
     let { cards } = getGoals(getState()).find(x => x.id === goalId);
-    cards = cards.filter(c => c !== storyId);
+    cards = cards.filter(c => !storyIds.includes(c));
 
     return api.goals.update(goalId, { cards });
   },

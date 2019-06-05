@@ -23,8 +23,20 @@
   margin-right: 0.5rem;
 }
 
+.delete_unfound_button {
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #d6d6d6;
+  margin: 0 0 0 8px;
+  padding: 0;
+}
+
 .delete_button:hover, 
-.delete_button:focus {
+.delete_button:focus, 
+.delete_unfound_button:hover, 
+.delete_unfound_button:focus {
   color: #E63333;
 }
 
@@ -67,7 +79,7 @@
 }
 
 .archived_link {
-  color: #9B9B9B;
+  color: #d6d6d6;
   text-decoration: none;
 }
 

@@ -28,6 +28,7 @@ class Goal extends Component {
     const {
       goal,
       onDelete,
+      onDeleteStories,
       stories,
       loadingStories,
       createDragHandle,
@@ -45,8 +46,8 @@ class Goal extends Component {
       );
     }
 
-    const cards = goal.cards;
-    const unfound = cards.filter(id => !stories.find(s => s.id === id));
+    const cards = goal.cards.filter(id => stories.find(s => s.id === id));
+    const unfound = goal.cards.filter(id => !stories.find(s => s.id === id));
 
     return (
       <div className={styles.container}>
@@ -92,18 +93,26 @@ class Goal extends Component {
           })}
           {!loadingStories && unfound.length > 0 && (
             <span className={styles.archived_count}>
+              Not found:{' '}
               {unfound.map((id, index) => (
                 <span key={id}>
                   <a
                     className={styles.archived_link}
                     target="_blank"
+                    rel="noopener noreferrer"
                     href={`https://app.clubhouse.io/geckoboard/story/${id}`}
                   >
-                    #{id}
+                    (#{id})
                   </a>
                   {index < unfound.length - 1 && ', '}
                 </span>
               ))}
+              <button
+                className={styles.delete_unfound_button}
+                onClick={() => onDeleteStories(unfound)}
+              >
+                <FontAwesomeIcon icon={icons.faTrash} />
+              </button>
             </span>
           )}
         </div>
@@ -121,6 +130,7 @@ Goal.propTypes = {
     title: PropTypes.string,
   }),
   onDelete: PropTypes.func,
+  onDeleteStories: PropTypes.func,
   onChangeTitle: PropTypes.func,
   loadingStories: PropTypes.bool,
   stories: PropTypes.array,

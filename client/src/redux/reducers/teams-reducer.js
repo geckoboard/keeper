@@ -167,7 +167,7 @@ const teamsReducer = (state = initialState, action) => {
         })),
       };
 
-    case actions.removeStoryFromGoal.start.type:
+    case actions.removeStoriesFromGoal.start.type:
       return {
         ...state,
         entities: _updateCurrent(state, team => ({
@@ -179,7 +179,7 @@ const teamsReducer = (state = initialState, action) => {
 
             return {
               ...goal,
-              cards: goal.cards.filter(card => card !== payload.storyId),
+              cards: goal.cards.filter(c => !payload.storyIds.includes(c)),
             };
           }),
         })),

@@ -5,36 +5,13 @@
   margin-bottom: 1rem;
 }
 
-.icon_button {
-  padding: 0;
-  margin: 0;
-  background: none;
-  border: none;
-  box-shadow: none;
+.icon {
   position: absolute;
   left: 0;
-  appearance: none;
-  color: #9B9B9B;
-  cursor: pointer;
   min-width: 20px;
   min-height: 20px;
-}
-
-.icon {
   opacity: 0.6;
-}
-
-.delete {
-  color: #E63333;
-  display: none;
-}
-
-.icon_button:hover .icon, .icon_button:focus .icon {
-  display: none;
-}
-
-.icon_button:hover .delete, .icon_button:focus .delete {
-  display: inline-block;
+  color: #9B9B9B;
 }
 
 .story_icon_completed {
@@ -42,13 +19,31 @@
   opacity: 1;
 }
 
-.id {
+.after {
   font-size: 0.75rem;
-  color: #d6d6d6;
-  text-decoration: none;
   margin-left: 8px;
+}
+
+.id {
+  text-decoration: none;
+  color: #d6d6d6;
 }
 
 .id:hover {
   color: #821EBA;
+}
+
+.delete_button {
+  padding: 0;
+  margin: 0 0 0 8px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: #d6d6d6;
+  appearance: none;
+  cursor: pointer;
+}
+
+.delete_button:hover {
+  color: #E63333;
 }
