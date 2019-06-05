@@ -1,11 +1,11 @@
-const storyCreated = require('./storyCreated');
-const storyRenamed = require('./storyRenamed');
-const storyArchived = require('./storyArchived');
-const storyUnarchived = require('./storyUnarchived');
-const storyChangedProject = require('./storyChangedProject');
-const storyMovedToVisibleColumn = require('./storyMovedToVisibleColumn');
-const storyMovedFromVisibleColumn = require('./storyMovedFromVisibleColumn');
-const storyMovedBetweenVisibleColumns = require('./storyMovedBetweenVisibleColumns');
+const storyCreated = require('./story-created');
+const storyRenamed = require('./story-renamed');
+const storyArchived = require('./story-Archived');
+const storyUnarchived = require('./story-unarchived');
+const storyChangedProject = require('./story-changed-project');
+const storyMovedToVisibleColumn = require('./story-moved-to-visible-column');
+const storyMovedFromVisibleColumn = require('./story-moved-from-visible-column');
+const storyMovedBetweenVisibleColumns = require('./story-moved-between-visible-columns');
 
 module.exports = {
   storyCreated,
