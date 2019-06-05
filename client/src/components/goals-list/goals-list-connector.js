@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import GoalsList from './goals-list';
-import Goal from '../goal/goal';
 import { getGoals } from '../../redux/helpers';
 
 const mapStateToProps = state => ({

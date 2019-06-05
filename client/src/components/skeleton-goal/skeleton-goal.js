@@ -2,7 +2,7 @@ import React from 'react';
 import Shimmer from '../shimmer';
 import styles from './skeleton-goal-styles.css';
 
-const SkeletonGoal = props => (
+const SkeletonGoal = () => (
   <Shimmer>
     <div className={styles.container}>
       <div className={styles.title} />

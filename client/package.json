@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --mode development --open",
-    "build": "NODE_ENV=production webpack --mode production",
-    "fix": "node_modules/.bin/prettier --write \"./src/**/*.js\""
+    "build": "NODE_ENV=production webpack --mode production"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +28,9 @@
     "webpack-dev-server": "^3.1.1"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.18",
+    "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "deepmerge": "^3.2.0",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.1",

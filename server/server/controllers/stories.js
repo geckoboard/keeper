@@ -1,6 +1,6 @@
 const request = require('request-promise');
 const Goal = require('../models').goal;
-const updateDataset = require('../scripts/update-dataset');
+const { whitelistStory } = require('./helpers');
 
 const API = 'https://api.clubhouse.io/api/v2';
 const API_KEY = process.env.CLUBHOUSE_API_KEY;
@@ -25,19 +25,6 @@ const _getTeamReadyColumn = teamId => {
   });
 };
 
-const _whitelistStory = story => ({
-  id: story.id,
-  app_url: story.app_url,
-  name: story.name,
-  archived: story.archived,
-  blocked: story.blocked,
-  blocker: story.blocker,
-  started: story.started,
-  completed: story.completed,
-  completed_at: story.completed_at,
-  project_id: story.project_id,
-});
-
 const list = (req, res) => {
   const qs = {
     token: API_KEY,
@@ -56,20 +43,14 @@ const list = (req, res) => {
     .then(stories => {
       res.status(200).send({
         ...stories,
-        data: stories.data.map(_whitelistStory),
+        data: stories.data.map(whitelistStory),
       });
     })
     .catch(error => res.status(400).send(error));
 };
 
-const create = (req, res) => {
-  const options = {
-    uri: `${API}/teams/${req.body.teamId}`,
-    qs: { token: API_KEY },
-    json: true,
-  };
-
-  return _getTeamReadyColumn(req.body.teamId)
+const create = (req, res) =>
+  _getTeamReadyColumn(req.body.teamId)
     .then(column =>
       request({
         method: 'post',
@@ -90,15 +71,11 @@ const create = (req, res) => {
             cards: [...goal.cards, story.id],
           }),
         )
-        .then(goal => {
-          res.status(200).send(_whitelistStory(story));
-          updateDataset(goal.getDataValue('teamId'));
-        }),
+        .then(() => res.status(200).send(whitelistStory(story))),
     )
     .catch(error => {
       res.status(400).send(error);
     });
-};
 
 module.exports = {
   list,

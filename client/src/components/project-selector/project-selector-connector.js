@@ -2,12 +2,6 @@ import { connect } from 'react-redux';
 import ProjectSelector from './project-selector';
 import * as actions from '../../redux/actions';
 
-const loadingState = {
-  loading: true,
-  projects: [],
-  selected: [],
-};
-
 const mapStateToProps = state => {
   const team = state.teams.entities.find(t => t.id === state.teams.current);
 

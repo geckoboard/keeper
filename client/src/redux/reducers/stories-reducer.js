@@ -1,4 +1,5 @@
 import * as actions from '../actions';
+import socketActions from '../socket-actions';
 import { values } from '../../utils';
 
 const initialState = {
@@ -25,7 +26,7 @@ const storiesReducer = (state = initialState, action) => {
         loading: false,
       };
 
-    case actions.storiesReceived.type:
+    case actions.storiesReceived.type: {
       let entities = { ...state.entities };
 
       payload.data.forEach(story => {
@@ -36,6 +37,7 @@ const storiesReducer = (state = initialState, action) => {
         ...state,
         entities: entities,
       };
+    }
 
     case actions.removeProject.start.type: {
       let entities = {};
@@ -60,6 +62,56 @@ const storiesReducer = (state = initialState, action) => {
           [payload.story.id]: payload.story,
         },
       };
+
+    case socketActions.stories.update.type: {
+      let entities = { ...state.entities };
+
+      if (!entities[payload.id]) {
+        return state;
+      }
+
+      entities[payload.id] = payload;
+
+      return {
+        ...state,
+        entities,
+      };
+    }
+
+    case socketActions.stories.create.type:
+      return {
+        ...state,
+        entities: {
+          ...state.entities,
+          [payload.id]: payload,
+        },
+      };
+
+    case socketActions.stories.delete.type: {
+      let entities = { ...state.entities };
+      delete entities[payload];
+
+      return {
+        ...state,
+        entities,
+      };
+    }
+
+    case actions.deleteGoal.start.type: {
+      let entities = { ...state.entities };
+
+      payload.cards
+        .reduce((acc, id) => (entities[id] ? [...acc, entities[id]] : acc), [])
+        .filter(story => story.completed || story.archived)
+        .forEach(story => {
+          delete entities[story.id];
+        });
+
+      return {
+        ...state,
+        entities,
+      };
+    }
 
     default:
       return state;

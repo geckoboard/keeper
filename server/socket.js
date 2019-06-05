@@ -9,7 +9,7 @@ const init = server => {
 const emit = payload => {
   if (!io) {
     throw new Error('Socket has not been initialised');
-  };
+  }
 
   io.emit('socket-event', payload);
 };

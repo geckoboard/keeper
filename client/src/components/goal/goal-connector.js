@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import * as actions from '../../redux/actions';
 import GoalDragWrapper from './goal-drag-wrapper';
 
@@ -23,7 +22,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => ({
   createHandlers: stateProps => ({
-    onDelete: () => dispatch(actions.deleteGoal(props.goal.id)),
+    onDelete: () => dispatch(actions.deleteGoal(props.goal)),
     onChangeOrder: update => dispatch(actions.updateGoalOrder(update)),
     onSaveOrder: () => dispatch(actions.saveGoalOrders(stateProps.teamId)),
     onChangeTitle: title =>

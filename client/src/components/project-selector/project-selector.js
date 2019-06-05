@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as icons from '@fortawesome/free-solid-svg-icons';
 import { times } from '../../utils';
 import Shimmer from '../shimmer';
 import styles from './project-selector-styles.css';
@@ -60,7 +62,7 @@ class ProjectSelector extends Component {
   }
 
   render() {
-    const { loading, onChange, onOpen, projects, selected } = this.props;
+    const { loading, projects, selected } = this.props;
 
     return (
       <div className={styles.container}>
@@ -68,7 +70,10 @@ class ProjectSelector extends Component {
           {selected.length === 1
             ? `${selected.length} project`
             : `${selected.length} projects`}
-          <i className={`fas fa-caret-down ${styles.buttonCaret}`} />
+          <FontAwesomeIcon
+            icon={icons.faCaretDown}
+            className={styles.buttonCaret}
+          />
         </button>
         {this.state.open && (
           <div ref={node => (this.list = node)} className={styles.list}>

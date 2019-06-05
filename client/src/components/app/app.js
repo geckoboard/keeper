@@ -8,7 +8,6 @@ import ProjectSelector from '../project-selector';
 import AddGoalForm from '../add-goal-form';
 import GoalsList from '../goals-list';
 import styles from './app-styles.css';
-import Goal from '../goal/goal';
 import { IconTeamSwitcher } from '../team-switcher';
 
 class App extends Component {
@@ -61,6 +60,7 @@ class App extends Component {
 }
 
 App.propTypes = {
+  init: PropTypes.func,
   setTeam: PropTypes.func,
   team: PropTypes.number,
 };

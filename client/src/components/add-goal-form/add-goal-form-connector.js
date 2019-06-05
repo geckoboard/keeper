@@ -14,7 +14,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = (dispatch, props) => ({
+const mapDispatchToProps = dispatch => ({
   createHandlers: state => ({
     onSubmit: title => {
       dispatch(
