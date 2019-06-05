@@ -6,7 +6,12 @@ const Story = ({ name, id, app_url }) => (
   <div className={styles.container}>
     <span className={styles.title}>{name}</span>
     <div className={styles.meta}>
-      <a className={styles.id} href={app_url} target="_blank">
+      <a
+        className={styles.id}
+        href={app_url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         #{id}
       </a>
     </div>

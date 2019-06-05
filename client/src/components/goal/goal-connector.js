@@ -25,6 +25,13 @@ const mapDispatchToProps = (dispatch, props) => ({
     onDelete: () => dispatch(actions.deleteGoal(props.goal)),
     onChangeOrder: update => dispatch(actions.updateGoalOrder(update)),
     onSaveOrder: () => dispatch(actions.saveGoalOrders(stateProps.teamId)),
+    onDeleteStories: storyIds =>
+      dispatch(
+        actions.removeStoriesFromGoal({
+          goalId: props.goal.id,
+          storyIds,
+        }),
+      ),
     onChangeTitle: title =>
       dispatch(
         actions.updateGoalTitle({
