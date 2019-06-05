@@ -6,6 +6,8 @@ const update = (req, res) => {
 
   const { body } = req;
 
+  console.log('WEBHOOK EVENT', JSON.stringify(body)); // eslint-disable-line
+
   body.actions
     .filter(action => action.entity_type === 'story')
     .forEach(action => {
