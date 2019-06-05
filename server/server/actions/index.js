@@ -13,7 +13,6 @@ module.exports = {
   stories: {
     create: createAction('socket:stories:create'),
     update: createAction('socket:stories:update'),
-    updateProject: createAction('socket:stories:updateProject'),
     delete: createAction('socket:stories:delete'),
   },
 };
