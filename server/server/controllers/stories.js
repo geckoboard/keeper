@@ -25,7 +25,7 @@ const _getTeamReadyColumn = teamId => {
   });
 };
 
-const list = (req, res) => {
+const list = (req, res, next) => {
   const qs = {
     token: API_KEY,
     page_size: 25,
@@ -46,10 +46,10 @@ const list = (req, res) => {
         data: stories.data.map(whitelistStory),
       });
     })
-    .catch(error => res.status(400).send(error));
+    .catch(next);
 };
 
-const create = (req, res) =>
+const create = (req, res, next) =>
   _getTeamReadyColumn(req.body.teamId)
     .then(column =>
       request({
@@ -73,9 +73,7 @@ const create = (req, res) =>
         )
         .then(() => res.status(200).send(whitelistStory(story))),
     )
-    .catch(error => {
-      res.status(400).send(error);
-    });
+    .catch(next);
 
 module.exports = {
   list,

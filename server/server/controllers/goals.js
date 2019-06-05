@@ -2,7 +2,7 @@ const Goal = require('../models').goal;
 const socket = require('../../socket');
 const actions = require('../actions');
 
-const create = (req, res) =>
+const create = (req, res, next) =>
   Goal.create({
     order: req.body.order,
     title: req.body.title,
@@ -18,9 +18,9 @@ const create = (req, res) =>
       );
       res.status(201).send(goal);
     })
-    .catch(error => res.status(400).send(error));
+    .catch(next);
 
-const list = (req, res) =>
+const list = (req, res, next) =>
   Goal.findAll({
     where: {
       teamId: req.params.teamId,
@@ -28,15 +28,15 @@ const list = (req, res) =>
     order: [['order', 'ASC']],
   })
     .then(goals => res.status(200).send(goals))
-    .catch(error => res.status(400).send(error));
+    .catch(next);
 
-const update = (req, res) =>
+const update = (req, res, next) =>
   Goal.findByPk(req.params.goalId)
     .then(goal => {
       if (!goal) {
-        return res.status(404).send({
-          message: 'Goal Not Found',
-        });
+        const err = new Error('Goal Not Found');
+        err.statusCode = 404;
+        throw err;
       }
 
       const { cards, title } = req.body;
@@ -53,17 +53,17 @@ const update = (req, res) =>
       );
       res.status(200).send(goal);
     })
-    .catch(error => res.status(400).send(error));
+    .catch(next);
 
-const destroy = async (req, res) => {
+const destroy = async (req, res, next) => {
   try {
     const { goalId } = req.params;
     const goal = await Goal.findByPk(goalId);
 
     if (!goal) {
-      return res.status(404).send({
-        message: 'Goal Not Found',
-      });
+      const err = new Error('Goal Not Found');
+      err.statusCode = 404;
+      throw err;
     }
 
     const teamId = goal.getDataValue('teamId');
@@ -88,12 +88,12 @@ const destroy = async (req, res) => {
     );
 
     res.status(204).send();
-  } catch (error) {
-    res.status(400).send(error);
+  } catch (err) {
+    next(err);
   }
 };
 
-const updateOrders = async (req, res) => {
+const updateOrders = async (req, res, next) => {
   try {
     const updates = Object.keys(req.body).map(async goalId => {
       const goal = await Goal.findByPk(goalId);
@@ -111,8 +111,8 @@ const updateOrders = async (req, res) => {
       ),
     );
     res.status(204).send();
-  } catch (error) {
-    res.status(400).send(error);
+  } catch (err) {
+    next(err);
   }
 };
 
