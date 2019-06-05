@@ -22,6 +22,21 @@
 .after {
   font-size: 0.75rem;
   margin-left: 8px;
+  white-space: nowrap;
+}
+
+.content {
+  display: flex;
+}
+
+.number {
+  margin-right: 8px;
+  line-height: 1.3;
+}
+
+.name {
+  flex: 1;
+  line-height: 1.3;
 }
 
 .id {
