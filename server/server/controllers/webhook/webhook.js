@@ -17,6 +17,7 @@ const update = (req, res) => {
       handler.registerCase(cases.storyRenamed);
       handler.registerCase(cases.storyArchived);
       handler.registerCase(cases.storyUnarchived);
+      handler.registerCase(cases.storyChangedProject);
       handler.registerCase(cases.storyMovedToVisibleColumn);
       handler.registerCase(cases.storyMovedFromVisibleColumn);
       handler.registerCase(cases.storyMovedBetweenVisibleColumns);
