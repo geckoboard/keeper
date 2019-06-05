@@ -47,3 +47,9 @@
 .delete_button:hover {
   color: #E63333;
 }
+
+@media screen and (max-width: 940px) {
+  .delete_button {
+    display: none;
+  }
+}
