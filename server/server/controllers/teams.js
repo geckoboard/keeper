@@ -3,7 +3,7 @@ const Team = require('../models').team;
 const socket = require('../../socket');
 const actions = require('../actions');
 
-const list = (req, res) =>
+const list = (req, res, next) =>
   Team.findAll({
     order: [['title', 'ASC']],
     include: [
@@ -14,9 +14,9 @@ const list = (req, res) =>
     ],
   })
     .then(teams => res.status(200).send(teams))
-    .catch(error => res.status(400).send(error));
+    .catch(next);
 
-const update = (req, res) =>
+const update = (req, res, next) =>
   Team.findByPk(req.params.teamId, {
     include: [
       {
@@ -27,9 +27,9 @@ const update = (req, res) =>
   })
     .then(team => {
       if (!team) {
-        return res.status(404).send({
-          message: 'Team Not Found',
-        });
+        const err = new Error('Team Not Found');
+        err.statusCode = 404;
+        throw err;
       }
 
       const { projects } = req.body;
@@ -42,7 +42,7 @@ const update = (req, res) =>
       socket.emit(actions.teams.update(team, req.header('X-Socket-Session')));
       return res.status(200).send(team);
     })
-    .catch(error => res.status(400).send(error));
+    .catch(next);
 
 module.exports = {
   list,
