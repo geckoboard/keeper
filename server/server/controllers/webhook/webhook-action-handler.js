@@ -1,6 +1,6 @@
 const { getStory } = require('../helpers');
 
-class Handler {
+class WebhookActionHandler {
   constructor() {
     this.cases = [];
     this.story = null;
@@ -35,4 +35,4 @@ class Handler {
   }
 }
 
-module.exports = Handler;
+module.exports = WebhookActionHandler;

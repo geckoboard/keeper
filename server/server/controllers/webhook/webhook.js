@@ -1,5 +1,5 @@
 const cases = require('./cases');
-const Handler = require('./handler');
+const WebhookActionHandler = require('./webhook-action-handler');
 
 const update = (req, res) => {
   res.status(200).send();
@@ -9,7 +9,7 @@ const update = (req, res) => {
   body.actions
     .filter(action => action.entity_type === 'story')
     .forEach(action => {
-      const handler = new Handler();
+      const handler = new WebhookActionHandler();
 
       handler.registerCase(cases.storyCreated);
       handler.registerCase(cases.storyRenamed);
