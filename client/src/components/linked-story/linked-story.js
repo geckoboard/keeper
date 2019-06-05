@@ -33,20 +33,25 @@ const LinkedStory = ({ story, index, onDelete }) => {
   return (
     <div className={styles.story}>
       <FontAwesomeIcon icon={getIcon(story)} className={getClassName(story)} />
-      {index}. {story.name}
-      <span className={styles.after}>
-        <a
-          className={styles.id}
-          href={story.app_url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          (#{story.id})
-        </a>
-        <button className={styles.delete_button} onClick={onDelete}>
-          <FontAwesomeIcon icon={icons.faTrash} />
-        </button>
-      </span>
+      <div className={styles.content}>
+        <div className={styles.number}>{index}.</div>
+        <div className={styles.name}>
+          {story.name}
+          <span className={styles.after}>
+            <a
+              className={styles.id}
+              href={story.app_url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              (#{story.id})
+            </a>
+            <button className={styles.delete_button} onClick={onDelete}>
+              <FontAwesomeIcon icon={icons.faTrash} />
+            </button>
+          </span>
+        </div>
+      </div>
     </div>
   );
 };

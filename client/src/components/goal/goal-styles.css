@@ -14,6 +14,10 @@
   cursor: -webkit-grab;
 }
 
+.stories_list {
+  padding: 10px 0 0 32px;
+}
+
 .delete_button, .edit_button {
   appearance: none;
   cursor: pointer;
