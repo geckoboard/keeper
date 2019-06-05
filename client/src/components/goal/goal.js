@@ -45,8 +45,8 @@ class Goal extends Component {
       );
     }
 
-    const cards = goal.cards;
-    const unfound = cards.filter(id => !stories.find(s => s.id === id));
+    const cards = goal.cards.filter(id => stories.find(s => s.id === id));
+    const unfound = goal.cards.filter(id => !stories.find(s => s.id === id));
 
     return (
       <div className={styles.container}>
