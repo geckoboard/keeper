@@ -53,32 +53,6 @@ const mapDispatchToProps = dispatch => ({
           }
           return;
 
-        case 'socket:stories:updateProject': {
-          const wasInProjects = stateProps.projects.includes(payload.from);
-          const isInProjects = stateProps.projects.includes(payload.to);
-
-          if (!wasInProjects && !isInProjects) {
-            return;
-          }
-
-          if (wasInProjects && isInProjects) {
-            dispatch(socketActions.stories.update(payload.story));
-            return;
-          }
-
-          if (isInProjects && !wasInProjects) {
-            dispatch(socketActions.stories.create(payload.story));
-            return;
-          }
-
-          if (!isInProjects && wasInProjects) {
-            dispatch(socketActions.stories.delete(payload.story.id));
-            return;
-          }
-
-          return;
-        }
-
         case 'socket:stories:delete':
           dispatch(socketActions.stories.delete(payload));
           return;
