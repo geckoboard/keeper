@@ -13,9 +13,16 @@
   flex: 1;
   cursor: -webkit-grab;
 }
+.actions {
+  opacity: 0;
+}
+
+.container:hover .actions{
+  opacity: 1;
+}
 
 .stories_list {
-  padding: 10px 0 0 32px;
+  padding-left: 32px;
 }
 
 .delete_button, .edit_button {

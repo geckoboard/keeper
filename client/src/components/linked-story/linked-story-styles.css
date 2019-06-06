@@ -1,8 +1,7 @@
 .story {
   color: #4a4a4a;
-  padding-left: 2rem;
   position: relative;
-  margin-bottom: 1rem;
+  padding: 0.5rem 0 0.5rem 2rem;
 }
 
 .icon {
@@ -20,9 +19,14 @@
 }
 
 .after {
+  opacity: 0;
   font-size: 0.75rem;
   margin-left: 8px;
   white-space: nowrap;
+}
+
+.story:hover .after {
+  opacity: 1;
 }
 
 .content {
@@ -41,7 +45,7 @@
 
 .id {
   text-decoration: none;
-  color: #d6d6d6;
+  color: #9B9B9B;
 }
 
 .id:hover {
@@ -54,7 +58,7 @@
   background: none;
   border: none;
   box-shadow: none;
-  color: #d6d6d6;
+  color: #9B9B9B;
   appearance: none;
   cursor: pointer;
 }
