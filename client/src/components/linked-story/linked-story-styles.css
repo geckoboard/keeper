@@ -11,11 +11,15 @@
   min-height: 20px;
   opacity: 0.6;
   color: #9B9B9B;
+  margin-top: 3px;
+  font-size: 14px;
 }
 
 .story_icon_completed {
   color: #38D41C;
   opacity: 1;
+  margin-top: 1px;
+  font-size: 16px;
 }
 
 .after {
@@ -49,7 +53,7 @@
 }
 
 .id:hover {
-  color: #821EBA;
+  color: #4A4A4A;
 }
 
 .delete_button {

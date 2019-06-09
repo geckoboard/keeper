@@ -46,7 +46,6 @@ class AddGoalForm extends Component {
 
   render() {
     const { showForm } = this.state;
-    const { isEmpty } = this.props;
 
     if (!showForm) {
       return (
@@ -55,14 +54,11 @@ class AddGoalForm extends Component {
             className={styles.add_goal_button}
             onClick={() => this.setState({ showForm: true })}
           >
-            Add Goal
+            New goal
           </button>
-          {isEmpty && (
-            <span className={styles.empty}>
-              {`👈 Let's get started! '`}
-              <span className={styles.hint}>{`(press "n")`}</span>
-            </span>
-          )}
+          <span className={styles.empty}>
+            <span className={styles.hint}>{`or press "n"`}</span>
+          </span>
         </div>
       );
     }
@@ -77,7 +73,6 @@ class AddGoalForm extends Component {
 }
 
 AddGoalForm.propTypes = {
-  isEmpty: PropTypes.bool,
   onSubmit: PropTypes.func,
 };
 

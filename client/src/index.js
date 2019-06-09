@@ -19,11 +19,14 @@ const socket =
 const store = createStore();
 
 library.add(
+  icons.faBroom,
   icons.faCaretDown,
   icons.faCheck,
+  icons.faChevronLeft,
   icons.faExclamationTriangle,
   icons.faMinusCircle,
   icons.faPencilAlt,
+  icons.faPlus,
   icons.faTrash,
   icons.faTruck,
 );

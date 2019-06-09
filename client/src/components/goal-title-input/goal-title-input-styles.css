@@ -1,3 +1,7 @@
+.goalTitleInput {
+  width: 100%;
+}
+
 .input {
   appearance: none;
   display: block;
@@ -13,7 +17,8 @@
 .save_button {
   appearance: none;
   border: none;
-  background: #821EBA;
+  background: #4A4A4A;
+  border: 2px solid #4A4A4A;
   color: #FFFFFF;
   font-size: 0.875rem;
   border-radius: 4px;
@@ -24,9 +29,9 @@
 
 .cancel_button {
   appearance: none;
-  border: 1px solid #821EBA;
-  background: #FFFFFF;
-  color: #821EBA;
+  border: 2px solid #4A4A4A;
+  background: none;
+  color: #4A4A4A;
   font-size: 0.875rem;
   border-radius: 4px;
   padding: 0.5rem 1rem;

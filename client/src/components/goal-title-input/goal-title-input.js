@@ -48,7 +48,7 @@ class GoalTitleInput extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className={styles.goalTitleInput}>
         <input
           type="text"
           placeholder="Enter a goal name"

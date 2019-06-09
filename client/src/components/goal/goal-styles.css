@@ -25,7 +25,7 @@
   padding-left: 32px;
 }
 
-.delete_button, .edit_button {
+.check_button, .edit_button {
   appearance: none;
   cursor: pointer;
   border: none;
@@ -44,8 +44,11 @@
   padding: 0;
 }
 
-.delete_button:hover, 
-.delete_button:focus, 
+.check_button:hover, 
+.check_button:focus {
+  color: #38D41C;
+}
+
 .delete_unfound_button:hover, 
 .delete_unfound_button:focus {
   color: #E63333;
@@ -53,7 +56,7 @@
 
 .edit_button:hover,
 .edit_button:focus {
-  color: #821EBA;
+  color: #4A4A4A;
 }
 
 .drag_container {
@@ -95,7 +98,7 @@
 }
 
 .archived_link:hover {
-  color: #821EBA;
+  color: #4A4A4A;
 }
 
 .skeleton_story_container {

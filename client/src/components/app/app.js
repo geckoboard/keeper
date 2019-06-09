@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-import NavBar from '../navbar';
-import StoriesList from '../stories-list';
-import ProjectSelector from '../project-selector';
+import Sidebar from '../sidebar';
 import AddGoalForm from '../add-goal-form';
 import GoalsList from '../goals-list';
 import styles from './app-styles.css';
-import { IconTeamSwitcher } from '../team-switcher';
+import { IconTeamSwitcher, DropdownTeamSwitcher } from '../team-switcher';
 
 class App extends Component {
   componentDidMount() {
@@ -34,15 +32,13 @@ class App extends Component {
 
     return (
       <div>
-        <NavBar team={team} />
         {team ? (
           <div className={styles.container}>
             <div className={styles.sidebar}>
-              <ProjectSelector />
-              <StoriesList />
+              <Sidebar />
             </div>
             <div className={styles.content}>
-              <h2 className={styles.goals_title}>Goals</h2>
+              {!!team && <DropdownTeamSwitcher />}
               <GoalsList />
               <div className={styles.add_goal_form}>
                 <AddGoalForm />

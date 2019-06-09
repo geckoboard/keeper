@@ -32,7 +32,9 @@ const getClassName = story =>
 const LinkedStory = ({ story, index, onDelete }) => {
   return (
     <div className={styles.story}>
-      <FontAwesomeIcon icon={getIcon(story)} className={getClassName(story)} />
+      <span className={getClassName(story)}>
+        <FontAwesomeIcon icon={getIcon(story)} />
+      </span>
       <div className={styles.content}>
         <div className={styles.number}>{index}.</div>
         <div className={styles.name}>

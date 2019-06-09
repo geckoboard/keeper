@@ -24,6 +24,17 @@ class Goal extends Component {
     this.setState({ edit: false });
   }
 
+  handleSweep() {
+    const { goal, stories, onDeleteStories } = this.props;
+    const toClean = goal.cards.filter(id => {
+      const story = stories.find(s => s.id === id);
+
+      return !story || story.completed || story.archived;
+    });
+
+    onDeleteStories(toClean);
+  }
+
   render() {
     const {
       goal,
@@ -34,36 +45,40 @@ class Goal extends Component {
       createDragHandle,
     } = this.props;
 
-    if (this.state.edit) {
-      return (
-        <div className={styles.container}>
-          <GoalTitleInput
-            initialValue={goal.title}
-            onCancel={() => this.setState({ edit: false })}
-            onSubmit={this.handleTitleChange}
-          />
-        </div>
-      );
-    }
-
     const cards = goal.cards.filter(id => stories.find(s => s.id === id));
     const unfound = goal.cards.filter(id => !stories.find(s => s.id === id));
 
     return (
       <div className={styles.container}>
         <div className={styles.titlebar}>
-          {createDragHandle(<span className={styles.title}>{goal.title}</span>)}
-          <div className={styles.actions}>
-            <button
-              onClick={() => this.setState({ edit: true })}
-              className={styles.edit_button}
-            >
-              <FontAwesomeIcon icon={icons.faPencilAlt} />
-            </button>
-            <button onClick={onDelete} className={styles.delete_button}>
-              <FontAwesomeIcon icon={icons.faTrash} />
-            </button>
-          </div>
+          {this.state.edit ? (
+            <GoalTitleInput
+              initialValue={goal.title}
+              onCancel={() => this.setState({ edit: false })}
+              onSubmit={this.handleTitleChange}
+            />
+          ) : (
+            createDragHandle(<span className={styles.title}>{goal.title}</span>)
+          )}
+          {!this.state.edit && (
+            <div className={styles.actions}>
+              <button
+                onClick={() => this.setState({ edit: true })}
+                className={styles.edit_button}
+              >
+                <FontAwesomeIcon icon={icons.faPencilAlt} />
+              </button>
+              <button
+                onClick={() => this.handleSweep()}
+                className={styles.edit_button}
+              >
+                <FontAwesomeIcon icon={icons.faBroom} />
+              </button>
+              <button onClick={onDelete} className={styles.check_button}>
+                <FontAwesomeIcon icon={icons.faCheck} />
+              </button>
+            </div>
+          )}
         </div>
         <div className={styles.stories_list}>
           {cards.length === 0 && <CreateStoryDropdown goal={goal} />}

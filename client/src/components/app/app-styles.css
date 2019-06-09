@@ -1,17 +1,7 @@
 .container {
   display: flex;
-  padding-top: 44px;
   height: 100vh;
   box-sizing: border-box;
-}
-
-.sidebar {
-  background: #F7F6F3;
-  width: 380px;
-  padding: 1rem 1rem 0;
-  box-sizing: border-box;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
 }
 
 .content {
@@ -20,13 +10,6 @@
   box-sizing: border-box;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
-}
-
-.goals_title {
-  margin: 0;
-  font-weight: normal;
-  font-size: 1.75rem;
-  padding: 1.5rem;
 }
 
 .add_goal_form {
