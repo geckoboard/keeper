@@ -21,6 +21,7 @@ const store = createStore();
 library.add(
   icons.faCaretDown,
   icons.faCheck,
+  icons.faChevronLeft,
   icons.faExclamationTriangle,
   icons.faMinusCircle,
   icons.faPencilAlt,

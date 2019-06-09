@@ -4,15 +4,6 @@
   box-sizing: border-box;
 }
 
-.sidebar {
-  background: #F7F6F3;
-  width: 380px;
-  padding: 1rem 1rem 0;
-  box-sizing: border-box;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
 .content {
   flex: 1;
   padding: 1rem;
