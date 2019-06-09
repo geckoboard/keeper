@@ -24,6 +24,7 @@ library.add(
   icons.faExclamationTriangle,
   icons.faMinusCircle,
   icons.faPencilAlt,
+  icons.faPlus,
   icons.faTrash,
   icons.faTruck,
 );

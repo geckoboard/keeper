@@ -1,9 +1,10 @@
 .add_goal_button {
   appearance: none;
   border: none;
-  background: #821EBA;
-  color: #FFFFFF;
-  font-size: 0.875rem;
+  border: 2px solid #4A4A4A;
+  background: none;
+  color: #4A4A4A;
+  font-size: 1rem;
   border-radius: 4px;
   width: 145px;
   padding: 0.5rem;
