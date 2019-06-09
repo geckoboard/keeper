@@ -60,8 +60,8 @@ class Goal extends Component {
             >
               <FontAwesomeIcon icon={icons.faPencilAlt} />
             </button>
-            <button onClick={onDelete} className={styles.delete_button}>
-              <FontAwesomeIcon icon={icons.faTrash} />
+            <button onClick={onDelete} className={styles.check_button}>
+              <FontAwesomeIcon icon={icons.faCheck} />
             </button>
           </div>
         </div>
