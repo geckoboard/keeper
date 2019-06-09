@@ -5,11 +5,19 @@ import StoriesList from '../stories-list';
 import ProjectSelector from '../project-selector';
 import styles from './sidebar.css';
 
+const isOpen = () => {
+  return localStorage.getItem('sidebar_open') !== 'CLOSED';
+};
+
+const storeOpenState = isOpen => {
+  localStorage.setItem('sidebar_open', isOpen ? 'OPEN' : 'CLOSED');
+};
+
 class Sidebar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { open: true, scrolled: false };
+    this.state = { open: isOpen(), scrolled: false };
     this.toggle = this.toggle.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
   }
@@ -25,7 +33,9 @@ class Sidebar extends Component {
   }
 
   toggle() {
-    this.setState({ open: !this.state.open });
+    const open = !this.state.open;
+    this.setState({ open });
+    storeOpenState(open);
   }
 
   render() {
