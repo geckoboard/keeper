@@ -62,6 +62,8 @@ LinkedStory.propTypes = {
   story: PropTypes.shape({
     name: PropTypes.string,
   }),
+  goalId: PropTypes.number,
+  id: PropTypes.number,
   index: PropTypes.number,
   onDelete: PropTypes.func,
 };

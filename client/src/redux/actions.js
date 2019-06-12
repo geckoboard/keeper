@@ -42,6 +42,7 @@ const _completedInLastTwoWeeks = response => {
 export const setGoals = createAction('SET_GOALS');
 export const storiesReceived = createAction('STORIES_RECEIVED');
 export const updateGoalOrder = createAction('UPDATE_GOAL_ORDER');
+export const updateStoryOrder = createAction('UPDATE_STORY_ORDER');
 
 export const fetchTeams = createThunk('FETCH_TEAMS', () => () =>
   api.teams.get(),
