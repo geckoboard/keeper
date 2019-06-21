@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
 import styles from './dropdown-team-switcher-styles.css';
+import KeyListener from '../key-listener';
 
 const DropdownTeamSwitcher = ({ onChange, teams, value }) => (
   <div className={styles.DropdownTeamSwitcher}>
+    <KeyListener character="t" onKeyPress={() => onChange()} />
     <div className={styles.container}>
       <h2 className={styles.title}>
         Team {teams.find(t => t.id === value).title}

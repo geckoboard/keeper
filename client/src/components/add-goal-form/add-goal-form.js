@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import GoalTitleInput from '../goal-title-input';
 import autobind from 'react-autobind';
 import styles from './add-goal-form-styles.css';
+import KeyListener from '../key-listener';
 
 class AddGoalForm extends Component {
   constructor(props) {
@@ -12,23 +13,6 @@ class AddGoalForm extends Component {
     this.state = {
       showForm: false,
     };
-  }
-
-  componentDidMount() {
-    document.addEventListener('keyup', this.handleKeypress);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keyup', this.handleKeypress);
-  }
-
-  handleKeypress(event) {
-    if (
-      event.key.toLowerCase() === 'n' &&
-      event.target.tagName.toLowerCase() !== 'input'
-    ) {
-      this.setState({ showForm: true });
-    }
   }
 
   handleSubmit(value) {
@@ -50,6 +34,10 @@ class AddGoalForm extends Component {
     if (!showForm) {
       return (
         <div>
+          <KeyListener
+            character="n"
+            onKeyPress={() => this.setState({ showForm: true })}
+          />
           <button
             className={styles.add_goal_button}
             onClick={() => this.setState({ showForm: true })}
