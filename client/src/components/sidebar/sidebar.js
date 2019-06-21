@@ -4,6 +4,7 @@ import * as icons from '@fortawesome/free-solid-svg-icons';
 import StoriesList from '../stories-list';
 import ProjectSelector from '../project-selector';
 import styles from './sidebar.css';
+import KeyListener from '../key-listener';
 
 const isOpen = () => {
   return localStorage.getItem('sidebar_open') !== 'CLOSED';
@@ -47,6 +48,7 @@ class Sidebar extends Component {
           scrolled ? styles.scrolled : styles.notScrolled
         }`}
       >
+        <KeyListener character="s" onKeyPress={this.toggle} />
         <div className={styles.sidebar__content}>
           <div className={styles.sidebar__header}>
             <ProjectSelector />

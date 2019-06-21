@@ -9,8 +9,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, props) => ({
   createHandlers: stateProps => ({
     onChange: id => {
-      const team = stateProps.teams.find(t => t.id === id);
-      props.history.push(`/${team.slug}`);
+      if (id) {
+        const team = stateProps.teams.find(t => t.id === id);
+        props.history.push(`/${team.slug}`);
+      } else {
+        props.history.push(`/`);
+      }
     },
   }),
 });
