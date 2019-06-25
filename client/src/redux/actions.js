@@ -52,6 +52,10 @@ export const fetchProjects = createThunk('FETCH_PROJECTS', () => () =>
   api.projects.get(),
 );
 
+export const fetchMembers = createThunk('FETCH_MEMBERS', () => () =>
+  api.members.get(),
+);
+
 export const addProject = createThunk(
   'ADD_PROJECT',
   project => (dispatch, getState) => {

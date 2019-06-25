@@ -14,6 +14,13 @@ const whitelistStory = story => ({
   project_id: story.project_id,
 });
 
+const whitelistMember = member => ({
+  id: member.id,
+  profile: {
+    name: member.profile.name,
+  },
+});
+
 const getStory = id =>
   request({
     qs: { token: API_KEY },
@@ -67,6 +74,7 @@ const isStoryDone = story => story.completed;
 
 module.exports = {
   whitelistStory,
+  whitelistMember,
   getStory,
   getWorkflowState,
   isStoryReadyOrDoing,
