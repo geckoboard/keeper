@@ -1,11 +1,9 @@
 const request = require('request-promise');
-
-const API = 'https://api.clubhouse.io/api/v2';
-const API_KEY = process.env.CLUBHOUSE_API_KEY;
+const { API_URL, API_KEY } = require('./constants');
 
 const list = (req, res, next) =>
   request({
-    uri: `${API}/projects`,
+    uri: `${API_URL}/projects`,
     qs: { token: API_KEY },
     json: true,
   })
