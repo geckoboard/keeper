@@ -9,12 +9,14 @@ const mapStateToProps = (state, props) => {
     story: { owner_ids = [] },
   } = props;
 
-  const ownerNames = owner_ids.map(id => {
+  const ownerNames = owner_ids.reduce((owners, id) => {
     const member = members.byId[id];
-    if (!member) return null;
+    if (member) {
+      owners.push(member.profile.name);
+    }
 
-    return member.profile.name;
-  });
+    return owners;
+  }, []);
 
   return { ownerNames };
 };

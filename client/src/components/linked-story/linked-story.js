@@ -47,8 +47,16 @@ const renderOwners = ownerNames => {
 };
 
 const LinkedStory = props => {
-  const { story, index, ownerNames, connectDragSource, onDelete } = props;
-  const doRenderOwners = !story.completed && !!ownerNames.length;
+  const {
+    story,
+    index,
+    ownerNames,
+    showStoryOwners,
+    connectDragSource,
+    onDelete,
+  } = props;
+  const doRenderOwners =
+    showStoryOwners && !story.completed && !!ownerNames.length;
 
   return (
     <div className={styles.story}>
@@ -91,6 +99,7 @@ LinkedStory.propTypes = {
   id: PropTypes.number,
   index: PropTypes.number,
   ownerNames: PropTypes.arrayOf(PropTypes.string),
+  showStoryOwners: PropTypes.bool,
   connectDragSource: PropTypes.func,
   onDelete: PropTypes.func,
 };

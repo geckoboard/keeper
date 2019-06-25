@@ -5,7 +5,7 @@ const initialState = {
   byId: {},
 };
 
-const projectsReducer = (state = initialState, action) => {
+const membersReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -33,4 +33,4 @@ const projectsReducer = (state = initialState, action) => {
   }
 };
 
-export default projectsReducer;
+export default membersReducer;
