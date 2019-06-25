@@ -29,7 +29,8 @@ const getClassName = story =>
     ? `${styles.icon} ${styles.story_icon_completed}`
     : styles.icon;
 
-const LinkedStory = ({ story, index, onDelete }) => {
+const LinkedStory = props => {
+  const { story, index, connectDragSource, onDelete } = props;
   return (
     <div className={styles.story}>
       <span className={getClassName(story)}>
@@ -38,7 +39,9 @@ const LinkedStory = ({ story, index, onDelete }) => {
       <div className={styles.content}>
         <div className={styles.number}>{index}.</div>
         <div className={styles.name}>
-          {story.name}
+          {connectDragSource(
+            <span className={styles.dragHandle}>{story.name}</span>,
+          )}
           <span className={styles.after}>
             <a
               className={styles.id}
@@ -62,7 +65,10 @@ LinkedStory.propTypes = {
   story: PropTypes.shape({
     name: PropTypes.string,
   }),
+  goalId: PropTypes.number,
+  id: PropTypes.number,
   index: PropTypes.number,
+  connectDragSource: PropTypes.func,
   onDelete: PropTypes.func,
 };
 

@@ -213,6 +213,32 @@ const teamsReducer = (state = initialState, action) => {
         }),
       };
 
+    case actions.updateStoryOrder.type:
+      const { id: cardIdToMove, goalId, to: toIndex } = payload;
+
+      return {
+        ...state,
+        entities: _updateCurrent(state, team => ({
+          ...team,
+          goals: team.goals.map(goal => {
+            if (goal.id !== goalId) {
+              return goal;
+            }
+
+            // Remove ID to re-order
+            let cards = goal.cards.filter(c => c !== cardIdToMove);
+
+            // Add ID back in correct place
+            cards.splice(toIndex - 1, 0, cardIdToMove);
+
+            return {
+              ...goal,
+              cards: cards,
+            };
+          }),
+        })),
+      };
+
     case socketActions.goals.updateOrders.type:
       return {
         ...state,

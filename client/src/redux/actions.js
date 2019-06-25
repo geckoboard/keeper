@@ -42,6 +42,7 @@ const _completedInLastTwoWeeks = response => {
 export const setGoals = createAction('SET_GOALS');
 export const storiesReceived = createAction('STORIES_RECEIVED');
 export const updateGoalOrder = createAction('UPDATE_GOAL_ORDER');
+export const updateStoryOrder = createAction('UPDATE_STORY_ORDER');
 
 export const fetchTeams = createThunk('FETCH_TEAMS', () => () =>
   api.teams.get(),
@@ -159,6 +160,14 @@ export const removeStoriesFromGoal = createThunk(
     let { cards } = getGoals(getState()).find(x => x.id === goalId);
     cards = cards.filter(c => !storyIds.includes(c));
 
+    return api.goals.update(goalId, { cards });
+  },
+);
+
+export const saveStoryOrders = createThunk(
+  'SAVE_STORY_ORDERS',
+  goalId => (_, getState) => {
+    let { cards } = getGoals(getState()).find(x => x.id === goalId);
     return api.goals.update(goalId, { cards });
   },
 );
