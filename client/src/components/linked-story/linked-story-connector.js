@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as actions from '../../redux/actions';
-import LinkedStory from './linked-story';
+import LinkedStoryDragWrapper from './linkedstory-drag-wrapper';
 
 const mapDispatchToProps = (dispatch, props) => ({
   onDelete: () =>
@@ -11,12 +11,13 @@ const mapDispatchToProps = (dispatch, props) => ({
         storyIds: [props.story.id],
       }),
     ),
+  onChangeOrder: update => dispatch(actions.updateStoryOrder(update)),
 });
 
 const LinkedStoryConnector = connect(
   null,
   mapDispatchToProps,
-)(LinkedStory);
+)(LinkedStoryDragWrapper);
 
 LinkedStoryConnector.propTypes = {
   story: PropTypes.shape({

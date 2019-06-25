@@ -89,6 +89,7 @@ class Goal extends Component {
               return (
                 <LinkedStory
                   key={story.id}
+                  id={story.id}
                   story={story}
                   index={index + 1}
                   goalId={goal.id}

@@ -1,3 +1,7 @@
+.story_drag_container {
+  padding-left: 10px;
+}
+
 .story {
   color: #4a4a4a;
   position: relative;
@@ -45,6 +49,18 @@
 .name {
   flex: 1;
   line-height: 1.3;
+}
+
+.dragHandle {
+  cursor: -webkit-grab;
+}
+
+.isDragging {
+  opacity: 0;
+}
+
+.isDragging, .isDragging * {
+  cursor: -webkit-grabbing !important;
 }
 
 .id {
