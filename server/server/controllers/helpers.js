@@ -12,6 +12,7 @@ const whitelistStory = story => ({
   completed: story.completed,
   completed_at: story.completed_at,
   project_id: story.project_id,
+  owner_ids: story.owner_ids,
 });
 
 const whitelistMember = member => ({

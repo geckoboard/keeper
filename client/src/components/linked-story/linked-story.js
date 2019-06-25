@@ -68,6 +68,7 @@ LinkedStory.propTypes = {
   goalId: PropTypes.number,
   id: PropTypes.number,
   index: PropTypes.number,
+  ownerNames: PropTypes.arrayOf(PropTypes.string),
   connectDragSource: PropTypes.func,
   onDelete: PropTypes.func,
 };
