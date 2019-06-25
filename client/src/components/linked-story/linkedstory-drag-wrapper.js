@@ -24,11 +24,8 @@ const LinkedStoryDragWrapper = props => {
 
 const linkedCardSource = {
   beginDrag: props => props,
-
-  endDrag: (props, monitor) => {
-    if (monitor.didDrop()) {
-      //TODO: Save
-    }
+  endDrag: props => {
+    props.onSaveOrder();
   },
 };
 

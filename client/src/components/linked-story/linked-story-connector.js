@@ -4,6 +4,7 @@ import * as actions from '../../redux/actions';
 import LinkedStoryDragWrapper from './linkedstory-drag-wrapper';
 
 const mapDispatchToProps = (dispatch, props) => ({
+  onSaveOrder: () => dispatch(actions.saveStoryOrders(props.goalId)),
   onDelete: () =>
     dispatch(
       actions.removeStoriesFromGoal({

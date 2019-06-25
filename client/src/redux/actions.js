@@ -164,6 +164,14 @@ export const removeStoriesFromGoal = createThunk(
   },
 );
 
+export const saveStoryOrders = createThunk(
+  'SAVE_STORY_ORDERS',
+  goalId => (_, getState) => {
+    let { cards } = getGoals(getState()).find(x => x.id === goalId);
+    return api.goals.update(goalId, { cards });
+  },
+);
+
 export const setTeam = createThunk('SET_TEAM', id => (dispatch, getState) => {
   const state = getState();
   const team = state.teams.entities.find(t => t.id === id);
