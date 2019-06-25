@@ -51,6 +51,29 @@
   line-height: 1.3;
 }
 
+.ownerList {
+  padding: 0 5px;
+}
+
+.owner {
+  margin: 0 0 0 5px;
+}
+
+.owner .initials {
+  box-sizing: border-box;
+  display: inline-block;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 3px;
+  background: #9B9B9B;
+  opacity: 0.5;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+
 .dragHandle {
   cursor: -webkit-grab;
 }
