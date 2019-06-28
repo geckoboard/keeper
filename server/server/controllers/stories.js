@@ -1,14 +1,12 @@
 const request = require('request-promise');
 const Goal = require('../models').goal;
 const { whitelistStory } = require('./helpers');
-
-const API = 'https://api.clubhouse.io/api/v2';
-const API_KEY = process.env.CLUBHOUSE_API_KEY;
+const { API_URL, API_KEY } = require('./constants');
 
 const _getTeamReadyColumn = teamId => {
   const options = {
     qs: { token: API_KEY },
-    uri: `${API}/teams/${teamId}`,
+    uri: `${API_URL}/teams/${teamId}`,
   };
 
   return request(options).then(response => {
@@ -34,7 +32,7 @@ const list = (req, res, next) => {
   };
 
   const options = {
-    uri: `${API}/search/stories`,
+    uri: `${API_URL}/search/stories`,
     qs,
     json: true,
   };
@@ -54,7 +52,7 @@ const create = (req, res, next) =>
     .then(column =>
       request({
         method: 'post',
-        uri: `${API}/stories`,
+        uri: `${API_URL}/stories`,
         qs: { token: API_KEY },
         body: {
           name: req.body.name,

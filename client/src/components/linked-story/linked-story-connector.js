@@ -3,6 +3,24 @@ import PropTypes from 'prop-types';
 import * as actions from '../../redux/actions';
 import LinkedStoryDragWrapper from './linkedstory-drag-wrapper';
 
+const mapStateToProps = (state, props) => {
+  const { members } = state;
+  const {
+    story: { owner_ids = [] },
+  } = props;
+
+  const ownerNames = owner_ids.reduce((owners, id) => {
+    const member = members.byId[id];
+    if (member) {
+      owners.push(member.profile.name);
+    }
+
+    return owners;
+  }, []);
+
+  return { ownerNames };
+};
+
 const mapDispatchToProps = (dispatch, props) => ({
   onSaveOrder: () => dispatch(actions.saveStoryOrders(props.goalId)),
   onDelete: () =>
@@ -16,7 +34,7 @@ const mapDispatchToProps = (dispatch, props) => ({
 });
 
 const LinkedStoryConnector = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(LinkedStoryDragWrapper);
 

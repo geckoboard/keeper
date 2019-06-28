@@ -1,7 +1,5 @@
 const request = require('request-promise');
-
-const API = 'https://api.clubhouse.io/api/v2';
-const API_KEY = process.env.CLUBHOUSE_API_KEY;
+const { API_URL, API_KEY } = require('./constants');
 
 const whitelistStory = story => ({
   id: story.id,
@@ -14,18 +12,26 @@ const whitelistStory = story => ({
   completed: story.completed,
   completed_at: story.completed_at,
   project_id: story.project_id,
+  owner_ids: story.owner_ids,
+});
+
+const whitelistMember = member => ({
+  id: member.id,
+  profile: {
+    name: member.profile.name,
+  },
 });
 
 const getStory = id =>
   request({
     qs: { token: API_KEY },
-    uri: `${API}/stories/${id}`,
+    uri: `${API_URL}/stories/${id}`,
   }).then(story => JSON.parse(story));
 
 const getWorkflowState = id =>
   request({
     qs: { token: API_KEY },
-    uri: `${API}/workflows`,
+    uri: `${API_URL}/workflows`,
   })
     .then(state => JSON.parse(state))
     .then(workflows => {
@@ -69,6 +75,7 @@ const isStoryDone = story => story.completed;
 
 module.exports = {
   whitelistStory,
+  whitelistMember,
   getStory,
   getWorkflowState,
   isStoryReadyOrDoing,

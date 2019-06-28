@@ -29,8 +29,35 @@ const getClassName = story =>
     ? `${styles.icon} ${styles.story_icon_completed}`
     : styles.icon;
 
+const getInitials = name => {
+  return name
+    .split(' ')
+    .map(n => n.slice(0, 1).toUpperCase())
+    .join('');
+};
+
+const renderOwners = ownerNames => {
+  return ownerNames.map((name, index) => {
+    return (
+      <span className={styles.owner} key={index}>
+        <span className={styles.initials}>{getInitials(name)}</span>
+      </span>
+    );
+  });
+};
+
 const LinkedStory = props => {
-  const { story, index, connectDragSource, onDelete } = props;
+  const {
+    story,
+    index,
+    ownerNames,
+    showStoryOwners,
+    connectDragSource,
+    onDelete,
+  } = props;
+  const doRenderOwners =
+    showStoryOwners && !story.completed && !!ownerNames.length;
+
   return (
     <div className={styles.story}>
       <span className={getClassName(story)}>
@@ -41,6 +68,9 @@ const LinkedStory = props => {
         <div className={styles.name}>
           {connectDragSource(
             <span className={styles.dragHandle}>{story.name}</span>,
+          )}
+          {doRenderOwners && (
+            <span className={styles.ownerList}>{renderOwners(ownerNames)}</span>
           )}
           <span className={styles.after}>
             <a
@@ -68,6 +98,8 @@ LinkedStory.propTypes = {
   goalId: PropTypes.number,
   id: PropTypes.number,
   index: PropTypes.number,
+  ownerNames: PropTypes.arrayOf(PropTypes.string),
+  showStoryOwners: PropTypes.bool,
   connectDragSource: PropTypes.func,
   onDelete: PropTypes.func,
 };

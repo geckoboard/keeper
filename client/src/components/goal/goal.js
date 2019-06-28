@@ -40,6 +40,7 @@ class Goal extends Component {
       goal,
       onDelete,
       onDeleteStories,
+      showStoryOwners,
       stories,
       loadingStories,
       createDragHandle,
@@ -93,6 +94,7 @@ class Goal extends Component {
                   story={story}
                   index={index + 1}
                   goalId={goal.id}
+                  showStoryOwners={showStoryOwners}
                 />
               );
             }
@@ -149,6 +151,7 @@ Goal.propTypes = {
   onDeleteStories: PropTypes.func,
   onChangeTitle: PropTypes.func,
   loadingStories: PropTypes.bool,
+  showStoryOwners: PropTypes.bool,
   stories: PropTypes.array,
   createDragHandle: PropTypes.func,
 };

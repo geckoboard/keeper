@@ -1,5 +1,6 @@
 const path = require('path');
 const goalsController = require('../controllers').goals;
+const membersController = require('../controllers').members;
 const projectsController = require('../controllers').projects;
 const storiesController = require('../controllers').stories;
 const teamsController = require('../controllers').teams;
@@ -14,6 +15,8 @@ module.exports = app => {
 
   app.get('/api/teams', teamsController.list);
   app.put('/api/teams/:teamId', teamsController.update);
+
+  app.get('/api/members', membersController.list);
 
   app.get('/api/projects', projectsController.list);
 
