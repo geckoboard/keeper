@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
+import LabelList from '../label-list';
 import styles from './linked-story-styles.css';
 
 const getIcon = story => {
@@ -69,6 +70,7 @@ const LinkedStory = props => {
           {connectDragSource(
             <span className={styles.dragHandle}>{story.name}</span>,
           )}
+          <LabelList labels={story.labels} />
           {doRenderOwners && (
             <span className={styles.ownerList}>{renderOwners(ownerNames)}</span>
           )}
@@ -94,6 +96,12 @@ const LinkedStory = props => {
 LinkedStory.propTypes = {
   story: PropTypes.shape({
     name: PropTypes.string,
+    labels: PropTypes.arrayOf(
+      PropTypes.shape({
+        color: PropTypes.string,
+        name: PropTypes.string.isRequired,
+      }),
+    ),
   }),
   goalId: PropTypes.number,
   id: PropTypes.number,
