@@ -52,6 +52,7 @@ const LinkedStory = props => {
     story,
     index,
     ownerNames,
+    showStoryLabels,
     showStoryOwners,
     connectDragSource,
     onDelete,
@@ -70,7 +71,7 @@ const LinkedStory = props => {
           {connectDragSource(
             <span className={styles.dragHandle}>{story.name}</span>,
           )}
-          <LabelList labels={story.labels} />
+          {showStoryLabels && <LabelList labels={story.labels} />}
           {doRenderOwners && (
             <span className={styles.ownerList}>{renderOwners(ownerNames)}</span>
           )}
@@ -107,6 +108,7 @@ LinkedStory.propTypes = {
   id: PropTypes.number,
   index: PropTypes.number,
   ownerNames: PropTypes.arrayOf(PropTypes.string),
+  showStoryLabels: PropTypes.bool,
   showStoryOwners: PropTypes.bool,
   connectDragSource: PropTypes.func,
   onDelete: PropTypes.func,
