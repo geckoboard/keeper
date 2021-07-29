@@ -15,6 +15,15 @@ if (config.use_env_variable) {
   );
 }
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(e => {
+    console.error('Unable to connect to the database:', e);
+  });
+
 const Goal = sequelize.define(
   'goal',
   {
