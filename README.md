@@ -1,5 +1,38 @@
 # keeper
 
+[See keeper in production](https://geckoboard-keeper.herokuapp.com/) (⚠️ Keeper is currently broken)
+
+Keeper helps you set and track team goals... keeper... goal keeper... get it?
+
+It's a simple app that lets you create a set of team goals. Each goal can be assigned a set of Clubhouse cards and Keeper will tell you when those cards are done.
+
+![image](https://user-images.githubusercontent.com/6588325/127516556-04986d8a-5ce7-40d4-b0ab-3232d1771127.png)
+
+## How it works
+
+This repo contains a Node server and a client React app. The server uses a PostgreSQL for storing a list of teams and a set of goals for each team. The server exposes endpoints for:
+
+Local data (teams and goals)
+
+- `GET /api/teams` List all teams
+- `GET /api/teams/:teamId` Get a single team
+- `GET /api/:teamId/goals` List a teams goals
+- `POST /api/:teamId/goals` Create a goal
+- `PUT /api/:teamId/goals` Update a goal
+- `DELETE /api/:teamId/goals` Delete a goal
+- `PUT /api/:teamId/goals/orders` Reorder cards in a goal
+
+It also exposes some endpoints that forward requests to Clubhouse
+
+- `GET /api/members` Get Clubhouse members
+- `GET /api/projects` Get Clubhouse projects
+- `GET /api/stories` Get Clubhouse stories relating to a single team
+- `POST /api/stories` Add a Clubhouse card to the Ready column of a project
+
+And finally it exposes a webhook endpoint that Clubhouse posts to so that the app updates in real time
+
+- `POST /api/webhook` Receives Clubhouse webhooks
+
 ## Setup
 
 This is how to get keeper running on your machine so that you're able to work on it.
