@@ -10,7 +10,7 @@ const DropdownTeamSwitcher = ({ onChange, teams, value }) => (
     <KeyListener character="t" onKeyPress={() => onChange()} />
     <div className={styles.container}>
       <h2 className={styles.title}>
-        Team {teams.find(t => t.id === value).title}
+        {teams.find(t => t.id === value).title}
         <span className={styles.caret}>
           <FontAwesomeIcon icon={icons.faCaretDown} />
         </span>
