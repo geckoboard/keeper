@@ -1,11 +1,17 @@
 import { connect } from 'react-redux';
 import StoriesList from './stories-list';
-import { getGoals } from '../../redux/helpers';
+import { getGoals, getTeamProjects } from '../../redux/helpers';
 
 const mapStateToProps = state => {
   const alreadyAssigned = getGoals(state).reduce(
     (acc, goal) => [...acc, ...goal.cards],
     [],
+  );
+
+  let projects = getTeamProjects(state);
+  const projectColours = projects.reduce(
+    (acc, project) => (project ? { ...acc, [project.id]: project.color } : acc),
+    {},
   );
 
   let stories = Object.keys(state.stories.entities).filter(
@@ -20,6 +26,7 @@ const mapStateToProps = state => {
   return {
     loading: state.stories.loading,
     stories,
+    projectColours,
   };
 };
 

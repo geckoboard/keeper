@@ -5,7 +5,7 @@ import SkeletonStory from '../skeleton-story';
 import { times } from '../../utils';
 import styles from './stories-list-styles.css';
 
-const StoriesList = ({ loading, stories }) => {
+const StoriesList = ({ loading, stories, projectColours }) => {
   if (!loading && stories.length === 0) {
     return (
       <div className={styles.empty_container}>
@@ -20,7 +20,11 @@ const StoriesList = ({ loading, stories }) => {
   return (
     <div>
       {stories.map(story => (
-        <Story key={story.id} {...story} />
+        <Story
+          key={story.id}
+          {...story}
+          colour={projectColours[story.project_id]}
+        />
       ))}
       {loading && (
         <div className={styles.skeleton_container}>
@@ -36,6 +40,7 @@ const StoriesList = ({ loading, stories }) => {
 StoriesList.propTypes = {
   loading: PropTypes.bool,
   stories: PropTypes.array,
+  projectColours: PropTypes.object,
 };
 
 export default StoriesList;

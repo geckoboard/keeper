@@ -1,10 +1,10 @@
 .container {
   width: 100%;
-  background: #FFFFFF;
+  background: #ffffff;
   box-sizing: border-box;
   padding: 1rem;
-  border-radius: 4px;
-  border: 1px solid #DDDDDD;
+  border-radius: 8px;
+  border: 2px solid #dddddd;
   margin-bottom: 0.5rem;
   cursor: -webkit-grab;
 }
@@ -25,10 +25,10 @@
 
 .id {
   font-size: 0.75rem;
-  color: #9B9B9B;
+  color: #9b9b9b;
   text-decoration: none;
 }
 
 .id:hover {
-  color: #4A4A4A;
+  color: #4a4a4a;
 }

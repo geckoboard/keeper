@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './story-styles.css';
 
-const Story = ({ name, id, app_url }) => (
-  <div className={styles.container}>
+const Story = ({ name, id, app_url, colour }) => (
+  <div
+    className={styles.container}
+    style={{
+      'border-color': colour,
+    }}
+  >
     <span className={styles.title}>{name}</span>
     <div className={styles.meta}>
       <a
@@ -22,6 +27,7 @@ Story.propTypes = {
   name: PropTypes.string,
   id: PropTypes.number,
   app_url: PropTypes.string,
+  colour: PropTypes.string,
 };
 
 export default Story;
