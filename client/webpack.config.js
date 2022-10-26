@@ -1,27 +1,27 @@
-const webpack = require('webpack');
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
 const CSSLoader = {
-  loader: "css-loader",
+  loader: 'css-loader',
   options: {
-    modules: true,
     importLoaders: 1,
-    localIdentName: "[name]_[local]_[hash:base64]",
-    sourceMap: true
-  }
+    modules: {
+      mode: 'global',
+      localIdentName: '[local]---[hash:base64:5]',
+    },
+  },
 };
 
 const htmlPlugin = new HtmlWebPackPlugin({
-  template: "./src/index.html",
-  filename: "./index.html"
+  template: './src/index.html',
+  filename: './index.html',
 });
 
 const cssPlugin = new MiniCssExtractPlugin({
-  filename: "[name].css",
-  chunkFilename: "[id].css"
+  filename: '[name].css',
+  chunkFilename: '[id].css',
 });
 
 const plugins = [htmlPlugin];
@@ -50,8 +50,8 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      chunks: 'all'
-    }
+      chunks: 'all',
+    },
   },
   mode: isProd ? 'production' : 'development',
   module: {
@@ -60,21 +60,21 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
       {
         test: /\.css$/,
-        use: isProd 
-          ? [ MiniCssExtractPlugin.loader, CSSLoader ]
-          : [ "style-loader", CSSLoader ],
+        use: isProd
+          ? [MiniCssExtractPlugin.loader, CSSLoader]
+          : ['style-loader', CSSLoader],
       },
       {
         test: /\.(jpg|png)$/,
         use: {
-          loader: "file-loader",
+          loader: 'file-loader',
           options: {
-            name: "images/[name].[ext]",
+            name: 'images/[name].[ext]',
           },
         },
       },
