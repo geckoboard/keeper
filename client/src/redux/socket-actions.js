@@ -1,4 +1,4 @@
-import { createAction } from 'redan';
+import { createAction } from '../redan';
 
 export default {
   teams: {

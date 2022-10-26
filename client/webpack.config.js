@@ -43,7 +43,6 @@ module.exports = {
       'react-dom',
       'react-redux',
       'react-router-dom',
-      'redan',
       'redux',
       'redux-thunk',
     ],

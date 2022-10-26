@@ -1,4 +1,4 @@
-import { createThunk, createAction } from 'redan';
+import { createThunk, createAction } from '../redan';
 import api from '../api';
 import { unique } from '../utils';
 import { getGoals } from './helpers';
