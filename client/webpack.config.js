@@ -53,6 +53,7 @@ module.exports = {
       chunks: 'all'
     }
   },
+  mode: isProd ? 'production' : 'development',
   module: {
     rules: [
       {
