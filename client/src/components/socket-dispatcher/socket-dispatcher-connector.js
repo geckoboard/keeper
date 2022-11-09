@@ -7,7 +7,7 @@ const mapStateToProps = state => {
   const team = state.teams.entities.find(t => t.id === state.teams.current);
 
   return {
-    projects: team ? team.projects : [],
+    shortcutTeams: team ? team.shortcutTeams : [],
   };
 };
 
@@ -42,13 +42,13 @@ const mapDispatchToProps = dispatch => ({
           return;
 
         case 'socket:stories:create':
-          if (stateProps.projects.includes(payload.project_id)) {
+          if (stateProps.shortcutTeams.includes(payload.group_id)) {
             dispatch(socketActions.stories.create(payload));
           }
           return;
 
         case 'socket:stories:update':
-          if (stateProps.projects.includes(payload.project_id)) {
+          if (stateProps.shortcutTeams.includes(payload.group_id)) {
             dispatch(socketActions.stories.update(payload));
           }
           return;

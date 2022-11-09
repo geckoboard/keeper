@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
 import styles from './create-story-dropdown-styles.css';
 
-const CreateStoryDropdown = ({ projects, onChange }) => (
+const CreateStoryDropdown = ({ projects, shortcutTeam, onChange }) => (
   <div className={styles.createStoryDropdown}>
     <span className={styles.createStoryDropdown__plus}>
       <FontAwesomeIcon icon={icons.faPlus} className={styles.buttonCaret} />
@@ -17,7 +17,7 @@ const CreateStoryDropdown = ({ projects, onChange }) => (
           const id = parseInt(e.target.value, 10);
           const project = projects.find(p => p.id === id);
 
-          onChange(project);
+          onChange(project, shortcutTeam);
         }}
       >
         <option disabled value={-1}>
@@ -32,7 +32,7 @@ const CreateStoryDropdown = ({ projects, onChange }) => (
     ) : (
       <button
         className={styles.createStoryDropdown__input}
-        onClick={() => onChange(projects[0])}
+        onClick={() => onChange(projects[0], shortcutTeam)}
       >
         Create a Clubhouse story
       </button>
@@ -46,6 +46,7 @@ CreateStoryDropdown.defaultProps = {
 
 CreateStoryDropdown.propTypes = {
   projects: PropTypes.array,
+  shortcutTeam: PropTypes.object,
   onChange: PropTypes.func,
 };
 

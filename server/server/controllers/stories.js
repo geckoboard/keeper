@@ -57,6 +57,7 @@ const create = (req, res, next) =>
         body: {
           name: req.body.name,
           project_id: req.body.projectId,
+          group_id: req.body.groupId,
           workflow_state_id: column.id,
         },
         json: true,

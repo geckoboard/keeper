@@ -60,12 +60,12 @@ const Team = sequelize.define(
     icon: Sequelize.STRING,
     dataset: Sequelize.STRING,
     slug: Sequelize.STRING,
-    projects: Sequelize.ARRAY(Sequelize.INTEGER),
+    shortcutTeams: Sequelize.ARRAY(Sequelize.STRING),
   },
   {
     getterMethods: {
-      projects() {
-        return this.getDataValue('projects') || [];
+      shortcutTeams() {
+        return this.getDataValue('shortcutTeams') || [];
       },
     },
   },

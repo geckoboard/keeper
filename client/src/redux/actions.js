@@ -89,27 +89,26 @@ export const removeProject = createThunk(
 export const addShortcutTeam = createThunk(
   'ADD_SHORTCUT_TEAM',
   shortcutTeamId => (dispatch, getState) => {
-    // const state = getState();
-    // const team = state.teams.entities.find(t => t.id === state.teams.current);
+    const state = getState();
+    const team = state.teams.entities.find(t => t.id === state.teams.current);
 
     dispatch(fetchStoriesForShortcutTeam([shortcutTeamId]));
-    // TODO: Add shortcutTeam to team db
-    // api.teams.update(team.id, {
-    //   shortcutTeams: unique([...team.projects, shortcutTeam]),
-    // });
+
+    api.teams.update(team.id, {
+      shortcutTeams: unique([...team.shortcutTeams, shortcutTeamId]),
+    });
   },
 );
 
 export const removeShortcutTeam = createThunk(
   'REMOVE_SHORTCUT_TEAM',
   shortcutTeamId => (dispatch, getState) => {
-    // TODO: Add shortcutTeam to team db
-    // const state = getState();
-    // const team = state.teams.entities.find(t => t.id === state.teams.current);
+    const state = getState();
+    const team = state.teams.entities.find(t => t.id === state.teams.current);
 
-    // api.teams.update(team.id, {
-    //   projects: unique(team.projects.filter(p => p !== project)),
-    // });
+    api.teams.update(team.id, {
+      projects: unique(team.shortcutTreams.filter(p => p !== shortcutTeamId)),
+    });
   },
 );
 
@@ -249,17 +248,18 @@ export const setTeam = createThunk('SET_TEAM', id => (dispatch, getState) => {
   const team = state.teams.entities.find(t => t.id === id);
 
   dispatch(setGoals(team.goals));
-  dispatch(fetchStories(team.projects));
+  dispatch(fetchStoriesForShortcutTeam(team.shortcutTeams));
 });
 
 export const createStoryFromGoal = createThunk(
   'CREATE_STORY_FROM_GOAL',
-  ({ goal, project }) => () =>
+  ({ goal, project, shortcutTeam }) => () =>
     api.clubhouse.stories
       .create({
         goalId: goal.id,
         teamId: project.team_id,
         projectId: project.id,
+        groupId: shortcutTeam.id,
         name: goal.title,
       })
       .then(story => ({

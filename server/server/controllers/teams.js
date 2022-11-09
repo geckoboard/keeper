@@ -32,10 +32,10 @@ const update = (req, res, next) =>
         throw err;
       }
 
-      const { projects } = req.body;
+      const { shortcutTeams } = req.body;
 
       return team.update({
-        projects: projects || team.projects,
+        shortcutTeams: shortcutTeams || team.shortcutTeams,
       });
     })
     .then(team => {
