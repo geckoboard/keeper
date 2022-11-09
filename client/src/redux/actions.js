@@ -48,6 +48,11 @@ export const fetchTeams = createThunk('FETCH_TEAMS', () => () =>
   api.teams.get(),
 );
 
+export const fetchShortcutTeams = createThunk(
+  'FETCH_SHORTCUT_TEAMS',
+  () => () => api.teams.getShortcutTeams(),
+);
+
 export const fetchProjects = createThunk('FETCH_PROJECTS', () => () =>
   api.projects.get(),
 );
@@ -81,6 +86,33 @@ export const removeProject = createThunk(
   },
 );
 
+export const addShortcutTeam = createThunk(
+  'ADD_SHORTCUT_TEAM',
+  shortcutTeamId => (dispatch, getState) => {
+    // const state = getState();
+    // const team = state.teams.entities.find(t => t.id === state.teams.current);
+
+    dispatch(fetchStoriesForShortcutTeam([shortcutTeamId]));
+    // TODO: Add shortcutTeam to team db
+    // api.teams.update(team.id, {
+    //   shortcutTeams: unique([...team.projects, shortcutTeam]),
+    // });
+  },
+);
+
+export const removeShortcutTeam = createThunk(
+  'REMOVE_SHORTCUT_TEAM',
+  shortcutTeamId => (dispatch, getState) => {
+    // TODO: Add shortcutTeam to team db
+    // const state = getState();
+    // const team = state.teams.entities.find(t => t.id === state.teams.current);
+
+    // api.teams.update(team.id, {
+    //   projects: unique(team.projects.filter(p => p !== project)),
+    // });
+  },
+);
+
 export const addGoal = createThunk(
   'CREATE_GOAL',
   ({ team, title, order }) => () => api.goals.add(team, { title, order }),
@@ -107,6 +139,42 @@ export const saveGoalOrders = createThunk(
 
 export const deleteGoal = createThunk('DELETE_GOAL', goal => () =>
   api.goals.delete(goal.id),
+);
+
+export const fetchStoriesForShortcutTeam = createThunk(
+  'FETCH_STORIES_FOR_TEAM',
+  teamIds => dispatch => {
+    const requests = [];
+
+    teamIds.forEach(teamId => {
+      // FETCH READY
+      requests.push(
+        _keepFetching(
+          next => api.clubhouse.stories.getReadyByShortcutTeam(teamId, next),
+          res => dispatch(storiesReceived(res)),
+        ),
+      );
+
+      // FETCH DOING
+      requests.push(
+        _keepFetching(
+          next => api.clubhouse.stories.getDoingByShortcutTeam(teamId, next),
+          res => dispatch(storiesReceived(res)),
+        ),
+      );
+
+      // FETCH DONE
+      requests.push(
+        _keepFetching(
+          next => api.clubhouse.stories.getDoneByShortcutTeam(teamId, next),
+          res => dispatch(storiesReceived(res)),
+          _completedInLastTwoWeeks,
+        ),
+      );
+    });
+
+    return Promise.all(requests);
+  },
 );
 
 export const fetchStories = createThunk(

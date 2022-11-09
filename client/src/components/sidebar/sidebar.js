@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
 import StoriesList from '../stories-list';
-import ProjectSelector from '../project-selector';
+import ShortcutTeamSelector from '../shortcut-teams-selector';
 import styles from './sidebar.css';
 import KeyListener from '../key-listener';
 
@@ -51,7 +51,7 @@ class Sidebar extends Component {
         <KeyListener character="s" onKeyPress={this.toggle} />
         <div className={styles.sidebar__content}>
           <div className={styles.sidebar__header}>
-            <ProjectSelector />
+            <ShortcutTeamSelector />
             <button
               className={styles.sidebar__toggle}
               onClick={() => this.toggle()}

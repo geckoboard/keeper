@@ -54,6 +54,21 @@ const storiesReducer = (state = initialState, action) => {
       };
     }
 
+    case actions.removeShortcutTeam.start.type: {
+      let entities = {};
+      let stories = values(state.entities);
+      stories = stories.filter(story => story.group_id !== payload);
+
+      stories.forEach(story => {
+        entities[story.id] = story;
+      });
+
+      return {
+        ...state,
+        entities,
+      };
+    }
+
     case actions.createStoryFromGoal.end.type:
       return {
         ...state,

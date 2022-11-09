@@ -56,6 +56,7 @@ const teamsReducer = (state = initialState, action) => {
         entities: payload.map(team => ({
           ...team,
           goals: team.goals.sort(_byOrder),
+          shortcutTeams: [],
         })),
       };
 
@@ -74,6 +75,24 @@ const teamsReducer = (state = initialState, action) => {
         entities: _updateCurrent(state, team => ({
           ...team,
           projects: team.projects.filter(t => t !== payload),
+        })),
+      };
+
+    case actions.addShortcutTeam.start.type:
+      return {
+        ...state,
+        entities: _updateCurrent(state, team => ({
+          ...team,
+          shortcutTeams: [...team.shortcutTeams, payload],
+        })),
+      };
+
+    case actions.removeShortcutTeam.start.type:
+      return {
+        ...state,
+        entities: _updateCurrent(state, team => ({
+          ...team,
+          shortcutTeams: team.shortcutTeams.filter(t => t !== payload),
         })),
       };
 

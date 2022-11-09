@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import StoriesList from './stories-list';
-import { getGoals, getTeamProjects } from '../../redux/helpers';
+import { getGoals } from '../../redux/helpers';
 
 const mapStateToProps = state => {
   const alreadyAssigned = getGoals(state).reduce(
@@ -8,7 +8,7 @@ const mapStateToProps = state => {
     [],
   );
 
-  let projects = getTeamProjects(state);
+  let projects = state.projects.entities;
   const projectColours = projects.reduce(
     (acc, project) => (project ? { ...acc, [project.id]: project.color } : acc),
     {},
