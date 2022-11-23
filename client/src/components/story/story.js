@@ -6,7 +6,7 @@ const Story = ({ name, id, app_url, colour }) => (
   <div
     className={styles.container}
     style={{
-      'border-color': colour,
+      borderColor: colour,
     }}
   >
     <span className={styles.title}>{name}</span>

@@ -19,7 +19,16 @@ export const getDoing = (project, next) =>
 export const getDone = (project, next) =>
   get(`is:done project:${project} !is:archived`, next);
 
-export const create = ({ projectId, teamId, goalId, name }) =>
+export const getReadyByShortcutTeam = (teamId, next) =>
+  get(`state:ready team:${teamId} !is:archived`, next);
+
+export const getDoingByShortcutTeam = (teamId, next) =>
+  get(`is:started team:${teamId} !is:archived`, next);
+
+export const getDoneByShortcutTeam = (teamId, next) =>
+  get(`is:done team:${teamId} !is:archived`, next);
+
+export const create = ({ projectId, teamId, goalId, groupId, name }) =>
   apiRequest(`${API}/stories`, {
     method: 'post',
     headers: {
@@ -29,6 +38,7 @@ export const create = ({ projectId, teamId, goalId, name }) =>
     body: JSON.stringify({
       projectId,
       teamId,
+      groupId,
       goalId,
       name,
     }),

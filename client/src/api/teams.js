@@ -1,5 +1,8 @@
 import { API, apiRequest, getJSON } from './utils';
 
+const getShortcutTeams = () =>
+  apiRequest(`${API}/shortcut-teams`).then(getJSON);
+
 const getTeams = () => apiRequest(`${API}/teams`).then(getJSON);
 
 const updateTeam = (id, updates) =>
@@ -12,4 +15,4 @@ const updateTeam = (id, updates) =>
     body: JSON.stringify(updates),
   }).then(getJSON);
 
-export { getTeams as get, updateTeam as update };
+export { getTeams as get, updateTeam as update, getShortcutTeams };

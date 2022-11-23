@@ -7,17 +7,32 @@ const mapStateToProps = state => {
     team => team.id === state.teams.current,
   );
 
+  // Give option to create card in any project that
+  // belongs to a card currently listen in keeper.
+  const storyIds = Object.keys(state.stories.entities);
+  const stories = storyIds.map(id => state.stories.entities[id]);
+  const projectIds = stories.map(story => story.project_id);
+  const projects = state.projects.entities.filter(project =>
+    projectIds.find(id => id === project.id),
+  );
+
+  // Most of the time we'll be working with only one team
+  // so just default to the first one for now.
+  const shortcutTeam = state.shortcutTeams.entities.find(
+    ({ id }) => id === team.shortcutTeams[0],
+  );
+
   return {
-    projects: state.projects.entities.filter(project =>
-      team.projects.includes(project.id),
-    ),
+    shortcutTeam,
+    projects,
   };
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
-  onChange: project => {
+  onChange: (project, shortcutTeam) => {
     dispatch(
       actions.createStoryFromGoal({
+        shortcutTeam,
         project,
         goal: props.goal,
       }),

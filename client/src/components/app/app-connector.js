@@ -5,6 +5,7 @@ import App from './app';
 const mapDispatchToProps = dispatch => ({
   init: () => {
     dispatch(actions.fetchTeams());
+    dispatch(actions.fetchShortcutTeams());
     dispatch(actions.fetchProjects());
     dispatch(actions.fetchMembers());
   },

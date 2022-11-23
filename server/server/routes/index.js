@@ -2,6 +2,7 @@ const path = require('path');
 const goalsController = require('../controllers').goals;
 const membersController = require('../controllers').members;
 const projectsController = require('../controllers').projects;
+const shortcutTeamsController = require('../controllers').shortcutTeams;
 const storiesController = require('../controllers').stories;
 const teamsController = require('../controllers').teams;
 const webhookController = require('../controllers').webhook;
@@ -11,6 +12,12 @@ module.exports = app => {
     res.status(200).send({
       message: 'Welcome to the Goals API!',
     }),
+  );
+
+  app.get('/api/shortcut-teams', shortcutTeamsController.list);
+  app.get(
+    '/api/shortcut-teams/:teamId/stories',
+    shortcutTeamsController.listStories,
   );
 
   app.get('/api/teams', teamsController.list);

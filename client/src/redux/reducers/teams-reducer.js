@@ -59,21 +59,21 @@ const teamsReducer = (state = initialState, action) => {
         })),
       };
 
-    case actions.addProject.start.type:
+    case actions.addShortcutTeam.start.type:
       return {
         ...state,
         entities: _updateCurrent(state, team => ({
           ...team,
-          projects: [...team.projects, payload],
+          shortcutTeams: [...team.shortcutTeams, payload],
         })),
       };
 
-    case actions.removeProject.start.type:
+    case actions.removeShortcutTeam.start.type:
       return {
         ...state,
         entities: _updateCurrent(state, team => ({
           ...team,
-          projects: team.projects.filter(t => t !== payload),
+          shortcutTeams: team.shortcutTeams.filter(t => t !== payload),
         })),
       };
 
